@@ -1,5 +1,26 @@
 # 07 · Arquitectura de la aplicación
 
+## Implementación disponible · 2026-09-15
+
+La aplicación vive en `../../mobile`, sobre Expo 57, React Native 0.86 y TypeScript.
+Ya existen la ruta local completa, Bluetooth Classic, motor puro, Zustand y SQLite.
+El esquema inicial tiene `ajustes` y `capturas`: el JSON de cada captura conserva
+lectura, observaciones, calibración y fuente; el resultado conserva versión del motor.
+El cierre es transaccional y los resultados finalizados son inmutables. Se usa una
+sola conexión. La vista web usa almacenamiento local y admite exclusivamente DEMO.
+
+Una pérdida de socket activa hasta tres reintentos al mismo equipo (1, 3 y 7 s).
+Los callbacks viejos se ignoran; desconectar cancela la recuperación. El primer
+fallo de conexión no entra en un bucle de permisos. La captura congelada permanece
+completable incluso sin conexión. Ocho pruebas de sesión lo comprueban con el
+servicio Bluetooth simulado; la radio real está pendiente. Véase D-003.
+
+El resto del documento describe la arquitectura objetivo: sincronización, backend,
+IA, fuentes geográficas, videos y traducciones aún no están implementados. No hay
+coordenadas ni solicitudes de red en el flujo de medición. Las pruebas actuales usan
+Vitest, incluida integración con SQLite real mediante `node:sqlite`; falta comprobar
+el puente nativo en Android. Véase [D-002](../prompts/iteraciones/D-002.md).
+
 ## Stack
 
 | Capa | Tecnología | Por qué |

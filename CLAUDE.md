@@ -71,9 +71,11 @@ coincidan con el dominio (`veredicto`, `turbidez`, `esEstancada`).
 
 ## Estado actual
 
-Documentación completa; implementación no iniciada. El repositorio original
-(`github.com/adiacla/refluye`) tiene cuatro bloqueos documentados en
-`refluye/contexto/05-estado-actual-y-deuda.md`.
+Aplicación inicial implementada en `mobile/`: Bluetooth Classic, modo DEMO,
+motor determinista, SQLite, observaciones, resultados y guías. 43 pruebas pasan;
+el motor tiene 100 % de cobertura. APK 0.1.0 compilada con firma de desarrollo;
+aceptación en Android físico pendiente. Backend e IA aún no implementados.
+Leer `README.md`, `mobile/README.md` y `refluye/contexto/05-estado-actual-y-deuda.md`.
 
 ## Ciclo de mejora
 

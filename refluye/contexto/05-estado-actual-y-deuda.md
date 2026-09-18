@@ -1,5 +1,20 @@
 # 05 · Estado actual y deuda técnica
 
+## Actualización de la aplicación · 2026-09-15
+
+La auditoría histórica inferior describe el repositorio original. El desarrollo
+activo está ahora en `../../mobile`, dentro de CampusMind. Existe una primera
+aplicación de campo con Bluetooth Classic, modo DEMO, motor local, observaciones,
+SQLite, guía y registro de calibración. 43 pruebas y TypeScript aprobados;
+recorrido web DEMO revisado. APK compilada y firma verificada (D-004), 51.99 MB.
+La prueba física está pendiente y se registra por separado. Los bloqueos históricos de PCB no demuestran que
+el equipo físico actual del usuario tenga esos mismos defectos.
+
+Pendientes reales: comprobar APK con dispositivo, TalkBack/voz, escalado y uso en
+campo; validar sensores y recomendaciones con responsables técnicos; implementar
+etapas posteriores de backend/IA solo tras cerrar la base. No hay sincronización
+ni coordenadas. El doc 09 vigente sustituye los tratamientos del diseño inicial.
+
 Auditoría del repositorio original `github.com/adiacla/refluye`, verificada
 mediante clonación, compilación con stubs, extracción de la netlist del PCB,
 medición de los STL y lectura completa de los tres documentos Word.

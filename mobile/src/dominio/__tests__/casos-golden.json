@@ -1,0 +1,20 @@
+[
+  {"nombre":"lectura favorable con desinfección","regla":"R15","nivel":0,"plan":"hervido"},
+  {"nombre":"veto olor","observacion":{"olor":"raro"},"regla":"R02","nivel":2,"plan":"alternativa"},
+  {"nombre":"combustible","observacion":{"olor":"raro","olorTipo":"combustible"},"regla":"R01","nivel":2,"plan":"alternativa"},
+  {"nombre":"aceite","observacion":{"visual":"aceitosa"},"regla":"R03","nivel":2,"plan":"alternativa"},
+  {"nombre":"verdosa estancada sin calibración","observacion":{"origen":"estancada","visual":"verdosa"},"sinCalibracion":true,"regla":"R06","nivel":2,"plan":"alternativa"},
+  {"nombre":"verdosa corriente","observacion":{"visual":"verdosa"},"regla":"R07","nivel":1,"plan":"alternativa"},
+  {"nombre":"pH crítico","lectura":{"ph":5},"regla":"R04","nivel":2,"plan":"alternativa"},
+  {"nombre":"pH inválido no se evalúa como pH real","lectura":{"ph":15},"regla":"R05","nivel":1,"plan":"repetir"},
+  {"nombre":"turbidez extrema","lectura":{"turbidez":100},"regla":"R08","nivel":2,"plan":"alternativa"},
+  {"nombre":"sales extremas y verdosa","lectura":{"tds":1500},"observacion":{"visual":"verdosa"},"regla":"R09","nivel":2,"plan":"alternativa"},
+  {"nombre":"pH fuera de referencia","lectura":{"ph":6.2},"regla":"R10","nivel":1,"plan":"alternativa"},
+  {"nombre":"turbidez alta","lectura":{"turbidez":25},"regla":"R11","nivel":1,"plan":"alternativa"},
+  {"nombre":"TDS alto","lectura":{"tds":600},"regla":"R12","nivel":1,"plan":"alternativa"},
+  {"nombre":"estancada","observacion":{"origen":"estancada"},"regla":"R13","nivel":1,"plan":"hervido"},
+  {"nombre":"duda","observacion":{"olor":"no_se"},"regla":"R14","nivel":1,"plan":"repetir"},
+  {"nombre":"aspecto turbio no cae en favorable","observacion":{"visual":"turbia"},"regla":"R16","nivel":1,"plan":"hervido"},
+  {"nombre":"sin calibración","sinCalibracion":true,"regla":"R05","nivel":1,"plan":"repetir"},
+  {"nombre":"sin temperatura","lectura":{"temperatura":null},"regla":"R15","nivel":0,"plan":"hervido"}
+]

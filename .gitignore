@@ -1,0 +1,9 @@
+.herramientas/
+.claude/
+*.log
+mobile/dist/
+mobile/coverage/
+mobile/artifacts/
+.env
+.env.*
+!.env.example

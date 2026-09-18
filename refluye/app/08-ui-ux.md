@@ -1,5 +1,17 @@
 # 08 · UI / UX
 
+## Estado implementado · 2026-09-15
+
+`../../mobile/src/app` contiene inicio, conexión, medición, tres preguntas,
+resultado, guía, historial, registro técnico de calibración y aprendizaje textual.
+La versión inicial conserva identidad, botones grandes y audio con la voz del
+teléfono. DEMO está separado de las capturas reales. Las preguntas y los pasos
+vuelven al inicio al avanzar; el historial incluye el descargo microbiológico.
+Recorrido web DEMO revisado a 390 y 320 px: [B-002](../prompts/iteraciones/B-002.md).
+Faltan pruebas Android de TalkBack, escalado 130 %, voz instalada y uso en campo.
+Los bocetos siguientes son la visión completa: no hay todavía videos, fotos,
+asistente, fuentes geográficas ni cloración en la aplicación inicial.
+
 ## El contexto de uso manda
 
 Antes de cualquier decisión estética, el escenario real:
@@ -52,8 +64,16 @@ NEUTROS
   Fondo         #FFFFFF
 ```
 
-Se conserva la paleta del proyecto original (estaba bien elegida) y se añaden
-fondos de estado con contraste verificado.
+Se conserva la identidad del proyecto original. Los colores del semáforo se
+usan en iconos y acentos; el texto crítico usa `#1C2833` sobre los fondos claros.
+No usar verde, ámbar o rojo como color del texto crítico en esos fondos.
+
+Contraste calculado el 2026-09-14: texto oscuro sobre verde claro **13.58:1**,
+sobre ámbar claro **13.87:1** y sobre rojo claro **13.21:1**. Texto blanco sobre
+azul principal: **8.36:1**. Los colores de estado sobre sus propios fondos dan
+4.27:1, 3.86:1 y 4.95:1 respectivamente: no cumplen el objetivo crítico 7:1.
+Comprobación reproducible: `../../../analisis/verificar_hallazgos.mjs` en el
+workspace de la auditoría. Aún falta verificar el renderizado Android.
 
 ### Tipografía
 
@@ -253,14 +273,14 @@ Responde en el primer pantallazo, sin scroll: **¿puedo usarla y para qué?**
 │         ⚠️                 │
 │    REQUIERE TRATAMIENTO    │  ← 34 sp
 │                            │
-│  Tu agua se puede usar,    │
-│  pero antes hay que        │
-│  tratarla.                 │
+│  Revisa el uso y sus       │
+│  condiciones antes de      │
+│  tratar esta agua.         │
 │                            │
 │  ┌──────────────────────┐  │
 │  │ 🚰 Beber   ⚠️ Tratar │  │
-│  │ 🐄 Animales ✅ Sí    │  │
-│  │ 🌱 Riego    ✅ Sí    │  │
+│  │ 🐄 Animales: ver plan│  │
+│  │ 🌱 Riego: ver límites│  │
 │  └──────────────────────┘  │
 │                            │
 │  Motivo principal:         │
@@ -274,13 +294,16 @@ Responde en el primer pantallazo, sin scroll: **¿puedo usarla y para qué?**
 │                            │
 │  ▸ Ver los números         │  ← colapsado
 │                            │
-│  ℹ️ Este equipo no detecta │
-│    bacterias. Desinfecta   │
-│    siempre antes de beber. │  ← S6, siempre visible
+│  ℹ️ No detecta bacterias,  │
+│    virus ni parásitos.     │
+│    No certifica potabilidad│  ← S6, siempre visible
 └────────────────────────────┘
 ```
 
 **Decisiones:**
+- Este esquema ilustra la jerarquía, no aprueba tratamientos. Las condiciones
+  por uso y la acción principal proceden del motor. «Ver plan» solo aparece si
+  hay un plan aprobado; en caso contrario se muestra la restricción concreta.
 - **Aptitud por destino, no un veredicto único.** "No apta" es demasiado grueso:
   la misma agua puede servir para riego y no para beber.
 - Los números se ocultan tras un desplegable. Existen; no dominan.
@@ -372,6 +395,64 @@ hostil.
 | Sin videos descargados | Se muestran las ilustraciones; el video se ofrece para descargar luego |
 | Primera vez | Tutorial de 3 pantallas, saltable, reabrible desde "Aprender" |
 | Sin equipo | Modo demo, con marca de agua "DEMO" siempre visible |
+
+## Contrato de resultado y fiabilidad — iteración B-001
+
+El resultado comunica dos cosas distintas: los peligros que identifica el motor
+y la fiabilidad de la medición. Un aviso de calibración no puede quedar debajo
+de una conclusión favorable ni sustituir una prohibición por olor o aspecto.
+La presentación nunca calcula otro veredicto ni habilita un tratamiento.
+
+| Estado recibido del dominio | Contenido obligatorio | Acción principal |
+|---|---|---|
+| Veto y lectura confiable | Restricción, motivo, usos bloqueados y descargo | Alternativa indicada por el motor |
+| Veto y lectura no confiable | Restricción intacta y aviso de fiabilidad | Alternativa; revisar equipo como acción secundaria |
+| Sin veto y calibración ausente/vencida | «Lectura no confiable» y «No podemos confirmar los usos con esta medición» | Revisar equipo / repetir |
+| Sin veto y lectura válida | Conclusión del motor con condiciones por uso | Abrir únicamente el plan aprobado |
+| No existe salida válida del motor | «No pudimos evaluar esta medición» | Reintentar conservando captura y observaciones |
+| DEMO | «DEMO — datos simulados» en todas las pantallas | Practicar sin registrar medición real |
+
+Hasta resolver la matriz del doc 09, no presentar autorizaciones de uso ni
+dosis como decisiones definitivas. Este contrato no modifica el orden de reglas;
+las inconsistencias del dominio quedan registradas en pendientes.md.
+
+En resultados, historial detallado, audio y exportación se conserva el descargo:
+«Este equipo no detecta bacterias, virus ni parásitos. No certifica potabilidad».
+Cuando el motor permita una ruta de consumo humano, su plan incluye desinfección.
+Cuando la prohíba, no se ofrece «desinfectar» como forma de levantar el veto.
+
+En pantalla pequeña, dar prioridad a restricción/acción, fiabilidad y descargo.
+Los detalles numéricos y destinos secundarios pueden desplazarse. El tamaño de
+fuente no se reduce para forzar el wireframe: comprobar 320 dp de ancho y 130 %
+de texto, sin recortes ni controles solapados. El bloque de advertencias no debe
+desaparecer al expandir detalles ni requerir cerrar un modal para leerlo.
+
+### Reconocimiento del equipo
+
+Primera vez: explicar permisos, listar equipos, seleccionar y dejar que Android
+gestione el emparejamiento. Guardar el identificador elegido y ofrecer cambiarlo.
+En siguientes sesiones, reconectar al equipo recordado. «Equipo listo» requiere
+datos compatibles recientes; socket abierto sin tramas significa «Esperando
+datos». No pedir al usuario direcciones MAC ni códigos de protocolo.
+
+Si hay varios equipos homónimos, exigir selección; nunca cambiar de equipo sin
+avisar. Mostrar instrucciones para Bluetooth apagado, permiso denegado y equipo
+ausente. No interpretar el permiso de Bluetooth como consentimiento de GPS.
+El PIN documentado debe verificarse con el firmware/core instalado antes de
+presentarlo como requisito universal.
+
+### Casos de aceptación de esta especificación
+
+1. Calibración ausente y sensores favorables: se ve incertidumbre, nunca «Sí».
+2. Olor raro y calibración ausente: el veto no desaparece detrás del aviso.
+3. Resultado sin plan: ningún botón inicia un tratamiento improvisado.
+4. Historial y audio conservan tanto el veto como la fiabilidad de la captura.
+5. Texto crítico oscuro supera 7:1 en los tres fondos de estado.
+6. Tamaño de texto 130 % y pantalla estrecha: se lee la información prioritaria.
+7. Equipo recordado ausente: se ofrece reintentar o elegir, sin fabricar datos.
+
+Estado: contrato documental revisado; casos de interfaz pendientes de implementar
+y ejecutar en Android. La aritmética de contraste sí fue comprobada.
 
 ---
 
