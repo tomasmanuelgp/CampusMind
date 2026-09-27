@@ -2,6 +2,14 @@
 
 ## Estado de implementación · 2026-09-15
 
+Actualización 2026-09-27: APK 0.2.0 publicada y 49 pruebas aprobadas; ver D-005.
+La ficha del sensor TDS SEN0244 declara 0–1000 ppm, mientras firmware, parser y
+motor admiten hasta 2000 ppm: identificar el modelo realmente montado y validar
+su respuesta antes de usar resultados por encima del rango del fabricante.
+También faltan alimentación, grado de sellado, lista de piezas y calibración
+verificados por unidad para completar la guía visual antes de entregarla. Ver
+[F-001](iteraciones/F-001.md) y [manual técnico](../manuales/03-manual-tecnico.md).
+
 - APK interna disponible en mobile/artifacts; compilación, firma y permisos
   verificados en D-004. Ejecutar doc 13 en Android físico antes de cerrar aceptación.
 

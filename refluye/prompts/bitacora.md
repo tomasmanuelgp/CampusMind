@@ -4,6 +4,9 @@ Una línea por iteración del ciclo de mejora.
 
 | Fecha | Área | Qué cambió | Por qué | Verificación |
 |---|---|---|---|---|
+| 2026-09-27 | D — Manual técnico (D-006) | Arquitectura, instalación, dependencias, pruebas y límites actuales en un documento | Evitar confundir planes futuros con funciones instaladas | Contraste con código y D-005; reproducción externa pendiente |
+| 2026-09-27 | F — Guía de equipo (F-001) | Hoja visual A4 a doble cara, cuidado por componente y campos por unidad | Acompañar al producto sin inventar alimentación ni sellado | Dos páginas renderizadas y revisadas; fichas primarias contrastadas; impresión pendiente |
+| 2026-09-27 | B — Guía de app (B-005) | Instalación, DEMO, Bluetooth, medición, usos, resultados y fallos | Reducir confusión en la primera medición | Comparación con pantallas 0.2.0 y límites S1–S8; usuarios pendientes |
 | 2026-09-26 | D — APK (D-005) | APK 0.2.0 con flujo integrado y orientación por uso | Probar en Android la iteración A-003/B-004 | Build, lint vital, firma, hash, paquete, ABI y permisos aprobados; certificado igual a 0.1.0; teléfono pendiente |
 | 2026-09-26 | B — UI (B-004) | Medición, fuente, uso y observación en una pantalla; jerarquía de color y pasos por uso | Reducir navegación y aclarar la acción antes del resultado | Recorrido DEMO de baño; TypeScript y 49 pruebas. Detalle: iteraciones/B-004.md |
 | 2026-09-26 | A — Usos (A-003) | Destinos conservadores para baño, utensilios y ropa; orientación determinista por uso | Evitar permisos falsos a partir de sensores limitados | 21 golden, 100 % ramas motor, veto por combustible y calibración probados. Detalle: iteraciones/A-003.md |

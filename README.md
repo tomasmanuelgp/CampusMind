@@ -73,6 +73,9 @@ No incluye todavía backend, IA, geolocalización ni dosificación de cloro.
 - [Instrucciones de desarrollo y compilación Android](mobile/README.md)
 - [Documentación del proyecto](refluye/README.md)
 - [Guion de aceptación en teléfono](refluye/app/13-pruebas-apk.md)
+- [Guía de la app](refluye/manuales/01-guia-app.md)
+- [Guía visual A4 del equipo](output/pdf/refluye-guia-visual-equipo-a4.pdf)
+- [Manual técnico del sistema](refluye/manuales/03-manual-tecnico.md)
 - [Bitácora del ciclo de mejora](refluye/prompts/bitacora.md)
 
 Las dependencias se recuperan con `npm ci`; el SDK Android, JDK, cachés, datos

@@ -4,6 +4,7 @@
 mobile/dist/
 mobile/coverage/
 mobile/artifacts/
+tmp/pdfs/
 .env
 .env.*
 !.env.example
