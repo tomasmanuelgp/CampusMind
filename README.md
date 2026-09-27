@@ -76,6 +76,7 @@ No incluye todavía backend, IA, geolocalización ni dosificación de cloro.
 - [Guía de la app](refluye/manuales/01-guia-app.md)
 - [Guía visual A4 del equipo](output/pdf/refluye-guia-visual-equipo-a4.pdf)
 - [Manual técnico del sistema](refluye/manuales/03-manual-tecnico.md)
+- Manuales en Word: [app](output/word/refluye-guia-app.docx), [guía visual A4](output/word/refluye-guia-visual-equipo-a4.docx) y [técnico](output/word/refluye-manual-tecnico.docx)
 - [Bitácora del ciclo de mejora](refluye/prompts/bitacora.md)
 
 Las dependencias se recuperan con `npm ci`; el SDK Android, JDK, cachés, datos

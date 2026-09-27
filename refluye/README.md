@@ -53,9 +53,9 @@ a construir**.
 
 | Pieza | Destinatario | Formato |
 |---|---|---|
-| [Guía de la app](manuales/01-guia-app.md) | Persona que mide y facilitador | Lectura digital |
-| [Guía visual del equipo](../output/pdf/refluye-guia-visual-equipo-a4.pdf) | Persona que recibe el prototipo | A4 a doble cara; [texto y notas editoriales](manuales/02-guia-visual-equipo.md) |
-| [Manual técnico](manuales/03-manual-tecnico.md) | Soporte, desarrollo y calibración | Documento versionable |
+| [Guía de la app](manuales/01-guia-app.md) | Persona que mide y facilitador | Lectura digital y [Word editable](../output/word/refluye-guia-app.docx) |
+| [Guía visual del equipo](../output/pdf/refluye-guia-visual-equipo-a4.pdf) | Persona que recibe el prototipo | A4 a doble cara; [Word editable](../output/word/refluye-guia-visual-equipo-a4.docx) y [texto fuente](manuales/02-guia-visual-equipo.md) |
+| [Manual técnico](manuales/03-manual-tecnico.md) | Soporte, desarrollo y calibración | Documento versionable y [Word editable](../output/word/refluye-manual-tecnico.docx) |
 
 La guía impresa requiere completar los datos reales de alimentación, sondas,
 calibración y soporte de cada unidad antes de entregarla. Ningún manual sustituye
