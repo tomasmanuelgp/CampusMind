@@ -1,12 +1,16 @@
 # 05 · Estado actual y deuda técnica
 
-## Actualización de la aplicación · 2026-09-15
+## Actualización de la aplicación · 2026-09-26
 
 La auditoría histórica inferior describe el repositorio original. El desarrollo
 activo está ahora en `../../mobile`, dentro de CampusMind. Existe una primera
 aplicación de campo con Bluetooth Classic, modo DEMO, motor local, observaciones,
-SQLite, guía y registro de calibración. 43 pruebas y TypeScript aprobados;
-recorrido web DEMO revisado. APK compilada y firma verificada (D-004), 51.99 MB.
+SQLite, guía y registro de calibración. 49 pruebas y TypeScript aprobados;
+recorrido web DEMO revisado. La medición, nombre, uso y observaciones ahora se
+completan en una pantalla; resultados orientan por uso sin autorizar usos no
+verificados. La APK 0.2.0 fue compilada y verificada (D-005), 52.00 MB;
+incluye esta iteración de interfaz. Comparte certificado con la 0.1.0 y puede
+instalarse sobre ella sin borrar datos, sujeto a la prueba en Android físico.
 La prueba física está pendiente y se registra por separado. Los bloqueos históricos de PCB no demuestran que
 el equipo físico actual del usuario tenga esos mismos defectos.
 

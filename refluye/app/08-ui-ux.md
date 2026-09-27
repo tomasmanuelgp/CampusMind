@@ -1,12 +1,15 @@
 # 08 · UI / UX
 
-## Estado implementado · 2026-09-15
+## Estado implementado · 2026-09-26
 
-`../../mobile/src/app` contiene inicio, conexión, medición, tres preguntas,
+`../../mobile/src/app` contiene inicio, conexión, medición con tres preguntas,
 resultado, guía, historial, registro técnico de calibración y aprendizaje textual.
 La versión inicial conserva identidad, botones grandes y audio con la voz del
 teléfono. DEMO está separado de las capturas reales. Las preguntas y los pasos
 vuelven al inicio al avanzar; el historial incluye el descargo microbiológico.
+Las preguntas se reúnen en la pantalla de medición; el flujo anterior de tres
+pantallas queda para recuperar borradores anteriores. La persona nombra la fuente,
+elige un uso y marca origen, olor y aspecto antes de analizar: [B-004](../prompts/iteraciones/B-004.md).
 Recorrido web DEMO revisado a 390 y 320 px: [B-002](../prompts/iteraciones/B-002.md).
 La condición para beber o cocinar y el descargo microbiológico ahora se leen antes
 del primer desplazamiento en resultado, incluso a 320 px: [B-003](../prompts/iteraciones/B-003.md).
@@ -127,7 +130,7 @@ no pueda leerlo. Debe estar visible, no escondido en un menú.
 
 ```
 Inicio
- ├─ Medir ahora ──► Conectar ──► Medición en vivo ──► Observación (3 pasos)
+ ├─ Medir ahora ──► Conectar ──► Medición + fuente + uso + observación
  │                                                          │
  │                                                          ▼
  │                                                     Resultado
@@ -207,13 +210,15 @@ capturas prematuras.
 Al estabilizarse: el texto pasa a "✅ Lectura estable" y el botón se activa con
 un cambio de color evidente.
 
-### Observación humana — el rediseño más importante
+### Observación humana — versión integrada
 
-El original mostraba las tres preguntas juntas, con botones de texto. El rediseño
-las separa en **tres pantallas de una pregunta cada una**, con apoyo visual.
-
-**Por qué una por pantalla:** reduce la carga cognitiva, permite ilustraciones
-grandes y evita que se respondan al azar por acumulación.
+La versión actual presenta las tres preguntas en una misma pantalla, junto a la
+lectura estable, el nombre de la fuente y el uso elegido. Se evita navegar tres
+veces para llegar al resultado. Cada grupo tiene título, ayuda y opciones grandes.
+El detalle del olor solo aparece si la persona marca «Huele raro». No se pide
+probar ni acercar la cara al agua. Las respuestas «No sé» siguen disponibles.
+Las pantallas separadas del boceto inferior describen la versión previa, que se
+conserva para reanudar borradores ya guardados.
 
 ```
 PASO 2 de 3

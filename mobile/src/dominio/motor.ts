@@ -1,11 +1,11 @@
 import type { Calibracion, Lectura, Observacion } from './tipos';
-export const VERSION_MOTOR = '0.1.0';
+export const VERSION_MOTOR = '0.2.0';
 export const DESCARGO = 'Este equipo no detecta bacterias, virus ni parásitos. No certifica potabilidad.';
 export type PlanId = 'alternativa' | 'repetir' | 'hervido';
 export interface Resultado {
   version: string; nivel: 0|1|2; reglaId: string; reglas: string[]; titulo: string;
   motivo: string; confiable: boolean; ica: number|null; plan: PlanId;
-  destinos: {humano: string; animal: string; riego: string}; advertencias: string[];
+  destinos: {humano: string; animal: string; riego: string; bano:string; utensilios:string; ropa:string}; advertencias: string[];
 }
 const enRango = (n:number|null,min:number,max:number): n is number => n !== null && Number.isFinite(n) && n>=min && n<=max;
 export function calcularIca(l: Lectura): number|null {
@@ -51,7 +51,10 @@ export function evaluar(l:Lectura,o:Observacion,c:Calibracion|null):Resultado {
     motivo:principal.motivo,confiable,ica,plan,
     destinos:{humano:plan==='hervido'?'Requiere aclarado y desinfección': 'No consumir con esta evaluación',
       animal:alternativa?'No recomendado; consulta a un técnico':'Requiere evaluación según el animal',
-      riego:alternativa?'No recomendado; consulta a un técnico':'Revisa el cultivo y el suelo con un técnico'},
+      riego:alternativa?'No recomendado; consulta a un técnico':'Revisa el cultivo y el suelo con un técnico',
+      bano:alternativa?'No te bañes con esta agua; busca otra fuente.':'No podemos confirmar si sirve para bañarse: el equipo no detecta microbios. Consulta orientación local.',
+      utensilios:alternativa?'No la uses para lavar utensilios de comida.':plan==='hervido'?'Aclara y desinfecta el agua antes de lavar utensilios de comida.':'No decidas este uso con una lectura sin verificar; repite la medición.',
+      ropa:alternativa?'Evita usarla para lavar ropa hasta una revisión técnica.':'No podemos confirmar este uso con los sensores; evita el contacto si sospechas contaminación.'},
     advertencias:[DESCARGO,...(confiable?[]:['Lectura no confiable: calibración o datos sin verificar.'])],
   };
 }

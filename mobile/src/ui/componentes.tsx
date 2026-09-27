@@ -5,11 +5,11 @@ import {router} from 'expo-router';
 import * as Speech from 'expo-speech';
 import Svg,{Path,Circle} from 'react-native-svg';
 
-export const colores={tinta:'#1C2833',azul:'#1A5276',fondo:'#F5F7F5',borde:'#CDD7D4',verde:'#E9F7EF',ambar:'#FEF5E7',rojo:'#FDEDEC'};
+export const colores={tinta:'#1C2833',azul:'#1A5276',fondo:'#F5F7F5',borde:'#CDD7D4',verde:'#E9F7EF',ambar:'#FEF5E7',rojo:'#FDEDEC',lima:'#F1F7E8',cielo:'#E8F4FA'};
 export function Gota({tamano=42}:{tamano?:number}) {return <Svg width={tamano} height={tamano} viewBox="0 0 48 48" aria-hidden={true}><Path d="M24 3C19 12 9 22 9 31a15 15 0 0030 0C39 22 29 12 24 3Z" fill={colores.azul}/><Path d="M16 30c0 5 3 8 8 8" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round"/><Circle cx="31" cy="28" r="2" fill="#92D6C3"/></Svg>}
 export function Texto({children,suave=false}:PropsWithChildren<{suave?:boolean}>) {return <Text style={[s.texto,suave&&s.suave]}>{children}</Text>;}
 export function Titulo({children}:PropsWithChildren) {return <Text accessibilityRole="header" style={s.titulo}>{children}</Text>;}
-export function Tarjeta({children,tono='blanco'}:PropsWithChildren<{tono?:'blanco'|'verde'|'ambar'|'rojo'}>) {return <View style={[s.tarjeta,{backgroundColor:tono==='blanco'?'white':colores[tono]}]}>{children}</View>;}
+export function Tarjeta({children,tono='blanco'}:PropsWithChildren<{tono?:'blanco'|'verde'|'ambar'|'rojo'|'lima'|'cielo'}>) {return <View style={[s.tarjeta,{backgroundColor:tono==='blanco'?'white':colores[tono]}]}>{children}</View>;}
 export function Boton({texto,onPress,secundario=false,disabled=false,icono='→'}:{texto:string;onPress:()=>void;secundario?:boolean;disabled?:boolean;icono?:string}) {
   return <Pressable accessibilityRole="button" accessibilityLabel={texto} accessibilityState={{disabled}} disabled={disabled} onPress={onPress}
     style={({pressed})=>[s.boton,secundario&&s.botonSecundario,disabled&&s.deshabilitado,pressed&&s.presionado]}>

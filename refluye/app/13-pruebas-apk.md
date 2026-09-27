@@ -1,6 +1,7 @@
 # 13 · Guion de aceptación de la APK
 
-Fecha de preparación: 2026-09-15. Estado: pendiente en teléfono físico.
+Fecha de preparación: 2026-09-15; actualizada para 0.2.0 el 2026-09-26.
+Estado: pendiente en teléfono físico.
 Registrar modelo, Android, versión APK, firmware, responsable y resultado de cada
 caso. No marcar aprobado por haber compilado o por haberlo probado en navegador.
 
@@ -17,6 +18,9 @@ el uso de agua real.
 | Caso | Resultado esperado | Estado |
 |---|---|---|
 | Abrir sin internet | Inicio, DEMO, guía e historial disponibles | Pendiente |
+| Actualizar 0.1.0 a 0.2.0 | Instala encima y conserva historial/calibración local | Pendiente |
+| Flujo de medición 0.2.0 | Fuente, uso y tres observaciones en una pantalla; sin recortes ni salida accidental | Pendiente |
+| Resultado por uso | Muestra primero uso elegido, límite y pasos claros; conserva descargo microbiológico | Pendiente |
 | Denegar permiso Bluetooth | Mensaje accionable; no bucle de permisos | Pendiente |
 | Bluetooth apagado | Solicitud de activación de Android | Pendiente |
 | Buscar dos equipos del mismo nombre | Permite elegir por identificación parcial; no cambia automáticamente | Pendiente |
@@ -25,7 +29,7 @@ el uso de agua real.
 | Desconectar la radio durante medición | Valores antiguos desaparecen; no permite capturar; hasta tres reintentos | Pendiente |
 | Pulsar Desconectar | Termina la recuperación automática | Pendiente |
 | Capturar y apagar el equipo | Permite completar las tres preguntas y guardar | Pendiente |
-| Cerrar app durante observaciones | Inicio ofrece recuperar borrador; respuestas conservadas | Pendiente |
+| Cerrar app durante observaciones | Inicio ofrece recuperar borrador; comprobar si respuestas nuevas se conservan | Pendiente |
 | Sin calibración vigente | Resultado no confiable, sin autorización de uso | Pendiente |
 | Olor raro con parámetros favorables | Busca otra fuente; no ofrece hervido para levantar veto | Pendiente |
 | Verdosa con o sin estancamiento | No recomienda resolverlo hirviendo | Pendiente |

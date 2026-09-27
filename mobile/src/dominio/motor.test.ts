@@ -10,6 +10,7 @@ describe('motor determinista',()=>{
     const r=evaluar({...lectura,...caso.lectura},{...observacion,...caso.observacion} as Observacion,caso.sinCalibracion?null:calibracion);
     expect([r.reglaId,r.nivel,r.plan]).toEqual([caso.regla,caso.nivel,caso.plan]);
     expect(r.advertencias).toContain(DESCARGO);
+    if('destinos' in caso && caso.destinos)expect(r.destinos).toMatchObject(caso.destinos);
   });
   it('preserva vetos y restricciones en combinaciones de entradas',()=>{
     for(const ph of [null,NaN,Infinity,-1,0,5,6.4,6.5,7.4,8.5,8.6,10,14,15])

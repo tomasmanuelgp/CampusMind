@@ -66,7 +66,9 @@ describe('sesión de campo',()=>{
   });
   it('DEMO nunca toca Bluetooth y todas sus capturas quedan identificadas',async()=>{
     await useSesion.getState().iniciarDemo();await vi.advanceTimersByTimeAsync(4500);
-    expect(useSesion.getState().capturar('Práctica').demo).toBe(true);
+    const captura=useSesion.getState().capturar('Práctica','banarse');
+    expect(captura.demo).toBe(true);expect(captura.uso).toBe('banarse');
+    expect(mocks.borrador.mock.calls.at(-1)?.[0]).toMatchObject({uso:'banarse'});
     expect(mocks.conectar).not.toHaveBeenCalled();
   });
 });

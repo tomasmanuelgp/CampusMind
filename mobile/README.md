@@ -1,8 +1,8 @@
 # Re-Fluye · App Android de campo
 
-Primera APK de pruebas: [Re-Fluye 0.1.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.1.0)
-(51.99 MB). Firma y empaquetado verificados; pendiente instalar y probar en un
-Android físico. [Evidencia de compilación](../refluye/prompts/iteraciones/D-004.md).
+APK de pruebas actual: [Re-Fluye 0.2.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0)
+(52.00 MB). Firma y empaquetado verificados; pendiente instalar y probar en un
+Android físico. [Evidencia de compilación](../refluye/prompts/iteraciones/D-005.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
 la observación humana y la identidad del proyecto Re-Fluye de CCD/UNAB.
@@ -16,6 +16,10 @@ El repositorio original no contenía una aplicación móvil recuperable.
 - Evaluar con motor determinista y ofrecer guía, audio, historial y compartir.
 - Registrar evidencia técnica de calibración. Sin registro vigente: no confiable.
 - Practicar en modo DEMO, con capturas identificadas como simuladas.
+- Elegir un uso (consumo, baño, utensilios, ropa, ganado o cultivo) y registrar
+  origen, olor y aspecto junto al nombre de la fuente en una sola pantalla.
+- Ver límites y acciones breves para ese uso sin convertir los sensores en una
+  autorización de baño, ganadería o riego.
 
 No se incluyen IA, backend, geolocalización, videos ni dosificación de cloro.
 La app no certifica potabilidad ni detecta bacterias, virus o parásitos.
@@ -59,17 +63,19 @@ Set-Location android
 Salida: `android/app/build/outputs/apk/release/app-release.apk`.
 El plugin local comprime las bibliotecas nativas (`expo.useLegacyPackaging=true`)
 para reducir la descarga; Android las extrae durante la instalación.
-El perfil local usa firma de desarrollo para pruebas internas. Antes de publicar
-hay que configurar firma de distribución y su custodia. No se publicó nada.
+El perfil local usa firma de desarrollo para pruebas internas. Antes de distribuir
+fuera del equipo de pruebas hay que configurar firma de distribución y su custodia.
 La configuración declara Android API 24 como mínimo y API 36 como objetivo;
 esto no prueba compatibilidad en todos los modelos. El dispositivo necesita SPP.
 
 ## Verificación disponible
 
-43 pruebas: golden y combinaciones del motor, parser, SQLite real con adaptador
+49 pruebas: golden y combinaciones del motor, parser, SQLite real con adaptador
 de prueba y sesión con Bluetooth simulado. El motor exige 100 % de cobertura.
-El recorrido web DEMO se revisó a 390 y 320 px, incluido veto por olor y recuperación
-del paso después de recargar. Estas comprobaciones no sustituyen Android físico.
+El recorrido web DEMO se revisó a 390 y 320 px; la nueva medición en una pantalla
+y el resultado para baño se comprobaron en navegador. La recuperación del borrador
+pertenece al flujo anterior y debe comprobarse de nuevo con esta interfaz.
+Estas comprobaciones no sustituyen Android físico.
 
 Guion pendiente: [Pruebas de campo](../refluye/app/13-pruebas-apk.md).
 Iteraciones y evidencia: [bitácora](../refluye/prompts/bitacora.md).

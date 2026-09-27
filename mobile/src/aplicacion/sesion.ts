@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import {randomUUID} from 'expo-crypto';
-import type {Captura,Lectura,Observacion,Calibracion} from '../dominio/tipos';
+import type {Captura,Lectura,Observacion,Calibracion,Uso} from '../dominio/tipos';
 import {ParserTramas} from '../infraestructura/bluetooth/parser';
 import {esEstable} from '../infraestructura/bluetooth/estabilidad';
 import {conectarEquipo} from '../infraestructura/bluetooth/servicio';
@@ -11,7 +11,7 @@ type Estado='desconectado'|'conectando'|'recibiendo'|'esperando';
 interface Sesion {
   estado:Estado; equipo:string; nombreEquipo:string; demo:boolean; lecturas:Lectura[]; error:string|null;
   captura:Captura|null; conectar:(id:string,nombre:string,reintento?:number)=>Promise<void>; iniciarDemo:()=>Promise<void>;
-  desconectar:()=>Promise<void>; capturar:(fuente:string)=>Captura;
+  desconectar:()=>Promise<void>; capturar:(fuente:string,uso?:Uso)=>Captura;
   observar:(datos:Partial<Observacion>)=>void; finalizar:()=>string;
   reanudar:(captura:Captura)=>void;
 }
@@ -69,14 +69,14 @@ export const useSesion=create<Sesion>((set,get)=>({
     emitir(); const temporizador=setInterval(emitir,1500);
     cerrar=async()=>clearInterval(temporizador);
   },
-  capturar:fuente=>{
+  capturar:(fuente,uso)=>{
     const s=get();
     if(!esEstable(s.lecturas,Date.now()) || s.estado!=='recibiendo') throw new Error('Espera una lectura estable antes de capturar.');
     const lectura=s.lecturas[s.lecturas.length-1];
     let calibracion:Calibracion|null=null;
     if(s.demo) calibracion={verificadaEn:0,venceEn:8640000000000000,responsable:'DEMO',referencia:'SIMULACIÓN'};
     else { const dato=leerAjuste('calibracion:'+s.equipo); if(dato) calibracion=JSON.parse(dato); }
-    const captura:Captura={id:randomUUID(),fuente:fuente.trim()||'Fuente sin nombre',equipo:s.equipo,demo:s.demo,
+    const captura:Captura={id:randomUUID(),fuente:fuente.trim()||'Fuente sin nombre',equipo:s.equipo,demo:s.demo,uso,
       lectura:JSON.parse(JSON.stringify(lectura)),calibracion,observacion:{}};
     guardarBorrador(captura); set({captura}); return captura;
   },

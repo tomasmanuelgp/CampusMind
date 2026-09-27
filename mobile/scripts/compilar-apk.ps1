@@ -30,11 +30,23 @@ try {
   & npx.cmd expo prebuild --platform android --no-install
   if ($LASTEXITCODE -ne 0) { throw 'Falló la generación Android.' }
   Set-Location android
+  # Expo autolinking usa rutas reales C: en Windows, aunque Gradle corre desde R:.
+  # Una configuración inicial crea el manifiesto; se normaliza al alias corto
+  # antes de que codegen intente calcular rutas relativas entre unidades.
+  & ./gradlew.bat help --no-daemon --console=plain --max-workers=4
+  if ($LASTEXITCODE -ne 0) { throw 'Falló la configuración inicial de Gradle.' }
+  $autolink = Join-Path (Get-Location) 'build/generated/autolinking/autolinking.json'
+  if (!(Test-Path -LiteralPath $autolink)) { throw 'No se generó el manifiesto de autolinking.' }
+  $contenido = Get-Content -LiteralPath $autolink -Raw
+  $rutaRealEscapada = $mobile.Replace('\','\\')
+  $rutaCortaEscapada = ($raizCorta + 'mobile').Replace('\','\\')
+  $contenido = $contenido.Replace($rutaRealEscapada,$rutaCortaEscapada).Replace($mobile.Replace('\','/'),($raizCorta + 'mobile').Replace('\','/'))
+  Set-Content -LiteralPath $autolink -Value $contenido -NoNewline -Encoding utf8
   & ./gradlew.bat :app:assembleRelease --no-daemon --console=plain --max-workers=4 '-Dorg.gradle.jvmargs=-Xmx3072m -XX:MaxMetaspaceSize=1024m'
   if ($LASTEXITCODE -ne 0) { throw 'Falló la compilación. Revisa el log y la versión de Ninja indicada en el README.' }
   $salida = Join-Path $mobile 'artifacts'
   New-Item -ItemType Directory -Force -Path $salida | Out-Null
-  $apk = Join-Path $salida 'refluye-campo-0.1.0-pruebas.apk'
+  $apk = Join-Path $salida 'refluye-campo-0.2.0-pruebas.apk'
   Copy-Item -LiteralPath './app/build/outputs/apk/release/app-release.apk' -Destination $apk -Force
   $hash = Get-FileHash -LiteralPath $apk -Algorithm SHA256
   ($hash.Hash + '  ' + (Split-Path $apk -Leaf)) | Set-Content -LiteralPath ($apk + '.sha256') -Encoding ascii

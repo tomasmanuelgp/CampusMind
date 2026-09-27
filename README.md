@@ -5,13 +5,38 @@ combinar sus sensores con observaciones humanas y conservar mediciones sin inter
 
 ## Descargar la app Android
 
-[Re-Fluye 0.1.0 — APK de pruebas](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.1.0).
-En **Assets**, descargar `refluye-campo-0.1.0-pruebas.apk` (52 MB).
-La publicación incluye SHA-256 y metadatos de verificación.
+[Re-Fluye 0.2.0 — APK de pruebas](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0).
+En **Assets**, descargar `refluye-campo-0.2.0-pruebas.apk` (52 MB).
+La publicación incluye el archivo SHA-256 para comprobar la descarga. Esta versión
+incluye la selección de uso y las observaciones integradas.
 
 Es una versión interna con firma de desarrollo. Compilación y firma verificadas;
 instalación, Bluetooth real, TalkBack y comportamiento en campo pendientes de
 aceptación. No certifica potabilidad ni detecta microorganismos.
+
+### Instalar y revisar en el celular
+
+1. En el Android, abrir el enlace de la versión 0.2.0 y descargar la APK de
+   **Assets**. Requiere Android 7.0 (API 24) o superior. Para medir con el equipo,
+   el teléfono debe admitir Bluetooth Classic SPP.
+2. Abrir la APK descargada desde **Archivos/Descargas**. Si Android bloquea la
+   instalación, abrir el ajuste que muestra para **permitir instalar apps de
+   esta fuente** (el navegador o gestor de archivos usado) y volver a la APK.
+   El nombre exacto del menú cambia entre fabricantes.
+3. Pulsar **Instalar** y luego **Abrir**. Si ya existe la versión 0.1.0, instalar
+   encima para conservar sus datos: el paquete y certificado son iguales y el
+   código de versión aumenta. Esta migración aún necesita prueba en teléfono.
+4. Entrar a **Medir agua → Practicar sin equipo · DEMO**. Registrar nombre de la
+   fuente, elegir un uso, contestar origen, olor y aspecto, y abrir el resultado.
+   La etiqueta DEMO indica que la lectura es simulada.
+5. Para una medición real, encender Re-Fluye, activar Bluetooth, emparejarlo si
+   Android lo solicita, aceptar el permiso de **Dispositivos cercanos/Bluetooth**
+   y elegir el dispositivo correcto. En Android 11 o anterior también puede
+   requerirse ubicación para buscar equipos; la app no guarda coordenadas.
+   Esperar cuatro tramas estables antes de registrar la fuente.
+
+El [guion de aceptación](refluye/app/13-pruebas-apk.md) indica qué revisar en el
+teléfono. Una pantalla DEMO no verifica la conexión con el dispositivo físico.
 
 ## Abrir el proyecto en otro computador
 
@@ -40,7 +65,7 @@ npm run typecheck
 npm run test:coverage
 ```
 
-43 pruebas aprobadas y 100 % de cobertura del motor. El código conserva el
+49 pruebas aprobadas y 100 % de cobertura del motor. El código conserva el
 transporte SPP, la observación humana y la identidad del proyecto original.
 Incluye reconexión limitada, persistencia SQLite, historial, guía y modo DEMO.
 No incluye todavía backend, IA, geolocalización ni dosificación de cloro.

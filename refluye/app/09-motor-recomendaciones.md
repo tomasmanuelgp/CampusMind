@@ -1,4 +1,4 @@
-# 09 · Motor de recomendaciones — versión implementada 0.1.0
+# 09 · Motor de recomendaciones — versión implementada 0.2.0
 
 Código: `../../mobile/src/dominio/motor.ts`. Instrucciones: `protocolos.ts`.
 Casos esperados: `__tests__/casos-golden.json` en ese mismo directorio.
@@ -61,6 +61,13 @@ son decisiones del proyecto; no certifican cumplimiento sanitario.
 Solo el tercer plan orienta tratamiento para consumo humano; nunca declara el
 agua potable. Los demás dicen «No consumir con esta evaluación». Animales y
 riego requieren evaluación específica; con alternativa se muestran no recomendados.
+La [iteración A-003](../prompts/iteraciones/A-003.md) añade destinos para baño,
+utensilios de comida y ropa. Un resultado favorable no autoriza el baño: los
+sensores no detectan microorganismos. Si se sospecha combustible u otro peligro
+que activa `alternativa`, no se recomienda contacto ni limpieza con esta agua.
+Sin calibración vigente, tampoco se recomienda lavar utensilios. El uso que
+selecciona la persona no cambia el veredicto; solo prioriza una orientación
+determinista compatible con él.
 
 | Plan | Pasos | Límite |
 |---|---|---|
@@ -89,6 +96,6 @@ S4–S5: olor extraño y agua verdosa nunca terminan en hervido. S6: cada result
 incluye «Este equipo no detecta bacterias, virus ni parásitos. No certifica
 potabilidad». S7: sin calibración vigente no hay fiabilidad. S8: sin coordenadas.
 
-18 escenarios golden y 22680 combinaciones adicionales de parámetros y observaciones.
+21 escenarios golden y 22680 combinaciones adicionales de parámetros y observaciones.
 `npm run test:coverage` exige 100 % de ramas, líneas, sentencias y funciones del
 motor. Cobertura demuestra ejecución del código, no validación sanitaria en campo.
