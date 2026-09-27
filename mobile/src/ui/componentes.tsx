@@ -25,8 +25,8 @@ export function Audio({texto}:{texto:string}) {
     setHablando(true);Speech.speak(texto,{language:'es-CO',rate:.88,onDone:()=>setHablando(false),onStopped:()=>setHablando(false),onError:()=>{setHablando(false);Alert.alert('Audio no disponible','Instala una voz en español en los ajustes de texto a voz del teléfono.');}});
   }}/>;
 }
-export function Pantalla({children,titulo,volver=true,demo=false}:PropsWithChildren<{titulo:string;volver?:boolean;demo?:boolean}>) {
-  return <SafeAreaView style={s.raiz} edges={['top','bottom']}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={s.contenido}>
+export function Pantalla({children,titulo,volver=true,demo=false,compacto=false}:PropsWithChildren<{titulo:string;volver?:boolean;demo?:boolean;compacto?:boolean}>) {
+  return <SafeAreaView style={s.raiz} edges={['top','bottom']}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[s.contenido,compacto&&s.contenidoCompacto]}>
     <View style={s.cabecera}><View style={{flexDirection:'row',alignItems:'center',gap:10}}><Gota tamano={28}/><Text style={s.marca}>Re-Fluye</Text></View><Text style={s.etiqueta}>MODO CAMPO</Text></View>
     {demo?<Tarjeta tono="ambar"><Text style={s.etiqueta}>DEMO · DATOS SIMULADOS</Text></Tarjeta>:null}
     {volver?<Pressable accessibilityRole="button" accessibilityLabel="Volver" onPress={()=>router.canGoBack()?router.back():router.replace('/')} style={s.volver}><Text style={s.volverTexto}>← Volver</Text></Pressable>:null}
@@ -36,7 +36,7 @@ export function Pantalla({children,titulo,volver=true,demo=false}:PropsWithChild
 }
 export function Cargando({texto='Cargando…'}:{texto?:string}) {return <Tarjeta><ActivityIndicator color={colores.azul}/><Texto>{texto}</Texto></Tarjeta>;}
 export const s=StyleSheet.create({
-  raiz:{flex:1,backgroundColor:colores.fondo},contenido:{padding:24,gap:20,width:'100%',maxWidth:620,alignSelf:'center',paddingBottom:40},
+  raiz:{flex:1,backgroundColor:colores.fondo},contenido:{padding:24,gap:20,width:'100%',maxWidth:620,alignSelf:'center',paddingBottom:40},contenidoCompacto:{padding:16,gap:12,paddingBottom:32},
   cabecera:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',gap:12,flexWrap:'wrap'},marca:{fontSize:22,fontWeight:'800',color:colores.azul},
   etiqueta:{fontSize:15,fontWeight:'700',letterSpacing:1,color:colores.azul},titulo:{fontSize:34,lineHeight:41,fontWeight:'800',letterSpacing:-1,color:colores.tinta},
   texto:{fontSize:18,lineHeight:27,color:colores.tinta},suave:{color:'#465862'},tarjeta:{padding:20,gap:12,borderWidth:1,borderColor:colores.borde,borderRadius:18,borderCurve:'continuous'},

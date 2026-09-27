@@ -8,6 +8,8 @@ La versión inicial conserva identidad, botones grandes y audio con la voz del
 teléfono. DEMO está separado de las capturas reales. Las preguntas y los pasos
 vuelven al inicio al avanzar; el historial incluye el descargo microbiológico.
 Recorrido web DEMO revisado a 390 y 320 px: [B-002](../prompts/iteraciones/B-002.md).
+La condición para beber o cocinar y el descargo microbiológico ahora se leen antes
+del primer desplazamiento en resultado, incluso a 320 px: [B-003](../prompts/iteraciones/B-003.md).
 Faltan pruebas Android de TalkBack, escalado 130 %, voz instalada y uso en campo.
 Los bocetos siguientes son la visión completa: no hay todavía videos, fotos,
 asistente, fuentes geográficas ni cloración en la aplicación inicial.
