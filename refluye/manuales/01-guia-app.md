@@ -1,8 +1,8 @@
-# Re-Fluye 0.2.0 · Guía de uso de la aplicación
+# Re-Fluye 0.3.0 · Guía de uso de la aplicación
 
 **Para quién:** personas que miden una fuente de agua con Re-Fluye y quienes las acompañan.
 
-**Edición:** 27 de septiembre de 2026 · APK de pruebas, Android 7.0 o posterior.
+**Edición:** 30 de septiembre de 2026 · APK de pruebas, Android 7.0 o posterior.
 **Lectura esencial:** la aplicación orienta decisiones, pero el equipo **no detecta bacterias, virus ni parásitos y no certifica potabilidad**. Una pantalla favorable no autoriza beber agua sin desinfección. La conexión con un equipo físico todavía requiere pruebas de aceptación en campo.
 
 ## 1. Antes de salir a medir
@@ -13,16 +13,16 @@ No introduzcas la mano en agua con olor químico, combustible, espuma inusual o 
 
 ## 2. Instalar la APK
 
-1. En el teléfono Android abre la [versión de pruebas 0.2.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0). En **Assets**, descarga `refluye-campo-0.2.0-pruebas.apk`. El archivo ocupa aproximadamente 52 MB.
+1. En el teléfono Android abre la [versión de pruebas 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0). En **Assets**, descarga `refluye-campo-0.3.0-pruebas.apk`.
 2. Abre **Archivos** o **Descargas** y toca la APK. Si Android lo pide, permite temporalmente **Instalar apps de esta fuente** para ese navegador o gestor de archivos. Los nombres de menú cambian según fabricante. Al terminar puedes revocar ese permiso en Ajustes.
-3. Toca **Instalar** y luego **Abrir**. Si ya usabas Re-Fluye 0.1.0, intenta instalar 0.2.0 encima, sin desinstalar la anterior. Ambas APK comparten identificador y certificado, pero la conservación del historial aún debe comprobarse en un teléfono. Si Android rechaza la actualización, no desinstales antes de consultar al equipo técnico.
-4. Opcionalmente comprueba la descarga con el archivo `.sha256` incluido en Assets. La huella SHA-256 esperada es `5e7bb29e40282b3234344928271abe975a70a2b467f69214306741aba567beb2`.
+3. Toca **Instalar** y luego **Abrir**. Si ya usabas Re-Fluye 0.1.0 o 0.2.0, intenta instalar 0.3.0 encima, sin desinstalar la anterior. Se conserva el identificador de paquete; la actualización y conservación del historial aún deben comprobarse en un teléfono. Si Android rechaza la actualización, no desinstales antes de consultar al equipo técnico.
+4. Opcionalmente comprueba la descarga con el archivo `.sha256` incluido en Assets. Compara la huella publicada allí con la que obtengas para la APK descargada.
 
 La APK no está en una tienda de aplicaciones y tiene **firma de desarrollo para pruebas internas**. Instala únicamente el archivo de la publicación indicada, no una copia reenviada sin origen. [Referencia Android sobre permisos Bluetooth](https://developer.android.com/develop/connectivity/bluetooth/bt-permissions).
 
 ## 3. Conocer la app sin el equipo
 
-En la pantalla inicial toca **Medir agua → Practicar sin equipo · DEMO**. La banda **DEMO · DATOS SIMULADOS** identifica esta práctica. Espera a que aparezca **Lectura estable**, completa las preguntas y revisa el resultado. Las mediciones DEMO se guardan como práctica y **no deben usarse para decidir sobre agua real**.
+En la pantalla inicial toca **Medir agua → Practicar sin equipo · DEMO**. La banda **DEMO · DATOS SIMULADOS** identifica esta práctica. La primera lectura completa ya permite analizar; si varía, se identifica como **inicial**. Completa las preguntas y revisa el resultado. Las mediciones DEMO se guardan como práctica y **no deben usarse para decidir sobre agua real**.
 
 La versión web permite recorrer DEMO desde un computador con `npm run web`; el navegador no puede hablar con el Bluetooth Classic SPP de este dispositivo. Para una lectura real se necesita la APK Android y un teléfono que admita SPP.
 
@@ -38,15 +38,15 @@ La app no envía órdenes de medición ni calibra a distancia: el ESP32 emite da
 ## 5. Medir y observar en una sola pantalla
 
 1. Prepara la muestra de forma que las puntas de medición entren en el agua sin mojar conectores, placas ni caja electrónica. Evita golpes y roces del bulbo de vidrio del pH. Usa un recipiente limpio entre fuentes para no arrastrar residuos. Si no conoces qué parte es sumergible, detente y consulta al responsable técnico.
-2. Mantén las sondas quietas. La app espera cuatro tramas recientes y estables; el primer número no basta. Puedes tocar **Ver las 4 lecturas del equipo** para revisar pH, turbidez, sólidos disueltos y temperatura. Si falta un sensor o la conexión se pierde, no fuerces la captura.
+2. Mantén las sondas quietas. Desde la primera trama completa y reciente aparece un **ICA orientativo de 0 a 100** y se ven pH, turbidez, sólidos disueltos y temperatura. El índice pondera los tres primeros parámetros; la temperatura se muestra como contexto porque no tiene un peso validado en la fórmula del proyecto. No es un porcentaje de potabilidad. Si la lectura varía, el resultado se marca **inicial**. Si faltan datos esenciales o se pierde la conexión, no fuerces la captura.
 3. En **Identifica la fuente**, escribe un nombre reconocible, por ejemplo «Quebrada de la finca». No introduzcas dirección precisa ni datos personales innecesarios.
 4. En **¿Para qué la necesitas?**, elige **un** uso: beber, cocinar, bañarse, lavar utensilios, lavar ropa, ganado o cultivos. Esto ordena la explicación; **no cambia la evaluación** de los sensores y observaciones.
 5. En **Lo que observas**, elige si el agua corre o está quieta, si notas olor extraño y cómo se ve. Si marcas **Huele raro**, puedes precisar el tipo; cualquier olor extraño mantiene la advertencia. Si no lo sabes, marca **No sé**. Nunca pruebes el agua para contestar.
-6. Toca **Ver análisis y recomendaciones**. La app guarda la lectura, la observación y el resultado localmente, incluso sin internet.
+6. Toca **Ver qué puedo hacer con esta agua**. No necesitas esperar a que cuatro lecturas coincidan. La app guarda la lectura, la observación y el resultado localmente, incluso sin internet. Si la lectura es inicial, puede mostrar una ruta posible de tratamiento solo cuando los datos y la calibración están verificados, pero **no autoriza consumir** antes de una nueva comprobación.
 
 ## 6. Entender el resultado
 
-Lee primero **TU USO**, la instrucción principal y la advertencia de fiabilidad. Luego lee **QUÉ HACER AHORA**. Abre **Ver cómo desinfectar / Ver cómo repetir / Ver qué hacer** si está disponible. La guía de hervor de la app cuenta **3 minutos desde que hay burbujas grandes y continuas**; si se interrumpe, reinicia el temporizador. Antes del hervor, aclara el agua con partículas; si sigue turbia, detente y busca otra fuente. El hervor no elimina combustibles, químicos, metales, sales ni toxinas de algas. [CDC: agua en emergencias](https://www.cdc.gov/water-emergency/about/index.html).
+Lee primero la decisión, **TU USO** y **QUÉ HACER AHORA**. Para beber o cocinar, los pasos de aclarado, hervor de **3 minutos desde burbujas grandes y continuas**, enfriado y almacenamiento están en la misma pantalla; puedes abrir el temporizador y la guía completa si los necesitas. Si se interrumpe el hervor, reinicia el temporizador. Antes del hervor, aclara el agua con partículas; si sigue turbia, detente y busca otra fuente. El hervor no elimina combustibles, químicos, metales, sales ni toxinas de algas. [CDC: agua en emergencias](https://www.cdc.gov/water-emergency/about/index.html).
 
 | Lo que aparece | Qué hacer |
 |---|---|
@@ -60,7 +60,7 @@ El botón **Escuchar** lee el resultado si el teléfono tiene voz en español. *
 
 ## 7. Calibración y cuidado después de medir
 
-En **Mi equipo y calibración**, un técnico puede **registrar** responsable, referencia y vigencia de una calibración ya realizada. La app no calibra la sonda ni envía comandos al equipo. Sin registro vigente, marca la lectura **no confiable**. Una señal «Lectura estable» solo describe variación reciente, no exactitud.
+En **Mi equipo y calibración**, un técnico puede **registrar** responsable, referencia y vigencia de una calibración ya realizada. La app no calibra la sonda ni envía comandos al equipo. Sin registro vigente, marca la lectura **no confiable**. Una lectura repetida solo describe variación reciente, no exactitud.
 
 Después de cada muestra, enjuaga cuidadosamente las partes sumergibles según las indicaciones del fabricante y evita contaminar otra muestra. Mantén secos el conector BNC, módulos, cables de unión y electrónica. No frotes el bulbo de vidrio del pH. Para almacenar ese electrodo, usa la solución y tapa indicadas por el fabricante del modelo instalado; la referencia DFRobot SEN0161 usa solución KCl 3N. La ficha del sensor TDS SEN0244 limita su sonda a agua **por debajo de 55 °C**. [DFRobot pH SEN0161](https://wiki.dfrobot.com/sen0161/docs/19898) · [DFRobot TDS SEN0244](https://wiki.dfrobot.com/sen0244/docs/20305).
 
@@ -70,7 +70,7 @@ Después de cada muestra, enjuaga cuidadosamente las partes sumergibles según l
 |---|---|
 | No aparece ReFluye-V2 | Equipo encendido, Bluetooth y permisos activos, distancia corta. Confirma nombre/PIN del prototipo. |
 | Aparece, pero no llegan lecturas | Espera unos segundos; si persiste, reconecta y solicita revisión del firmware/protocolo. |
-| No se habilita analizar | Falta lectura estable, nombre, uso u observación. Revisa el mensaje bajo las preguntas. |
+| No se habilita analizar | Falta una trama completa y reciente, nombre, uso u observación. Revisa el mensaje bajo las preguntas. |
 | Temperatura no disponible | Podría ser el sensor DS18B20 desconectado. No interpretes `-127 °C` como agua fría; avisa al técnico. |
 | Calibración no verificada | No rellenes fechas estimadas. Solicita una calibración real y su registro. |
 | Audio no se escucha | Revisa volumen y motor de voz en español del teléfono. Lee el texto mientras tanto. |

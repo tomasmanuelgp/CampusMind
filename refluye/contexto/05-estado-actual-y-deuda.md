@@ -1,16 +1,19 @@
 # 05 · Estado actual y deuda técnica
 
-## Actualización de la aplicación · 2026-09-26
+## Actualización de la aplicación · 2026-09-30
 
 La auditoría histórica inferior describe el repositorio original. El desarrollo
 activo está ahora en `../../mobile`, dentro de CampusMind. Existe una primera
 aplicación de campo con Bluetooth Classic, modo DEMO, motor local, observaciones,
-SQLite, guía y registro de calibración. 49 pruebas y TypeScript aprobados;
-recorrido web DEMO revisado. La medición, nombre, uso y observaciones ahora se
-completan en una pantalla; resultados orientan por uso sin autorizar usos no
-verificados. La APK 0.2.0 fue compilada y verificada (D-005), 52.00 MB;
-incluye esta iteración de interfaz. Comparte certificado con la 0.1.0 y puede
-instalarse sobre ella sin borrar datos, sujeto a la prueba en Android físico.
+SQLite, guía y registro de calibración. La versión 0.3.0 pasa 54 pruebas y
+TypeScript; el recorrido web DEMO se revisó. La medición, nombre, uso y
+observaciones se completan en una pantalla. El resultado muestra enseguida una
+orientación por uso y los pasos pertinentes; una primera trama completa permite
+un resultado provisional sin esperar estabilidad imposible. El ICA de 0 a 100
+resume pH, turbidez y TDS; la temperatura se muestra aparte, pues no hay una
+fórmula validada para incorporarla. No es un porcentaje de potabilidad. La APK
+0.2.0 anterior fue compilada y verificada (D-005); la comprobación de 0.3.0 se
+registra en D-007. La actualización del historial necesita prueba en Android.
 La prueba física está pendiente y se registra por separado. Los bloqueos históricos de PCB no demuestran que
 el equipo físico actual del usuario tenga esos mismos defectos.
 

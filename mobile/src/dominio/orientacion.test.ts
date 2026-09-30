@@ -23,4 +23,9 @@ describe('orientación según el uso elegido',()=>{
     expect(guia.estado).toContain('lectura sin verificar');
     expect(guia.pasos[0]).toContain('No decidas');
   });
+  it('muestra el tratamiento para cocinar sin abrir otra pantalla',()=>{
+    const guia=orientarUso(evaluar(lectura,observacion,calibracion),'cocinar');
+    expect(guia.pasos.join(' ')).toContain('3 minutos');
+    expect(guia.pasos.join(' ')).toContain('recipiente limpio');
+  });
 });

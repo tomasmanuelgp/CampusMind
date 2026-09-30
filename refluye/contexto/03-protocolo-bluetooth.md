@@ -139,17 +139,21 @@ emite cada 1.5 s, así que una sola trama perdida es normal y no debe alarmar.
 
 ---
 
-## Estabilidad de la lectura antes de medir
+## Captura inicial y estabilidad temporal
 
-Una medición no debe tomarse del primer valor que llega. Los electrodos necesitan
-estabilizarse tras sumergirse.
+La app 0.3.0 puede orientar desde la primera trama completa, reciente y sin
+errores de pH, turbidez y TDS. La etiqueta **lectura inicial** avisa que los
+valores pueden cambiar y el resultado no autoriza consumo. Conviene mantener las
+sondas sumergidas y repetir la lectura para observar su evolución.
 
 **Criterio de estabilidad:** el pH no varía más de **±0.05** y el TDS no varía
-más de **±5 %** durante **cuatro tramas consecutivas** (≈6 s). Hasta que eso no
-ocurra, la app muestra "Estabilizando…" y no habilita el botón de capturar.
+más de **±5 %** durante **cuatro tramas consecutivas** (≈6 s), con intervalos
+entre 750 y 5000 ms. Cuando se cumple, la captura queda marcada `estable`.
+La estabilidad indica repetibilidad en ese intervalo, no exactitud ni inocuidad;
+requiere calibración vigente y no detecta microorganismos.
 
-Esto es una defensa contra el error más común en campo: medir demasiado rápido y
-registrar un valor que todavía estaba moviéndose.
+Esta distinción permite una orientación temprana sin ocultar la incertidumbre de
+medir demasiado rápido.
 
 ---
 

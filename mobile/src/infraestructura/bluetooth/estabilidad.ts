@@ -1,5 +1,14 @@
 import type { Lectura } from '../../dominio/tipos';
 
+/** Una sola trama íntegra y reciente basta para orientar, aunque aún varíe. */
+export function lecturaRecienteValida(lecturas: Lectura[], ahora: number): Lectura | null {
+  const ultima = lecturas.at(-1);
+  if (!ultima || ahora < ultima.recibidaEn || ahora - ultima.recibidaEn >= 5000) return null;
+  if (ultima.errores.length || ultima.versionProtocolo > 1) return null;
+  if (ultima.ph === null || ultima.turbidez === null || ultima.tds === null) return null;
+  return ultima;
+}
+
 export function esEstable(lecturas: Lectura[], ahora: number): boolean {
   const ventana = lecturas.slice(-4);
   if (ventana.length !== 4) return false;

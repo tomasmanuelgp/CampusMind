@@ -13,4 +13,5 @@ export interface Calibracion { verificadaEn: number; venceEn: number; responsabl
 export interface Captura {
   id: string; fuente: string; equipo: string; demo: boolean; uso?: Uso; lectura: Lectura;
   calibracion: Calibracion | null; observacion: Partial<Observacion>;
+  estabilidad?: 'estable' | 'inicial';
 }

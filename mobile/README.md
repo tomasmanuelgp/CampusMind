@@ -1,7 +1,7 @@
 # Re-Fluye · App Android de campo
 
-APK de pruebas actual: [Re-Fluye 0.2.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0)
-(52.00 MB). Firma y empaquetado verificados; pendiente instalar y probar en un
+APK de pruebas actual: [Re-Fluye 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0).
+Pendiente instalar y probar en un
 Android físico. [Evidencia de compilación](../refluye/prompts/iteraciones/D-005.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
@@ -11,9 +11,13 @@ El repositorio original no contenía una aplicación móvil recuperable.
 ## Lo implementado
 
 - Buscar/emparejar Re-Fluye, recordar el equipo y recuperar una conexión perdida.
-- Leer pH, turbidez, TDS y temperatura; esperar cuatro tramas estables y recientes.
+- Leer pH, turbidez, TDS y temperatura; orientar desde la primera trama íntegra
+  reciente. La estabilidad posterior mejora la confianza, pero no bloquea el análisis.
+- Mostrar ICA orientativo de 0 a 100 y cuatro mediciones visibles. El índice
+  pondera pH, turbidez y TDS; temperatura queda como contexto sin peso validado.
 - Congelar la lectura, guardar cada observación y completar la medición sin radio.
-- Evaluar con motor determinista y ofrecer guía, audio, historial y compartir.
+- Evaluar con motor determinista y ofrecer tratamiento visible en resultado,
+  guía opcional con temporizador, audio, historial y compartir.
 - Registrar evidencia técnica de calibración. Sin registro vigente: no confiable.
 - Practicar en modo DEMO, con capturas identificadas como simuladas.
 - Elegir un uso (consumo, baño, utensilios, ropa, ganado o cultivo) y registrar
@@ -70,10 +74,10 @@ esto no prueba compatibilidad en todos los modelos. El dispositivo necesita SPP.
 
 ## Verificación disponible
 
-49 pruebas: golden y combinaciones del motor, parser, SQLite real con adaptador
+54 pruebas: golden y combinaciones del motor, parser, SQLite real con adaptador
 de prueba y sesión con Bluetooth simulado. El motor exige 100 % de cobertura.
-El recorrido web DEMO se revisó a 390 y 320 px; la nueva medición en una pantalla
-y el resultado para baño se comprobaron en navegador. La recuperación del borrador
+El recorrido web DEMO se revisó a 390 y 320 px en 0.2.0; la primera lectura y el
+resultado directo para cocinar se comprobaron en navegador en 0.3.0. La recuperación del borrador
 pertenece al flujo anterior y debe comprobarse de nuevo con esta interfaz.
 Estas comprobaciones no sustituyen Android físico.
 

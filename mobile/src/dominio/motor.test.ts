@@ -7,7 +7,7 @@ const observacion:Observacion={origen:'corriente',olor:'normal',visual:'limpia'}
 const calibracion:Calibracion={verificadaEn:0,venceEn:2000,responsable:'Técnico',referencia:'Registro 1'};
 describe('motor determinista',()=>{
   for(const caso of golden) it(caso.nombre,()=>{
-    const r=evaluar({...lectura,...caso.lectura},{...observacion,...caso.observacion} as Observacion,caso.sinCalibracion?null:calibracion);
+    const r=evaluar({...lectura,...caso.lectura},{...observacion,...caso.observacion} as Observacion,caso.sinCalibracion?null:calibracion,caso.lecturaEstable??true);
     expect([r.reglaId,r.nivel,r.plan]).toEqual([caso.regla,caso.nivel,caso.plan]);
     expect(r.advertencias).toContain(DESCARGO);
     if('destinos' in caso && caso.destinos)expect(r.destinos).toMatchObject(caso.destinos);
@@ -32,6 +32,14 @@ describe('motor determinista',()=>{
     expect(evaluar({...lectura,errores:['inválido']},observacion,calibracion).confiable).toBe(false);
     expect(evaluar({...lectura,versionProtocolo:2},observacion,calibracion).confiable).toBe(false);
     expect(calcularIca({...lectura,ph:7.4,tds:0,turbidez:0})).toBe(100);
+  });
+  it('un ICA alto no convierte una primera lectura variable en agua consumible',()=>{
+    const r=evaluar(lectura,observacion,calibracion,false);
+    expect(r.ica).toBeGreaterThan(90);
+    expect(r.confiable).toBe(false);
+    expect(r.plan).toBe('hervido');
+    expect(r.destinos.humano).toContain('No consumir todavía');
+    expect(r.advertencias.join(' ')).toContain('Lectura inicial');
   });
   it('calibración exige referencia, responsable y fechas coherentes',()=>{
     for(const c of [null,{...calibracion,verificadaEn:NaN},{...calibracion,venceEn:NaN},

@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {randomUUID} from 'expo-crypto';
 import type {Captura,Lectura,Observacion,Calibracion,Uso} from '../dominio/tipos';
 import {ParserTramas} from '../infraestructura/bluetooth/parser';
-import {esEstable} from '../infraestructura/bluetooth/estabilidad';
+import {esEstable,lecturaRecienteValida} from '../infraestructura/bluetooth/estabilidad';
 import {conectarEquipo} from '../infraestructura/bluetooth/servicio';
 import {guardarAjuste,leerAjuste,guardarBorrador,completarCaptura} from '../infraestructura/db/repositorio';
 import {evaluar} from '../dominio/motor';
@@ -71,12 +71,14 @@ export const useSesion=create<Sesion>((set,get)=>({
   },
   capturar:(fuente,uso)=>{
     const s=get();
-    if(!esEstable(s.lecturas,Date.now()) || s.estado!=='recibiendo') throw new Error('Espera una lectura estable antes de capturar.');
-    const lectura=s.lecturas[s.lecturas.length-1];
+    const ahora=Date.now();
+    const lectura=lecturaRecienteValida(s.lecturas,ahora);
+    if(!lectura || s.estado!=='recibiendo') throw new Error('Espera una lectura completa y reciente antes de analizar.');
+    const estabilidad=esEstable(s.lecturas,ahora)?'estable':'inicial';
     let calibracion:Calibracion|null=null;
     if(s.demo) calibracion={verificadaEn:0,venceEn:8640000000000000,responsable:'DEMO',referencia:'SIMULACIÓN'};
     else { const dato=leerAjuste('calibracion:'+s.equipo); if(dato) calibracion=JSON.parse(dato); }
-    const captura:Captura={id:randomUUID(),fuente:fuente.trim()||'Fuente sin nombre',equipo:s.equipo,demo:s.demo,uso,
+    const captura:Captura={id:randomUUID(),fuente:fuente.trim()||'Fuente sin nombre',equipo:s.equipo,demo:s.demo,uso,estabilidad,
       lectura:JSON.parse(JSON.stringify(lectura)),calibracion,observacion:{}};
     guardarBorrador(captura); set({captura}); return captura;
   },
@@ -89,7 +91,7 @@ export const useSesion=create<Sesion>((set,get)=>({
   finalizar:()=>{
     const c=get().captura;
     if(!c?.observacion.origen||!c.observacion.olor||!c.observacion.visual) throw new Error('Completa las tres observaciones.');
-    const resultado=evaluar(c.lectura,c.observacion as Observacion,c.calibracion);
+    const resultado=evaluar(c.lectura,c.observacion as Observacion,c.calibracion,c.estabilidad!=='inicial');
     completarCaptura(c,resultado); set({captura:null}); return c.id;
   },
   reanudar:captura=>set({captura}),

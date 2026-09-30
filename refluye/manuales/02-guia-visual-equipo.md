@@ -2,7 +2,7 @@
 
 **Formato de entrega:** hoja A4, dos caras, en [PDF listo para imprimir](../../output/pdf/refluye-guia-visual-equipo-a4.pdf). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
 
-**Edición de prototipo · 27 de septiembre de 2026.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
+**Edición de prototipo · 30 de septiembre de 2026.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
 
 ## Cara 1 · Abre, conecta, mide
 
@@ -19,7 +19,7 @@
 ### 2 · Enciende y conecta
 
 - Enciende el equipo con la alimentación **etiquetada en tu unidad**.
-- Si aún no tienes la app, descarga la APK 0.2.0 desde el enlace/QR de esta hoja.
+- Si aún no tienes la app, descarga la APK 0.3.0 desde el enlace/QR de esta hoja.
 - Abre Re-Fluye en Android: **Medir agua → Buscar equipos cercanos**.
 - Acepta el permiso Bluetooth de Android. Elige **ReFluye-V2** y verifica su identificador; el firmware de referencia documenta PIN `1234`, si Android lo pide.
 - Sin equipo, toca **Practicar sin equipo · DEMO**; los resultados simulados no describen tu fuente.
@@ -28,7 +28,7 @@
 
 - Introduce únicamente sus extremos de medición en una muestra tomada de forma segura. No mojes la caja, conectores ni placas.
 - Evita chocar el bulbo de vidrio del pH contra el recipiente. No uses agua caliente con la sonda TDS de referencia.
-- Mantén las sondas quietas hasta ver **Lectura estable**. La app requiere cuatro tramas recientes; esto no prueba calibración.
+- Mantén las sondas quietas. Con la primera lectura completa ya puedes abrir una orientación; si varía, el resultado será **preliminar** y no autoriza consumo. Una lectura repetida tampoco prueba calibración.
 
 ### 4 · Cuenta lo que ves
 
@@ -36,7 +36,7 @@ En la misma pantalla escribe el **nombre de la fuente**, escoge **para qué nece
 
 ### 5 · Decide con el resultado completo
 
-Toca **Ver análisis y recomendaciones**. Lee primero **TU USO** y **QUÉ HACER AHORA**. Para beber o cocinar, una lectura favorable todavía exige desinfección. La app puede indicar buscar otra fuente o repetir. Nunca uses el color o el número del LCD/LED como autorización: son una preclasificación solo por sensores.
+Toca **Ver qué puedo hacer con esta agua**. Lee primero la decisión, **TU USO** y **QUÉ HACER AHORA**. El ICA de 0 a 100 es orientativo, no un porcentaje de potabilidad. Para beber o cocinar, una lectura favorable todavía exige desinfección. La app puede indicar buscar otra fuente o repetir. Nunca uses el color o el número del LCD/LED como autorización: son una preclasificación solo por sensores.
 
 ## Cara 2 · Cuida el equipo y resuelve dudas
 
@@ -62,7 +62,7 @@ Las indicaciones específicas de pH y TDS corresponden a las referencias DFRobot
 
 **Después de medir:** enjuaga las partes sumergibles, apaga el equipo, guarda el pH según su fabricante y tapa las muestras tratadas. Conserva el resultado en **Mis mediciones**. El equipo no reemplaza un análisis de laboratorio ni una recomendación sanitaria local.
 
-**Descarga de la app:** [CampusMind · Re-Fluye 0.2.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0). El QR de la cara 1 lleva a esta misma publicación; comprueba el dominio `github.com` antes de descargar.
+**Descarga de la app:** [CampusMind · Re-Fluye 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0). El QR de la cara 1 lleva a esta misma publicación; comprueba el dominio `github.com` antes de descargar.
 
 ### Datos de esta unidad · completar antes de entregarla
 
@@ -74,4 +74,4 @@ Las indicaciones específicas de pH y TDS corresponden a las referencias DFRobot
 | Vigente hasta | ______________________________ |
 | Contacto de soporte | ______________________________ |
 
-**Versión de app:** 0.2.0 · **Documento:** guía de prototipo 0.1 · **Origen:** CCD / UNAB, proyecto Re-Fluye. Para el procedimiento completo de la app: `refluye/manuales/01-guia-app.md`. Para mantenimiento y montaje: `refluye/manuales/03-manual-tecnico.md`.
+**Versión de app:** 0.3.0 · **Documento:** guía de prototipo 0.2 · **Origen:** CCD / UNAB, proyecto Re-Fluye. Para el procedimiento completo de la app: `refluye/manuales/01-guia-app.md`. Para mantenimiento y montaje: `refluye/manuales/03-manual-tecnico.md`.

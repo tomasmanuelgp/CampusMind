@@ -1,5 +1,17 @@
 # 08 · UI / UX
 
+## Ajuste implementado · 2026-09-30
+
+La medición ya muestra el ICA orientativo y los cuatro valores sin abrir otro
+panel. Una sola trama íntegra y reciente habilita el análisis, aunque aún varíe.
+El resultado distingue lectura inicial de lectura repetida, prioriza **qué hacer
+ahora** y presenta para beber o cocinar los pasos de aclarado y hervor sin abrir
+la guía detallada. El índice no autoriza consumo; olor, aspecto, calibración y
+variación pueden cambiar la orientación. [B-006](../prompts/iteraciones/B-006.md).
+
+Los bocetos de medición con botón inactivo hasta estabilidad, más abajo, son
+históricos y ya no describen la pantalla 0.3.0.
+
 ## Estado implementado · 2026-09-26
 
 `../../mobile/src/app` contiene inicio, conexión, medición con tres preguntas,
@@ -207,13 +219,13 @@ capturas prematuras.
 └────────────────────────────┘
 ```
 
-Al estabilizarse: el texto pasa a "✅ Lectura estable" y el botón se activa con
-un cambio de color evidente.
+En la versión 0.3.0 el botón se activa desde la primera trama íntegra reciente.
+La estabilidad mejora la confianza, pero no bloquea la orientación inicial.
 
 ### Observación humana — versión integrada
 
 La versión actual presenta las tres preguntas en una misma pantalla, junto a la
-lectura estable, el nombre de la fuente y el uso elegido. Se evita navegar tres
+lectura recibida, el nombre de la fuente y el uso elegido. Se evita navegar tres
 veces para llegar al resultado. Cada grupo tiene título, ayuda y opciones grandes.
 El detalle del olor solo aparece si la persona marca «Huele raro». No se pide
 probar ni acercar la cara al agua. Las respuestas «No sé» siguen disponibles.

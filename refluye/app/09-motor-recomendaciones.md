@@ -1,4 +1,4 @@
-# 09 · Motor de recomendaciones — versión implementada 0.2.0
+# 09 · Motor de recomendaciones — versión implementada 0.3.0
 
 Código: `../../mobile/src/dominio/motor.ts`. Instrucciones: `protocolos.ts`.
 Casos esperados: `__tests__/casos-golden.json` en ese mismo directorio.
@@ -7,21 +7,35 @@ historia; sus dosis, cadenas y autorizaciones por destino no están vigentes.
 
 ## Contrato y fiabilidad
 
-`evaluar(lectura, observacion, calibracion)` es pura: no consulta red, reloj ni
+`evaluar(lectura, observacion, calibracion, lecturaEstable)` es pura: no consulta red, reloj ni
 almacenamiento. Devuelve versión, nivel interno, motivo, todos los IDs aplicables,
 fiabilidad, ICA auxiliar, plan, destinos y advertencias. La IA no participa.
 El nivel interno no se puede convertir en una autorización de consumo.
 
-ICA exige pH finito 0–14, turbidez 0–200 NTU y TDS 0–2000 ppm. Un dato inválido
+ICA orientativo exige pH finito 0–14, turbidez 0–200 NTU y TDS 0–2000 ppm. Un dato inválido
 produce ICA nulo, nunca un dato recortado. Fórmula heredada con sPH acotado:
 
 `round1(0.4 × max(0,100−abs(pH−7.4)×30) + 0.3 × (100−TURB/2) + 0.3 × (100−TDS/20))`.
 
-Confiable exige ICA calculable, ausencia de errores de trama, versión ≤ 1 y un
+La app muestra las **cuatro mediciones** (pH, turbidez, TDS, temperatura) junto al
+índice. La temperatura aporta contexto físico, pero no recibe un peso numérico:
+el proyecto no tiene una curva validada para convertirla en seguridad de consumo.
+El ICA de 0–100 no es un porcentaje de potabilidad; olor, aspecto y calibración
+pueden prevalecer sobre un valor alto. Su fórmula y los rangos TDS requieren
+validación metrológica con los sensores reales antes de uso sanitario.
+
+Confiable exige ICA calculable, ausencia de errores de trama, versión ≤ 1, una
+lectura repetida estable y un
 registro de calibración con responsable, referencia y fechas finitas coherentes:
 verificación ≤ captura < vencimiento. Estabilidad no demuestra calibración.
 El registro manual local no constituye verificación automática del equipo físico.
-Temperatura ausente no altera el resultado.
+Temperatura ausente no altera el resultado. La primera trama íntegra y reciente
+(menos de cinco segundos) ya permite capturar y analizar. Si aún no se observa
+estabilidad, se conserva como **lectura inicial** y se marca no confiable. Si los
+datos y la calibración sí están verificados y no hay vetos, puede mostrarse una
+**ruta posible** de aclarado y desinfección, pero el texto prohíbe consumir antes
+de verificar otra lectura. Sin calibración vigente o con datos inválidos, el plan
+es `repetir`, aunque el ICA parezca favorable.
 
 ## Reglas y prioridad
 
@@ -55,8 +69,10 @@ son decisiones del proyecto; no certifican cumplimiento sanitario.
 ## Planes y destinos
 
 1. Cualquier nivel 2, R07, R10, R11 o R12: `alternativa`.
-2. En ausencia de lo anterior, lectura no confiable o R14: `repetir`.
-3. En los demás casos: `hervido`, con aclarado y desinfección obligatoria.
+2. En ausencia de lo anterior, datos/calibración no verificados o R14: `repetir`.
+3. En los demás casos: `hervido`, con aclarado y desinfección obligatoria. Si la
+   lectura todavía varía, se muestra como orientación inicial sin permiso de
+   consumo.
 
 Solo el tercer plan orienta tratamiento para consumo humano; nunca declara el
 agua potable. Los demás dicen «No consumir con esta evaluación». Animales y
@@ -96,6 +112,6 @@ S4–S5: olor extraño y agua verdosa nunca terminan en hervido. S6: cada result
 incluye «Este equipo no detecta bacterias, virus ni parásitos. No certifica
 potabilidad». S7: sin calibración vigente no hay fiabilidad. S8: sin coordenadas.
 
-21 escenarios golden y 22680 combinaciones adicionales de parámetros y observaciones.
+22 escenarios golden y 22680 combinaciones adicionales de parámetros y observaciones.
 `npm run test:coverage` exige 100 % de ramas, líneas, sentencias y funciones del
 motor. Cobertura demuestra ejecución del código, no validación sanitaria en campo.

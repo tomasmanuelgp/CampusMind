@@ -1,6 +1,6 @@
 import { describe,it,expect } from 'vitest';
 import { ParserTramas,leerTrama } from './parser';
-import { esEstable } from './estabilidad';
+import { esEstable,lecturaRecienteValida } from './estabilidad';
 const trama='VER:1\r\nESTADO:0\r\nICA:96\r\npH:7.4\r\nTDS:145\r\nTURB:2\r\nTEMP:24\r\n---\r\n';
 describe('Contrato SPP',()=>{
   it('tolera cualquier corte del transporte',()=>{
@@ -35,6 +35,13 @@ describe('estabilidad',()=>{
     expect(esEstable(lecturas(),4500)).toBe(true);
     expect(esEstable(lecturas().slice(1),4500)).toBe(false);
     expect(esEstable(lecturas(),9500)).toBe(false);
+  });
+  it('una trama íntegra reciente sirve para orientar aunque no sea estable',()=>{
+    const primera=lecturas().slice(0,1);
+    expect(lecturaRecienteValida(primera,0)).not.toBeNull();
+    expect(esEstable(primera,0)).toBe(false);
+    expect(lecturaRecienteValida(primera,5000)).toBeNull();
+    expect(lecturaRecienteValida([{...primera[0],errores:['Dato inválido']}],0)).toBeNull();
   });
   it('rechaza ráfagas, huecos e inestabilidad',()=>{
     const l=lecturas(); l[3].ph=8; expect(esEstable(l,4500)).toBe(false);

@@ -40,7 +40,16 @@ describe('sesión de campo',()=>{
   it('rechaza capturar valores antiguos y finalizar sin las tres respuestas',async()=>{
     await estable();useSesion.getState().capturar('Fuente');
     expect(()=>useSesion.getState().finalizar()).toThrow('Completa');
-    vi.setSystemTime(110000);expect(()=>useSesion.getState().capturar('Fuente')).toThrow('estable');
+    vi.setSystemTime(110000);expect(()=>useSesion.getState().capturar('Fuente')).toThrow('reciente');
+  });
+  it('permite analizar desde la primera trama y la identifica como inicial',async()=>{
+    await useSesion.getState().conectar('A','Re-Fluye A');
+    mocks.recibir!(trama());
+    const captura=useSesion.getState().capturar('Fuente','cocinar');
+    expect(captura.estabilidad).toBe('inicial');
+    useSesion.getState().observar({origen:'corriente',olor:'normal',visual:'limpia'});
+    useSesion.getState().finalizar();
+    expect(mocks.completar.mock.calls[0][1]).toMatchObject({confiable:false,plan:'repetir'});
   });
   it('ignora callbacks de la conexión anterior',async()=>{
     await estable();const anterior=mocks.recibir!;

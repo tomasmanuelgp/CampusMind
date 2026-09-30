@@ -103,7 +103,7 @@ def footer(c, page):
     label(c, "RE-FLUYE  /  GUIA DE PROTOTIPO 0.1", M, 25, 8, NAVY)
     c.setFont("Arial", 8)
     c.setFillColor(MUTED)
-    c.drawRightString(PAGE_W - M, 25, f"{page} / 2  ·  27 SEP 2026")
+    c.drawRightString(PAGE_W - M, 25, f"{page} / 2  ·  30 SEP 2026")
 
 
 c = canvas.Canvas(str(DEST), pagesize=A4, pageCompression=1)
@@ -137,9 +137,9 @@ top = PAGE_H - 231
 steps = [
     ("Revisa el equipo", "Caja y conectores secos; sondas sin daño; calibración y alimentación confirmadas por el técnico. Si algo está mojado o roto, <b>no enciendas</b>.", 76, PALE_BLUE),
     ("Enciende y conecta", "Usa la alimentación <b>etiquetada en tu unidad</b>. Abre la app: <b>Medir agua → Buscar equipos cercanos</b>. Acepta Bluetooth y elige ReFluye-V2. PIN de referencia: 1234. Sin equipo: modo DEMO.", 91, PALE_GREEN),
-    ("Coloca las sondas", "Sumerge <b>solo los extremos de medición</b>; no mojes caja ni módulos. Evita golpear el vidrio del pH. Mantén la muestra quieta hasta ver <b>Lectura estable</b>.", 79, PALE_BLUE),
+    ("Coloca las sondas", "Sumerge <b>solo los extremos de medición</b>; no mojes caja ni módulos. Evita golpear el vidrio del pH. La primera lectura completa ya permite orientar; si varía, será <b>preliminar</b>.", 79, PALE_BLUE),
     ("Cuenta lo que observas", "Escribe la fuente, elige el uso y marca origen, olor y aspecto. Si no sabes, marca <b>No sé</b>. Nunca pruebes ni acerques la cara al agua sospechosa.", 76, PALE_AMBER),
-    ("Lee y actúa", "Toca <b>Ver análisis y recomendaciones</b>. Lee TU USO y QUÉ HACER AHORA. Para beber o cocinar, incluso una lectura favorable requiere desinfección. LCD y LEDs no autorizan consumo.", 86, PALE_GREEN),
+    ("Lee y actúa", "Toca <b>Ver qué puedo hacer con esta agua</b>. Lee la decisión y QUÉ HACER AHORA. El ICA de 0 a 100 no es potabilidad. Para beber o cocinar siempre hace falta desinfección.", 86, PALE_GREEN),
 ]
 for i, (title, content, height, tint) in enumerate(steps, 1):
     step(c, i, title, content, top, height, tint)
@@ -147,7 +147,7 @@ for i, (title, content, height, tint) in enumerate(steps, 1):
 if top < 95:
     raise ValueError(f"La cara 1 invade el pie: {top}")
 paragraph(c, "<b>Si hay olor raro, aceite o agua verde:</b> no intentes volverla utilizable solo hirviéndola. Busca otra fuente y pide orientación local.", M, top - 3, W, small, top - 50)
-qr_url = "https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0"
+qr_url = "https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0"
 qr = QrCodeWidget(qr_url)
 qr_bounds = qr.getBounds()
 qr_scale = 63 / (qr_bounds[2] - qr_bounds[0])
@@ -158,7 +158,7 @@ qr_drawing = Drawing(qr_bounds[2] - qr_bounds[0], qr_bounds[3] - qr_bounds[1])
 qr_drawing.add(qr)
 renderPDF.draw(qr_drawing, c, 0, 0)
 c.restoreState()
-label(c, "DESCARGA LA APP 0.2.0", M + 77, 108, 9.8, NAVY)
+label(c, "DESCARGA LA APP 0.3.0", M + 77, 108, 9.8, NAVY)
 paragraph(c, "Escanea el QR y descarga la APK en <b>Assets</b>. Confirma que el sitio sea <b>github.com/tomasmanuelgp/CampusMind</b>. Android 7.0+; Bluetooth Classic SPP para medir.", M + 77, 100, W - 77, micro, 45)
 footer(c, 1)
 c.showPage()

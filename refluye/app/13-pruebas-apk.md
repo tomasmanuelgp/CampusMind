@@ -1,6 +1,6 @@
 # 13 · Guion de aceptación de la APK
 
-Fecha de preparación: 2026-09-15; actualizada para 0.2.0 el 2026-09-26.
+Fecha de preparación: 2026-09-15; actualizada para 0.3.0 el 2026-09-30.
 Estado: pendiente en teléfono físico.
 Registrar modelo, Android, versión APK, firmware, responsable y resultado de cada
 caso. No marcar aprobado por haber compilado o por haberlo probado en navegador.
@@ -18,13 +18,16 @@ el uso de agua real.
 | Caso | Resultado esperado | Estado |
 |---|---|---|
 | Abrir sin internet | Inicio, DEMO, guía e historial disponibles | Pendiente |
-| Actualizar 0.1.0 a 0.2.0 | Instala encima y conserva historial/calibración local | Pendiente |
-| Flujo de medición 0.2.0 | Fuente, uso y tres observaciones en una pantalla; sin recortes ni salida accidental | Pendiente |
+| Actualizar 0.1.0/0.2.0 a 0.3.0 | Instala encima y conserva historial/calibración local | Pendiente |
+| Flujo de medición 0.3.0 | Fuente, uso y tres observaciones en una pantalla; captura desde la primera trama completa | Pendiente |
+| Lectura inicial variable | Muestra resultado provisional y posible ruta solo si hay calibración vigente; nunca autoriza consumo | Pendiente |
+| ICA y cuatro valores | ICA de 0 a 100, pH, turbidez, TDS y temperatura legibles; aclara que el índice no certifica potabilidad | Pendiente |
+| Cocinar | Muestra en resultado la indicación y los pasos de tratamiento, sin entrar a otra guía | Pendiente |
 | Resultado por uso | Muestra primero uso elegido, límite y pasos claros; conserva descargo microbiológico | Pendiente |
 | Denegar permiso Bluetooth | Mensaje accionable; no bucle de permisos | Pendiente |
 | Bluetooth apagado | Solicitud de activación de Android | Pendiente |
 | Buscar dos equipos del mismo nombre | Permite elegir por identificación parcial; no cambia automáticamente | Pendiente |
-| Conectar por primera vez | Emparejamiento Android; datos reales antes de «estable» | Pendiente |
+| Conectar por primera vez | Emparejamiento Android; datos reales disponibles desde la primera trama íntegra | Pendiente |
 | Volver a abrir | Ofrece conectar al equipo recordado | Pendiente |
 | Desconectar la radio durante medición | Valores antiguos desaparecen; no permite capturar; hasta tres reintentos | Pendiente |
 | Pulsar Desconectar | Termina la recuperación automática | Pendiente |

@@ -49,7 +49,7 @@ a construir**.
 | [`prompts/loop-mejora.md`](prompts/loop-mejora.md) | Prompt del ciclo iterativo de mejora |
 | [`../CLAUDE.md`](../CLAUDE.md) | Contexto permanente para agentes que trabajen en el repo |
 
-### Manuales de la versión 0.2.0
+### Manuales de la versión 0.3.0
 
 | Pieza | Destinatario | Formato |
 |---|---|---|
@@ -66,7 +66,7 @@ la prueba física ni la validación sanitaria pendiente.
 ## Decisiones ya tomadas
 
 Estas decisiones están cerradas. Cambiarlas obliga a revisar varios documentos.
-La tabla recoge decisiones de arquitectura del plan; la app 0.2.0 implementa
+La tabla recoge decisiones de arquitectura del plan; la app 0.3.0 implementa
 solo el flujo local descrito en el [manual técnico](manuales/03-manual-tecnico.md).
 
 | Decisión | Elección | Por qué |

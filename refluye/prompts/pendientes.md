@@ -2,7 +2,9 @@
 
 ## Estado de implementación · 2026-09-15
 
-Actualización 2026-09-27: APK 0.2.0 publicada y 49 pruebas aprobadas; ver D-005.
+Actualización 2026-09-30: versión 0.3.0 con 54 pruebas aprobadas, lectura inicial
+y resultado directo por uso; ver A-004, B-006 y D-007. El ICA sigue siendo
+indicativo y requiere validación de fórmula contra laboratorio.
 La ficha del sensor TDS SEN0244 declara 0–1000 ppm, mientras firmware, parser y
 motor admiten hasta 2000 ppm: identificar el modelo realmente montado y validar
 su respuesta antes de usar resultados por encima del rango del fabricante.
@@ -10,14 +12,14 @@ También faltan alimentación, grado de sellado, lista de piezas y calibración
 verificados por unidad para completar la guía visual antes de entregarla. Ver
 [F-001](iteraciones/F-001.md) y [manual técnico](../manuales/03-manual-tecnico.md).
 
-- APK interna disponible en mobile/artifacts; compilación, firma y permisos
-  verificados en D-004. Ejecutar doc 13 en Android físico antes de cerrar aceptación.
+- APK interna en mobile/artifacts tras la compilación; ejecutar doc 13 en Android
+  físico antes de cerrar aceptación.
 
 - A02–A03: resueltos en motor 0.1.0 y golden; doc 09 actualizado. Falta validación de campo.
 - A01: cloración excluida de la app; dosis antiguas archivadas como no vigentes.
 - A04–A05: tres planes conservadores implementados; no autorizan animales/riego.
 - A06: registro técnico local con fechas, responsable y referencia; no verifica sensores físicamente.
-- D01–D02: borrador transaccional, TDS cero, snapshots y reinicio probados; 43 pruebas totales.
+- D01–D02: borrador transaccional, TDS cero, snapshots y reinicio probados.
 - B: flujo DEMO web revisado a 320/390 px. Android físico, TalkBack y escalado pendientes.
 - C y E: etapas posteriores aún no implementadas; no son dependencias del flujo offline.
 - Radio: reconexión limitada implementada y probada con servicio simulado; falta equipo físico.

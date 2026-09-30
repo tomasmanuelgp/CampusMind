@@ -1,8 +1,8 @@
 # Re-Fluye · Manual técnico del sistema
 
-**Versión de referencia:** aplicación 0.2.0, motor 0.2.0, firmware de referencia V2.2, protocolo Bluetooth `VER:1`.
+**Versión de referencia:** aplicación 0.3.0, motor 0.3.0, firmware de referencia V2.2, protocolo Bluetooth `VER:1`.
 
-**Fecha:** 27 de septiembre de 2026.
+**Fecha:** 30 de septiembre de 2026.
 **Público:** responsables de hardware, firmware, software, calibración y aceptación en campo.
 
 Este manual describe el estado verificable del repositorio [CampusMind](https://github.com/tomasmanuelgp/CampusMind) y su relación con el [proyecto original](https://github.com/adiacla/refluye). No constituye certificación sanitaria, eléctrica, metrológica ni de resistencia al agua. La APK se compiló y verificó; no se ha cerrado la aceptación en un teléfono unido a un equipo físico. La placa, alimentación, carcasa y modelos exactos de las sondas deben identificarse por unidad antes de entregar la guía impresa.
@@ -15,12 +15,12 @@ El proyecto original de Alfredo Antonio Díaz Claros, CCD de la Universidad Aut�
 |---|---|---|
 | Firmware ESP32 V2.2 | `firmware/refluye_v2/refluye_v2.ino` | Compilación de referencia; no validación con toda la unidad física. |
 | Protocolo | `refluye/contexto/03-protocolo-bluetooth.md` | Contrato `VER:1`, SPP, texto por líneas; parser probado. |
-| App | `mobile/src` | TypeScript, 49 pruebas y APK Android 0.2.0 compilada. |
-| APK interna | [Publicación 0.2.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.2.0) | Firma, paquete, permisos, ABI y SHA-256 verificados; instalación real pendiente. |
+| App | `mobile/src` | TypeScript, 54 pruebas y APK Android 0.3.0 de pruebas. |
+| APK interna | [Publicación 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0) | Compilación y verificación técnica documentadas; instalación real pendiente. |
 | PCB y carcasa originales | Repositorio `adiacla/refluye` | Diseño histórico auditado; no se verificó el ensamblaje exacto de cada equipo actual. |
 | Laboratorio y estudio de campo | — | No hay un estudio de validación clínica/sanitaria ni una serie metrológica que certifique el sistema. |
 
-La app actual usa Bluetooth y SQLite locales. **No** implementa Supabase, PostGIS, IA conversacional, sincronización, geolocalización, dosificación de cloro ni vídeos. Esos elementos aparecen como visión futura en documentos 07, 10 y 11, no como servicios que deban instalarse para ejecutar 0.2.0.
+La app actual usa Bluetooth y SQLite locales. **No** implementa Supabase, PostGIS, IA conversacional, sincronización, geolocalización, dosificación de cloro ni vídeos. Esos elementos aparecen como visión futura en documentos 07, 10 y 11, no como servicios que deban instalarse para ejecutar 0.3.0.
 
 ## 2. Arquitectura y flujo de datos
 
@@ -28,9 +28,9 @@ La app actual usa Bluetooth y SQLite locales. **No** implementa Supabase, PostGI
 Fuente de agua -> sondas pH / turbidez / TDS / temperatura
               -> ESP32 (ADC1 + 1-Wire)
               -> trama de texto Bluetooth Classic SPP cada ~1,5 s
-              -> parser + control de estabilidad Android
+              -> parser + primera trama válida + señal de estabilidad Android
               -> captura local + observación de origen / olor / aspecto
-              -> motor determinista 0.2.0
+              -> motor determinista 0.3.0
               -> resultado por uso + protocolo local + SQLite
 ```
 
@@ -62,7 +62,7 @@ La configuración documentada contiene ESP32 DevKit v1 de 38 pines, sensor de pH
 2. Instala Arduino IDE y el paquete **ESP32** del gestor de placas de Espressif. En el gestor de librerías instala `LiquidCrystal_I2C`, `OneWire` y `DallasTemperature`. `BluetoothSerial` viene con el paquete ESP32. Revisa versiones en el entorno donde se realizará la prueba; el repositorio no fija versiones exactas del core Arduino ni de estas bibliotecas.
 3. Abre `firmware/refluye_v2/refluye_v2.ino`. Selecciona **ESP32 Dev Module** y el puerto USB del equipo. Verifica/compila antes de cargar. Desconecta cualquier montaje inseguro antes de conectar USB; sigue el procedimiento eléctrico del laboratorio para tu placa.
 4. Carga el firmware y abre el monitor serie a **115200 baudios**. Deben verse valores de sensores. Una pantalla LCD en blanco o `TEMP:-127` requiere revisión de hardware; no significa que el agua mida cero.
-5. Comprueba con un terminal Bluetooth SPP una trama completa terminada en `---` cada ~1,5 segundos; valida también que la APK 0.2.0 la recibe. Registra versión de core, librerías, placa, voltajes y resultados.
+5. Comprueba con un terminal Bluetooth SPP una trama completa terminada en `---` cada ~1,5 segundos; valida también que la APK 0.3.0 la recibe. Registra versión de core, librerías, placa, voltajes y resultados.
 
 El firmware usa `analogReadMilliVolts()`, diez muestras por canal y la fórmula ICA acotada. `PH_SLOPE=3.5` y `PH_OFFSET=0.0` son valores genéricos: no son calibración de una sonda concreta. La guía de firmware indica buffers pH 7,0 y 4,0 y revisión de pendiente; la fecha registrada en la app **no realiza** esa calibración. Un responsable debe aplicar un procedimiento metrológico trazable y documentar los límites de aceptación. [Firmware README](../../firmware/README.md).
 
@@ -81,7 +81,7 @@ TEMP:24.5
 ---
 ```
 
-`VER` ausente se trata como protocolo 0. El parser descarta tramas sin cierre, ignora campos desconocidos, marca ausencias/invalidez y descarta buffers mayores de 4 KB. `TEMP:-127` se transforma en temperatura no disponible. El `ESTADO` del dispositivo no determina el resultado final. La captura exige cuatro tramas consecutivas recientes: rango pH ≤ 0,05 y dispersión TDS ≤ 5 %, sin errores esenciales; pasan al menos 750 ms entre tramas y la última tiene menos de cinco segundos. Esto controla estabilidad temporal, **no exactitud**.
+`VER` ausente se trata como protocolo 0. El parser descarta tramas sin cierre, ignora campos desconocidos, marca ausencias/invalidez y descarta buffers mayores de 4 KB. `TEMP:-127` se transforma en temperatura no disponible. El `ESTADO` del dispositivo no determina el resultado final. La captura acepta **la primera trama íntegra de pH, turbidez y TDS, sin errores y con menos de cinco segundos**. Se guarda `estabilidad: inicial` hasta que haya cuatro tramas consecutivas con rango pH ≤ 0,05 y dispersión TDS ≤ 5 %, intervalos de 750–5000 ms; entonces se guarda `estable`. Esto controla estabilidad temporal, **no exactitud**. Los datos iniciales permiten una orientación condicionada, pero no autorizan consumo. El motor solo ofrece la ruta de tratamiento preliminar cuando hay calibración vigente y no hay vetos; sin ella pide otra medición.
 
 ## 6. Motor de resultados y tratamiento
 
@@ -89,7 +89,7 @@ El motor `mobile/src/dominio/motor.ts` evalúa todas las reglas y prioriza vetos
 
 La guía de hervor actual aclara partículas primero, mantiene ebullición **3 minutos** desde burbujeo fuerte y después enfría/guarda en recipiente limpio. Es una decisión conservadora que cubre la referencia CDC de 3 minutos por encima de 6500 pies; puede consumir más combustible a menor altura. El hervor no elimina químicos, combustible, metales, sales ni toxinas de algas. [CDC: preparación de agua](https://www.cdc.gov/water-emergency/about/index.html). Ninguna lectura de este equipo detecta microbios. La revisión sanitaria del conjunto de reglas con autoridades y laboratorio sigue pendiente.
 
-La fórmula ICA local, cuando pH/turbidez/TDS tienen datos válidos, es `0,4 × max(0,100−|pH−7,4|×30) + 0,3 × (100−TURB/2) + 0,3 × (100−TDS/20)`, redondeada a una décima. Los umbrales son **decisiones internas del proyecto**, no prueba de cumplimiento de una norma de agua potable. La fórmula antigua de los documentos originales tenía divisores erróneos; no se usa. [Contrato del motor](../app/09-motor-recomendaciones.md).
+La fórmula ICA local, cuando pH/turbidez/TDS tienen datos válidos, es `0,4 × max(0,100−|pH−7,4|×30) + 0,3 × (100−TURB/2) + 0,3 × (100−TDS/20)`, redondeada a una décima y mostrada como índice de 0 a 100. La temperatura es el cuarto parámetro visible, pero no modifica el índice porque no hay curva ni peso validados para potabilidad. Este ICA **no es un porcentaje de potabilidad**; los vetos por olor/aspecto y la falta de calibración prevalecen sobre una cifra alta. Los umbrales son **decisiones internas del proyecto**, no prueba de cumplimiento de una norma de agua potable. La fórmula antigua de los documentos originales tenía divisores erróneos; no se usa. [Contrato del motor](../app/09-motor-recomendaciones.md).
 
 ## 7. Aplicación: lenguajes, bibliotecas y datos
 
@@ -97,7 +97,7 @@ La app usa **TypeScript 6**, **React 19.2.3**, **React Native 0.86.3** y **Expo 
 
 `refluye.db` tiene tablas `ajustes` y `capturas`; cada captura guarda JSON de fuente, uso, lectura, observaciones y evidencia de calibración, y el resultado guarda versión de motor. El cierre es transaccional; la app no reescribe resultados completos. El historial lista las 100 capturas más recientes. La app actual no sincroniza ni solicita coordenadas; compartir un resultado sí abre las opciones del teléfono y requiere decisión del usuario. `allowBackup:false` en Android significa que **no debe prometerse recuperación del historial** tras borrar datos, desinstalar o cambiar de teléfono.
 
-La APK `co.refluye.campo` 0.2.0 declara Android mínimo API 24, objetivo API 36 y ABI arm64-v8a, armeabi-v7a, x86 y x86_64. Android ≥12 solicita Bluetooth Scan/Connect; Android ≤11 solicita ubicación precisa para descubrir equipos, sin persistir coordenadas. Los permisos finales se verificaron; no se incluyeron micrófono ni acceso a archivos multimedia. [Permisos Android](https://developer.android.com/develop/connectivity/bluetooth/bt-permissions).
+La APK `co.refluye.campo` 0.3.0 declara Android mínimo API 24, objetivo API 36 y ABI arm64-v8a, armeabi-v7a, x86 y x86_64. Android ≥12 solicita Bluetooth Scan/Connect; Android ≤11 solicita ubicación precisa para descubrir equipos, sin persistir coordenadas. Los permisos finales deben verificarse en la nueva compilación; no se solicitan micrófono ni acceso a archivos multimedia. [Permisos Android](https://developer.android.com/develop/connectivity/bluetooth/bt-permissions).
 
 ## 8. Instalar el proyecto en otro computador
 
@@ -120,15 +120,15 @@ npx expo prebuild --platform android --no-install
 npm run android
 ```
 
-Para una APK de pruebas en este workspace, configura `JAVA_HOME` y `ANDROID_HOME` y ejecuta `./scripts/compilar-apk.ps1`. El script ejecuta TypeScript/pruebas, prebuild y Gradle; genera `mobile/artifacts/refluye-campo-0.2.0-pruebas.apk` y `.sha256`. Si la unidad `R:` ya está ocupada, pasa `-Unidad S` u otra letra libre. Requiere Ninja moderno y memoria suficiente; en la compilación verificada se empleó Ninja 1.13.2 y ruta corta temporal. El directorio `android/` lo genera Expo, así que los cambios permanentes de permisos/configuración están en `mobile/app.config.ts` y `mobile/plugins/with-permisos-campo.js`. [Detalle de compilación](../prompts/iteraciones/D-005.md).
+Para una APK de pruebas en este workspace, configura `JAVA_HOME` y `ANDROID_HOME` y ejecuta `./scripts/compilar-apk.ps1`. El script ejecuta TypeScript/pruebas, prebuild y Gradle; genera `mobile/artifacts/refluye-campo-0.3.0-pruebas.apk` y `.sha256`. Si la unidad `R:` ya está ocupada, pasa `-Unidad S` u otra letra libre. Requiere Ninja moderno y memoria suficiente; en la compilación anterior se empleó Ninja 1.13.2 y ruta corta temporal. El directorio `android/` lo genera Expo, así que los cambios permanentes de permisos/configuración están en `mobile/app.config.ts` y `mobile/plugins/with-permisos-campo.js`. [Detalle de compilación anterior](../prompts/iteraciones/D-005.md).
 
-Para **instalar la APK sin desarrollar**, abre la publicación 0.2.0 en el teléfono, descarga el archivo APK desde Assets, permite instalar desde esa fuente cuando Android lo pida, abre Re-Fluye y prueba DEMO antes de Bluetooth. La firma de la 0.1.0 y 0.2.0 coincide y el código de versión sube de 1 a 2, pero la migración real de SQLite aún no se ha comprobado. No desinstales la versión vieja si necesitas conservar datos. [Guía de la app](01-guia-app.md).
+Para **instalar la APK sin desarrollar**, abre la publicación 0.3.0 en el teléfono, descarga el archivo APK desde Assets, permite instalar desde esa fuente cuando Android lo pida, abre Re-Fluye y prueba DEMO antes de Bluetooth. El código de versión sube a 3; hay que comprobar que la firma coincide con 0.2.0 y que el historial se conserva en un Android real. No desinstales la versión vieja si necesitas conservar datos. [Guía de la app](01-guia-app.md).
 
 ## 9. Pruebas, estudios y criterios de liberación
 
-`npm run test:coverage` ejecuta 49 pruebas, incluidos 21 escenarios golden, parser, estabilidad/sesión y SQLite con adaptador de prueba. El motor alcanza 100 % de cobertura de ramas, líneas, funciones y sentencias; esto detecta regresiones de código, **no valida el agua real**. `npm run typecheck` verifica TypeScript. La APK 0.2.0 pasó compilación release, lint vital, `apksigner`, inspección de paquete y checksum SHA-256 `5e7bb29e40282b3234344928271abe975a70a2b467f69214306741aba567beb2`. La verificación visual web se hizo a 320 y 390 px. [Evidencia D-005](../prompts/iteraciones/D-005.md).
+`npm run test:coverage` ejecuta 54 pruebas, incluidos 22 escenarios golden, parser, estabilidad/sesión y SQLite con adaptador de prueba. El motor alcanza 100 % de cobertura de ramas, líneas, funciones y sentencias; esto detecta regresiones de código, **no valida el agua real**. `npm run typecheck` verifica TypeScript. La APK 0.3.0 pasó compilación release, firma, permisos y checksum; la interfaz nueva se recorrió en la web DEMO. Android físico sigue pendiente. [Evidencia D-007](../prompts/iteraciones/D-007.md).
 
-Para dar por aceptada una unidad física faltan, al menos: identificar BOM exacta y alimentación; comprobar tensiones, temperatura, carcasa y partes sumergibles; corregir o descartar defectos de PCB histórica; calibrar con patrones trazables y caracterizar rangos/repetibilidad contra laboratorio; probar Android 7–16 con varios teléfonos SPP; verificar actualización 0.1.0→0.2.0, pérdida de conexión, batería, permisos, TalkBack, voz sin internet, lectura bajo sol y usuarios reales. El [guion de aceptación](../app/13-pruebas-apk.md) registra cada caso. Ningún documento disponible demuestra sensibilidad/especificidad para contaminantes o validez sanitaria de recomendaciones para ganado, cultivos y baño.
+Para dar por aceptada una unidad física faltan, al menos: identificar BOM exacta y alimentación; comprobar tensiones, temperatura, carcasa y partes sumergibles; corregir o descartar defectos de PCB histórica; calibrar con patrones trazables y caracterizar rangos/repetibilidad contra laboratorio; probar Android 7–16 con varios teléfonos SPP; verificar actualización 0.2.0→0.3.0, pérdida de conexión, batería, permisos, TalkBack, voz sin internet, lectura bajo sol y usuarios reales. El [guion de aceptación](../app/13-pruebas-apk.md) registra cada caso. Ningún documento disponible demuestra sensibilidad/especificidad para contaminantes o validez sanitaria de recomendaciones para ganado, cultivos y baño.
 
 ### Hallazgos prioritarios para el siguiente ciclo
 

@@ -16,6 +16,7 @@
   {"nombre":"duda","observacion":{"olor":"no_se"},"regla":"R14","nivel":1,"plan":"repetir"},
   {"nombre":"aspecto turbio no cae en favorable","observacion":{"visual":"turbia"},"regla":"R16","nivel":1,"plan":"hervido"},
   {"nombre":"sin calibración","sinCalibracion":true,"regla":"R05","nivel":1,"plan":"repetir"},
+  {"nombre":"primera lectura completa pero variable","lecturaEstable":false,"regla":"R05","nivel":1,"plan":"hervido","destinos":{"humano":"No consumir todavía; posible aclarar y desinfectar tras verificar la lectura"}},
   {"nombre":"sin temperatura","lectura":{"temperatura":null},"regla":"R15","nivel":0,"plan":"hervido"},
   {"nombre":"baño no confirmado aun con sensores favorables","regla":"R15","nivel":0,"plan":"hervido","destinos":{"bano":"No podemos confirmar si sirve para bañarse: el equipo no detecta microbios. Consulta orientación local."}},
   {"nombre":"olor a combustible impide baño y utensilios","observacion":{"olor":"raro","olorTipo":"combustible"},"regla":"R01","nivel":2,"plan":"alternativa","destinos":{"bano":"No te bañes con esta agua; busca otra fuente.","utensilios":"No la uses para lavar utensilios de comida."}},

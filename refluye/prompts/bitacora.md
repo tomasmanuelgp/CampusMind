@@ -4,6 +4,9 @@ Una línea por iteración del ciclo de mejora.
 
 | Fecha | Área | Qué cambió | Por qué | Verificación |
 |---|---|---|---|---|
+| 2026-09-30 | D — APK (D-007) | APK 0.3.0, manuales y hoja impresa actualizados | Entregar primera lectura e ICA en Android | Build, lint vital, firma, hash, paquete, ABI y permisos; teléfono pendiente |
+| 2026-09-30 | B — UI (B-006) | ICA indicativo y cuatro valores visibles; decisión y pasos por uso al abrir resultado | Evitar navegar para saber qué hacer | DEMO web, TypeScript y 54 pruebas; Android y usuarios pendientes |
+| 2026-09-30 | A — Primera lectura (A-004) | Captura desde trama íntegra y orientación inicial condicionada sin autorizar consumo | La estabilidad podía no llegar en campo | 22 golden, 54 pruebas y 100 % motor; hardware pendiente |
 | 2026-09-27 | D — Manual técnico (D-006) | Arquitectura, instalación, dependencias, pruebas y límites actuales en un documento | Evitar confundir planes futuros con funciones instaladas | Contraste con código y D-005; reproducción externa pendiente |
 | 2026-09-27 | F — Guía de equipo (F-001) | Hoja visual A4 a doble cara, cuidado por componente y campos por unidad | Acompañar al producto sin inventar alimentación ni sellado | Dos páginas renderizadas y revisadas; fichas primarias contrastadas; impresión pendiente |
 | 2026-09-27 | B — Guía de app (B-005) | Instalación, DEMO, Bluetooth, medición, usos, resultados y fallos | Reducir confusión en la primera medición | Comparación con pantallas 0.2.0 y límites S1–S8; usuarios pendientes |

@@ -23,9 +23,9 @@ export function orientarUso(r:Resultado,uso:Uso){
     'Si el olor o el aspecto te preocupa, busca otra fuente y pide orientación.',
   ]};
   if(uso==='beber'||uso==='cocinar'||uso==='utensilios')return {estado,pasos:[
-    'Si hay partículas, aclara el agua; si sigue turbia, detente y busca otra fuente.',
-    'Sigue la guía de desinfección completa, incluido el tiempo de hervor.',
-    'Guarda el agua en un recipiente limpio y tapado. Evita contaminarla de nuevo.',
+    'Si ves partículas, deja que se asienten y pasa la parte clara por una tela limpia. Si sigue turbia, busca otra fuente.',
+    'Pon el agua clara al fuego. Cuando hierva con burbujas grandes y continuas, mantenla hirviendo 3 minutos.',
+    'Deja enfriar el agua protegida de suciedad. Guárdala en un recipiente limpio, desinfectado y tapado.',
   ]};
   if(uso==='banarse')return {estado,pasos:[
     'No uses esta lectura para confirmar que el agua sirve para bañarse.',
