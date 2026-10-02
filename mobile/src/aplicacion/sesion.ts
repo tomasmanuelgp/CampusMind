@@ -47,7 +47,7 @@ export const useSesion=create<Sesion>((set,get)=>({
         if(intento!==generacion) return;
         const recibidas=parser.recibir(datos,Date.now());
         if(recibidas.length) {
-          set(s=>({estado:'recibiendo',lecturas:[...s.lecturas,...recibidas].slice(-4)}));
+          set(s=>({estado:'recibiendo',lecturas:[...s.lecturas,...recibidas].slice(-60)}));
           try { guardarAjuste('equipo',JSON.stringify({id,nombre})); } catch { set({error:'No pudimos recordar el equipo en este teléfono.'}); }
         }
       },recuperar);
@@ -61,10 +61,12 @@ export const useSesion=create<Sesion>((set,get)=>({
   iniciarDemo:async()=>{
     await get().desconectar(); const intento=++generacion;
     set({demo:true,equipo:'DEMO',nombreEquipo:'Equipo de práctica',estado:'esperando',error:null});
+    let n=0;
     const emitir=()=>{
       if(intento!==generacion) return;
-      const lecturas=parser.recibir('VER:1\nESTADO:0\nICA:96\npH:7.4\nTDS:145\nTURB:2\nTEMP:24\n---\n',Date.now());
-      set(s=>({estado:'recibiendo',lecturas:[...s.lecturas,...lecturas].slice(-4)}));
+      const variacion=Math.sin(n++/3);
+      const lecturas=parser.recibir(`VER:1\nESTADO:EXCELENTE\nICA:96\npH:${(7.4+variacion*0.12).toFixed(2)}\nTDS:${Math.round(145+variacion*12)}\nTURB:${(2+Math.abs(variacion)*2).toFixed(1)}\nTEMP:${(24+variacion*0.4).toFixed(1)}\n---\n`,Date.now());
+      set(s=>({estado:'recibiendo',lecturas:[...s.lecturas,...lecturas].slice(-60)}));
     };
     emitir(); const temporizador=setInterval(emitir,1500);
     cerrar=async()=>clearInterval(temporizador);

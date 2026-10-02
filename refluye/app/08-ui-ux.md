@@ -1,5 +1,15 @@
 # 08 · UI / UX
 
+## Monitoreo en vivo · 2026-10-02
+
+La app 0.3.1 muestra los sensores de la última trama reciente, incluso si otro
+campo impide analizar. `ESTADO` textual no oculta los valores. La pantalla dice
+«DATOS EN VIVO», indica antigüedad y presenta curvas de hasta 60 lecturas con
+escala propia por sensor. Los huecos y valores inválidos cortan la curva. Un
+panel opcional muestra la trama recibida para soporte. DEMO varía los cuatro
+valores y emite `ESTADO:EXCELENTE` para ejercitar la compatibilidad histórica.
+La estabilidad y calibración se exigen según el análisis, no para observar.
+
 ## Ajuste implementado · 2026-09-30
 
 La medición ya muestra el ICA orientativo y los cuatro valores sin abrir otro

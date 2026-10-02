@@ -4,6 +4,7 @@ Una línea por iteración del ciclo de mejora.
 
 | Fecha | Área | Qué cambió | Por qué | Verificación |
 |---|---|---|---|---|
+| 2026-10-02 | F — Bluetooth (F-002) | Estado textual no bloquea sensores; monitoreo y curvas por trama, diagnóstico recibido | Los datos del prototipo quedaban ocultos en Android | 61 pruebas, TypeScript, motor 100 %, build/firma/hash APK; Android USB bloqueado por error 10, prueba Bluetooth del usuario pendiente |
 | 2026-09-30 | D — APK (D-007) | APK 0.3.0, manuales y hoja impresa actualizados | Entregar primera lectura e ICA en Android | Build, lint vital, firma, hash, paquete, ABI y permisos; teléfono pendiente |
 | 2026-09-30 | B — UI (B-006) | ICA indicativo y cuatro valores visibles; decisión y pasos por uso al abrir resultado | Evitar navegar para saber qué hacer | DEMO web, TypeScript y 54 pruebas; Android y usuarios pendientes |
 | 2026-09-30 | A — Primera lectura (A-004) | Captura desde trama íntegra y orientación inicial condicionada sin autorizar consumo | La estabilidad podía no llegar en campo | 22 golden, 54 pruebas y 100 % motor; hardware pendiente |

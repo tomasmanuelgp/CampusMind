@@ -6,25 +6,32 @@ const rangos: Record<string, [number, number]> = {
 export function leerTrama(texto: string, recibidaEn: number): Lectura | null {
   const campos: Record<string, number | null> = {};
   const errores: string[] = [];
+  const avisos: string[] = [];
   for (const linea of texto.split(/\r?\n/)) {
     const separador = linea.indexOf(':');
     if (separador < 0) continue;
     const clave = linea.slice(0,separador).trim();
     if (!Object.hasOwn(rangos,clave)) continue;
-    if (Object.hasOwn(campos,clave)) { campos[clave] = null; errores.push(`Campo repetido: ${clave}`); continue; }
+    const auxiliar = clave === 'ESTADO' || clave === 'ICA';
+    const problemas = auxiliar ? avisos : errores;
+    if (Object.hasOwn(campos,clave)) { campos[clave] = null; problemas.push(`Campo repetido: ${clave}`); continue; }
     const valor = linea.slice(separador+1).trim();
     const numero = /^-?\d+(\.\d+)?$/.test(valor) ? Number(valor) : NaN;
     campos[clave] = Number.isFinite(numero) ? numero : null;
     if (clave === 'TEMP' && numero === -127) { campos[clave] = null; continue; }
     const [min,max] = rangos[clave];
     if (!Number.isFinite(numero) || numero < min || numero > max ||
-      (['ESTADO','VER'].includes(clave) && !Number.isInteger(numero))) errores.push(`Revisa el dato ${clave}`);
+      (['ESTADO','VER'].includes(clave) && !Number.isInteger(numero))) {
+      if (auxiliar) campos[clave] = null;
+      problemas.push(clave === 'ESTADO' ? 'El estado del equipo usa un formato antiguo; se analizan los sensores.' : `Revisa el dato ${clave}`);
+    }
   }
   if (!['pH','TDS','TURB'].some(clave => Object.hasOwn(campos,clave))) return null;
   for (const clave of ['pH','TDS','TURB']) if (campos[clave] == null) errores.push(`Falta ${clave}`);
   return { ph: campos.pH ?? null, tds: campos.TDS ?? null, turbidez: campos.TURB ?? null,
     temperatura: campos.TEMP ?? null, icaDispositivo: campos.ICA ?? null, estadoDispositivo: campos.ESTADO ?? null,
-    versionProtocolo: campos.VER ?? 0, recibidaEn, errores };
+    versionProtocolo: Object.hasOwn(campos,'VER') ? campos.VER ?? 999 : 0,
+    recibidaEn, errores, avisos, tramaOriginal: texto.trim() };
 }
 
 /** El marcador debe ocupar una línea. Tras desbordar, descartar hasta el siguiente cierre. */

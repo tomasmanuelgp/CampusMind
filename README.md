@@ -5,11 +5,13 @@ combinar sus sensores con observaciones humanas y conservar mediciones sin inter
 
 ## Descargar la app Android
 
-[Re-Fluye 0.3.0 — APK de pruebas](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0).
-En **Assets**, descargar `refluye-campo-0.3.0-pruebas.apk`.
+[Re-Fluye 0.3.1 — APK de pruebas](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.1).
+En **Assets**, descargar `refluye-campo-0.3.1-pruebas.apk`.
 La publicación incluye el archivo SHA-256 para comprobar la descarga. Esta versión
 incluye un ICA indicativo de 0 a 100, los cuatro valores medidos, orientación desde
 la primera lectura completa y pasos para el uso elegido en el propio resultado.
+La 0.3.1 corrige valores ocultos por `ESTADO` textual del firmware antiguo y
+muestra cada trama en vivo con curvas de comportamiento y diagnóstico Bluetooth.
 El ICA resume pH, turbidez y TDS; la temperatura se muestra como contexto y no
 se convierte en una falsa garantía de potabilidad.
 
@@ -19,14 +21,14 @@ aceptación. No certifica potabilidad ni detecta microorganismos.
 
 ### Instalar y revisar en el celular
 
-1. En el Android, abrir el enlace de la versión 0.3.0 y descargar la APK de
+1. En el Android, abrir el enlace de la versión 0.3.1 y descargar la APK de
    **Assets**. Requiere Android 7.0 (API 24) o superior. Para medir con el equipo,
    el teléfono debe admitir Bluetooth Classic SPP.
 2. Abrir la APK descargada desde **Archivos/Descargas**. Si Android bloquea la
    instalación, abrir el ajuste que muestra para **permitir instalar apps de
    esta fuente** (el navegador o gestor de archivos usado) y volver a la APK.
    El nombre exacto del menú cambia entre fabricantes.
-3. Pulsar **Instalar** y luego **Abrir**. Si ya existe la versión 0.1.0 o 0.2.0,
+3. Pulsar **Instalar** y luego **Abrir**. Si ya existe una versión anterior,
    intentar instalar encima para conservar sus datos. La migración aún necesita
    prueba en teléfono; no desinstalar la versión anterior si necesitas su historial.
 4. Entrar a **Medir agua → Practicar sin equipo · DEMO**. Registrar nombre de la

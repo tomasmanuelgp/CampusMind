@@ -1,8 +1,8 @@
 # Re-Fluye · Manual técnico del sistema
 
-**Versión de referencia:** aplicación 0.3.0, motor 0.3.0, firmware de referencia V2.2, protocolo Bluetooth `VER:1`.
+**Versión de referencia:** aplicación 0.3.1, motor 0.3.0, firmware de referencia V2.2, protocolo Bluetooth `VER:1`.
 
-**Fecha:** 30 de septiembre de 2026.
+**Fecha:** 2 de octubre de 2026.
 **Público:** responsables de hardware, firmware, software, calibración y aceptación en campo.
 
 Este manual describe el estado verificable del repositorio [CampusMind](https://github.com/tomasmanuelgp/CampusMind) y su relación con el [proyecto original](https://github.com/adiacla/refluye). No constituye certificación sanitaria, eléctrica, metrológica ni de resistencia al agua. La APK se compiló y verificó; no se ha cerrado la aceptación en un teléfono unido a un equipo físico. La placa, alimentación, carcasa y modelos exactos de las sondas deben identificarse por unidad antes de entregar la guía impresa.
@@ -15,7 +15,7 @@ El proyecto original de Alfredo Antonio Díaz Claros, CCD de la Universidad Aut�
 |---|---|---|
 | Firmware ESP32 V2.2 | `firmware/refluye_v2/refluye_v2.ino` | Compilación de referencia; no validación con toda la unidad física. |
 | Protocolo | `refluye/contexto/03-protocolo-bluetooth.md` | Contrato `VER:1`, SPP, texto por líneas; parser probado. |
-| App | `mobile/src` | TypeScript, 54 pruebas y APK Android 0.3.0 de pruebas. |
+| App | `mobile/src` | TypeScript, 61 pruebas y APK Android 0.3.0 de pruebas. |
 | APK interna | [Publicación 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0) | Compilación y verificación técnica documentadas; instalación real pendiente. |
 | PCB y carcasa originales | Repositorio `adiacla/refluye` | Diseño histórico auditado; no se verificó el ensamblaje exacto de cada equipo actual. |
 | Laboratorio y estudio de campo | — | No hay un estudio de validación clínica/sanitaria ni una serie metrológica que certifique el sistema. |
@@ -81,7 +81,7 @@ TEMP:24.5
 ---
 ```
 
-`VER` ausente se trata como protocolo 0. El parser descarta tramas sin cierre, ignora campos desconocidos, marca ausencias/invalidez y descarta buffers mayores de 4 KB. `TEMP:-127` se transforma en temperatura no disponible. El `ESTADO` del dispositivo no determina el resultado final. La captura acepta **la primera trama íntegra de pH, turbidez y TDS, sin errores y con menos de cinco segundos**. Se guarda `estabilidad: inicial` hasta que haya cuatro tramas consecutivas con rango pH ≤ 0,05 y dispersión TDS ≤ 5 %, intervalos de 750–5000 ms; entonces se guarda `estable`. Esto controla estabilidad temporal, **no exactitud**. Los datos iniciales permiten una orientación condicionada, pero no autorizan consumo. El motor solo ofrece la ruta de tratamiento preliminar cuando hay calibración vigente y no hay vetos; sin ella pide otra medición.
+`VER` ausente se trata como protocolo 0. El parser descarta tramas sin cierre, ignora campos desconocidos, marca ausencias/invalidez y descarta buffers mayores de 4 KB. `TEMP:-127` se transforma en temperatura no disponible. El `ESTADO` del dispositivo no determina el resultado final. En 0.3.1, `ESTADO` textual e ICA auxiliar inválido generan avisos sin invalidar sensores; `VER` ilegible conserva el bloqueo. El monitoreo muestra cada trama reciente y conserva hasta 60 lecturas en memoria para curvas. Un fallo de un sensor no oculta los otros; tras cinco segundos sin datos, los valores dejan de mostrarse como actuales. El panel de diagnóstico permite revisar la trama exacta recibida. La captura acepta **la primera trama íntegra de pH, turbidez y TDS, sin errores y con menos de cinco segundos**. Se guarda `estabilidad: inicial` hasta que haya cuatro tramas consecutivas con rango pH ≤ 0,05 y dispersión TDS ≤ 5 %, intervalos de 750–5000 ms; entonces se guarda `estable`. Esto controla estabilidad temporal, **no exactitud**. Los datos iniciales permiten una orientación condicionada, pero no autorizan consumo. El motor solo ofrece la ruta de tratamiento preliminar cuando hay calibración vigente y no hay vetos; sin ella pide otra medición.
 
 ## 6. Motor de resultados y tratamiento
 
@@ -120,15 +120,15 @@ npx expo prebuild --platform android --no-install
 npm run android
 ```
 
-Para una APK de pruebas en este workspace, configura `JAVA_HOME` y `ANDROID_HOME` y ejecuta `./scripts/compilar-apk.ps1`. El script ejecuta TypeScript/pruebas, prebuild y Gradle; genera `mobile/artifacts/refluye-campo-0.3.0-pruebas.apk` y `.sha256`. Si la unidad `R:` ya está ocupada, pasa `-Unidad S` u otra letra libre. Requiere Ninja moderno y memoria suficiente; en la compilación anterior se empleó Ninja 1.13.2 y ruta corta temporal. El directorio `android/` lo genera Expo, así que los cambios permanentes de permisos/configuración están en `mobile/app.config.ts` y `mobile/plugins/with-permisos-campo.js`. [Detalle de compilación anterior](../prompts/iteraciones/D-005.md).
+Para una APK de pruebas en este workspace, configura `JAVA_HOME` y `ANDROID_HOME` y ejecuta `./scripts/compilar-apk.ps1`. El script ejecuta TypeScript/pruebas, prebuild y Gradle; genera `mobile/artifacts/refluye-campo-0.3.1-pruebas.apk` y `.sha256`. Si la unidad `R:` ya está ocupada, pasa `-Unidad S` u otra letra libre. Requiere Ninja moderno y memoria suficiente; en la compilación anterior se empleó Ninja 1.13.2 y ruta corta temporal. El directorio `android/` lo genera Expo, así que los cambios permanentes de permisos/configuración están en `mobile/app.config.ts` y `mobile/plugins/with-permisos-campo.js`. [Detalle de compilación anterior](../prompts/iteraciones/D-005.md).
 
-Para **instalar la APK sin desarrollar**, abre la publicación 0.3.0 en el teléfono, descarga el archivo APK desde Assets, permite instalar desde esa fuente cuando Android lo pida, abre Re-Fluye y prueba DEMO antes de Bluetooth. El código de versión sube a 3; hay que comprobar que la firma coincide con 0.2.0 y que el historial se conserva en un Android real. No desinstales la versión vieja si necesitas conservar datos. [Guía de la app](01-guia-app.md).
+Para **instalar la APK sin desarrollar**, abre la publicación 0.3.1 en el teléfono, descarga el archivo APK desde Assets, permite instalar desde esa fuente cuando Android lo pida, abre Re-Fluye y prueba DEMO antes de Bluetooth. El código de versión sube a 4; hay que comprobar que la firma coincide con 0.2.0 y que el historial se conserva en un Android real. No desinstales la versión vieja si necesitas conservar datos. [Guía de la app](01-guia-app.md).
 
 ## 9. Pruebas, estudios y criterios de liberación
 
-`npm run test:coverage` ejecuta 54 pruebas, incluidos 22 escenarios golden, parser, estabilidad/sesión y SQLite con adaptador de prueba. El motor alcanza 100 % de cobertura de ramas, líneas, funciones y sentencias; esto detecta regresiones de código, **no valida el agua real**. `npm run typecheck` verifica TypeScript. La APK 0.3.0 pasó compilación release, firma, permisos y checksum; la interfaz nueva se recorrió en la web DEMO. Android físico sigue pendiente. [Evidencia D-007](../prompts/iteraciones/D-007.md).
+`npm run test:coverage` ejecuta 61 pruebas, incluidos 22 escenarios golden, parser, estabilidad/sesión y SQLite con adaptador de prueba. El motor alcanza 100 % de cobertura de ramas, líneas, funciones y sentencias; esto detecta regresiones de código, **no valida el agua real**. `npm run typecheck` verifica TypeScript. La APK 0.3.1 pasó compilación release, firma, permisos y checksum; la interfaz nueva se recorrió en la web DEMO. Android físico sigue pendiente. [Evidencia 0.3.0 D-007](../prompts/iteraciones/D-007.md). La compilación y corrección 0.3.1 se registran en [F-002](../prompts/iteraciones/F-002.md).
 
-Para dar por aceptada una unidad física faltan, al menos: identificar BOM exacta y alimentación; comprobar tensiones, temperatura, carcasa y partes sumergibles; corregir o descartar defectos de PCB histórica; calibrar con patrones trazables y caracterizar rangos/repetibilidad contra laboratorio; probar Android 7–16 con varios teléfonos SPP; verificar actualización 0.2.0→0.3.0, pérdida de conexión, batería, permisos, TalkBack, voz sin internet, lectura bajo sol y usuarios reales. El [guion de aceptación](../app/13-pruebas-apk.md) registra cada caso. Ningún documento disponible demuestra sensibilidad/especificidad para contaminantes o validez sanitaria de recomendaciones para ganado, cultivos y baño.
+Para dar por aceptada una unidad física faltan, al menos: identificar BOM exacta y alimentación; comprobar tensiones, temperatura, carcasa y partes sumergibles; corregir o descartar defectos de PCB histórica; calibrar con patrones trazables y caracterizar rangos/repetibilidad contra laboratorio; probar Android 7–16 con varios teléfonos SPP; verificar actualización 0.3.0→0.3.1, pérdida de conexión, batería, permisos, TalkBack, voz sin internet, lectura bajo sol y usuarios reales. El [guion de aceptación](../app/13-pruebas-apk.md) registra cada caso. Ningún documento disponible demuestra sensibilidad/especificidad para contaminantes o validez sanitaria de recomendaciones para ganado, cultivos y baño.
 
 ### Hallazgos prioritarios para el siguiente ciclo
 

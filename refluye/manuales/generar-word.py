@@ -123,7 +123,7 @@ def base_doc(visual: bool = False) -> Document:
         s.paragraph_format.keep_with_next = True
     footer = section.footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    footer.add_run("RE-FLUYE  ·  30 SEP 2026").font.color.rgb = GRAY
+    footer.add_run("RE-FLUYE  ·  02 OCT 2026").font.color.rgb = GRAY
     return doc
 
 

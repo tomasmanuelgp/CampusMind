@@ -28,6 +28,16 @@ describe('Contrato SPP',()=>{
     expect(p.recibir(trama,2)).toHaveLength(1);
   });
   it('entrega varias tramas sin mezclarlas',()=> expect(new ParserTramas().recibir(trama+trama,1)).toHaveLength(2));
+  it('ESTADO textual e ICA auxiliar inválido no ocultan ni bloquean sensores',()=>{
+    const l=leerTrama('ESTADO:EXCELENTE\nICA:fuera\npH:7.4\nTDS:145\nTURB:2\nTEMP:24',1)!;
+    expect(l.errores).toEqual([]);expect(l.avisos).toHaveLength(2);
+    expect(l.estadoDispositivo).toBeNull();expect(l.icaDispositivo).toBeNull();
+    expect(lecturaRecienteValida([l],1)).toMatchObject({ph:7.4,tds:145,turbidez:2,temperatura:24});
+  });
+  it('versión ilegible y fallos de sensores sí impiden analizar',()=>{
+    const l=leerTrama('VER:desconocida\npH:7.4\nTDS:145\nTURB:2',1)!;
+    expect(l.versionProtocolo).toBe(999);expect(lecturaRecienteValida([l],1)).toBeNull();
+  });
 });
 describe('estabilidad',()=>{
   const lecturas=()=>[0,1500,3000,4500].map(t=>leerTrama(trama,t)!);

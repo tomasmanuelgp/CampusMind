@@ -8,6 +8,7 @@ export interface Lectura {
   ph: number | null; turbidez: number | null; tds: number | null; temperatura: number | null;
   icaDispositivo: number | null; estadoDispositivo: number | null;
   versionProtocolo: number; recibidaEn: number; errores: string[];
+  avisos?: string[]; tramaOriginal?: string;
 }
 export interface Calibracion { verificadaEn: number; venceEn: number; responsable: string; referencia: string }
 export interface Captura {

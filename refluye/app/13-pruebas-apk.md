@@ -1,6 +1,6 @@
 # 13 · Guion de aceptación de la APK
 
-Fecha de preparación: 2026-09-15; actualizada para 0.3.0 el 2026-09-30.
+Fecha de preparación: 2026-09-15; actualizada para 0.3.1 el 2026-10-02.
 Estado: pendiente en teléfono físico.
 Registrar modelo, Android, versión APK, firmware, responsable y resultado de cada
 caso. No marcar aprobado por haber compilado o por haberlo probado en navegador.
@@ -17,6 +17,12 @@ el uso de agua real.
 
 | Caso | Resultado esperado | Estado |
 |---|---|---|
+| Actualizar 0.3.0 a 0.3.1 | Instala encima y conserva historial/calibración local | Pendiente |
+| Firmware con ESTADO textual | pH, TDS, turbidez y temperatura se ven en cada trama; estado auxiliar no bloquea | Pendiente |
+| Valores que varían constantemente | Curvas y números cambian en vivo; el análisis no espera estabilidad | Pendiente |
+| Un sensor inválido o ausente | Los otros sensores siguen visibles; análisis indica lo que falta | Pendiente |
+| Sin tramas durante cinco segundos | Vista en vivo vacía y aviso; no confunde datos viejos con actuales | Pendiente |
+| Diagnóstico Bluetooth | Trama recibida, hora y avisos visibles; datos corresponden al equipo físico | Pendiente |
 | Abrir sin internet | Inicio, DEMO, guía e historial disponibles | Pendiente |
 | Actualizar 0.1.0/0.2.0 a 0.3.0 | Instala encima y conserva historial/calibración local | Pendiente |
 | Flujo de medición 0.3.0 | Fuente, uso y tres observaciones en una pantalla; captura desde la primera trama completa | Pendiente |

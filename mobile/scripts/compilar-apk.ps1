@@ -42,11 +42,11 @@ try {
   $rutaCortaEscapada = ($raizCorta + 'mobile').Replace('\','\\')
   $contenido = $contenido.Replace($rutaRealEscapada,$rutaCortaEscapada).Replace($mobile.Replace('\','/'),($raizCorta + 'mobile').Replace('\','/'))
   Set-Content -LiteralPath $autolink -Value $contenido -NoNewline -Encoding utf8
-  & ./gradlew.bat :app:assembleRelease --no-daemon --console=plain --max-workers=4 '-Dorg.gradle.jvmargs=-Xmx3072m -XX:MaxMetaspaceSize=1024m'
+  & ./gradlew.bat :app:assembleRelease --no-daemon --console=plain --max-workers=4 '-Dorg.gradle.jvmargs=-Xmx3072m -XX:MaxMetaspaceSize=1024m' '-Pkotlin.incremental=false' '-Pkotlin.compiler.execution.strategy=in-process'
   if ($LASTEXITCODE -ne 0) { throw 'Falló la compilación. Revisa el log y la versión de Ninja indicada en el README.' }
   $salida = Join-Path $mobile 'artifacts'
   New-Item -ItemType Directory -Force -Path $salida | Out-Null
-  $apk = Join-Path $salida 'refluye-campo-0.3.0-pruebas.apk'
+  $apk = Join-Path $salida 'refluye-campo-0.3.1-pruebas.apk'
   Copy-Item -LiteralPath './app/build/outputs/apk/release/app-release.apk' -Destination $apk -Force
   $hash = Get-FileHash -LiteralPath $apk -Algorithm SHA256
   ($hash.Hash + '  ' + (Split-Path $apk -Leaf)) | Set-Content -LiteralPath ($apk + '.sha256') -Encoding ascii

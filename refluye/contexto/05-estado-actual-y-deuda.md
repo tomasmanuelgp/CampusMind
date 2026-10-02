@@ -1,5 +1,16 @@
 # 05 · Estado actual y deuda técnica
 
+## Corrección Bluetooth · 2026-10-02
+
+La app 0.3.1 corrige sensores ocultos por `ESTADO` textual del equipo histórico.
+Cada trama reciente se muestra en vivo, con curvas de 60 lecturas y diagnóstico
+del texto recibido, aunque otro campo impida analizar. TypeScript y 61 pruebas
+aprobados; el motor mantiene cobertura total. Evidencia de compilación y de
+prueba física en [F-002](../prompts/iteraciones/F-002.md). Los manuales Word y
+la hoja PDF se actualizaron a 0.3.1. La APK pasa build, firma y checksum; el
+Redmi 13 conectado por USB aparece con error 10 en Windows y no en ADB. La
+prueba real por Bluetooth queda para el equipo usuario con la APK nueva.
+
 ## Actualización de la aplicación · 2026-09-30
 
 La auditoría histórica inferior describe el repositorio original. El desarrollo

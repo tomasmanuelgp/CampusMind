@@ -21,6 +21,16 @@ async function estable(){
   for(let n=0;n<4;n++){vi.setSystemTime(100000+n*1500);mocks.recibir!(trama());}
 }
 describe('sesión de campo',()=>{
+  it('actualiza cada trama textual cambiante y limita el historial en vivo',async()=>{
+    await useSesion.getState().conectar('A','Re-Fluye A');
+    for(let n=0;n<65;n++){
+      vi.setSystemTime(100000+n*1500);
+      mocks.recibir!(`ESTADO:EXCELENTE\n${trama(n%2?7:8)}`);
+      expect(useSesion.getState().lecturas.at(-1)?.ph).toBe(n%2?7:8);
+    }
+    expect(useSesion.getState().lecturas).toHaveLength(60);
+    expect(useSesion.getState().capturar('Fuente').estabilidad).toBe('inicial');
+  });
   it('congela la lectura y permite finalizar después de perder Bluetooth',async()=>{
     await estable();const c=useSesion.getState().capturar('Quebrada');
     mocks.recibir!(trama(9));mocks.perder!();

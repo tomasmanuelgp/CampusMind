@@ -1,8 +1,8 @@
 # Re-Fluye · App Android de campo
 
-APK de pruebas actual: [Re-Fluye 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0).
+APK de pruebas actual: [Re-Fluye 0.3.1](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.1).
 Pendiente instalar y probar en un
-Android físico. [Evidencia de compilación](../refluye/prompts/iteraciones/D-005.md).
+Android físico. [Arreglo de Bluetooth y compilación](../refluye/prompts/iteraciones/F-002.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
 la observación humana y la identidad del proyecto Re-Fluye de CCD/UNAB.
@@ -11,6 +11,8 @@ El repositorio original no contenía una aplicación móvil recuperable.
 ## Lo implementado
 
 - Buscar/emparejar Re-Fluye, recordar el equipo y recuperar una conexión perdida.
+- Monitorear cada trama sin estabilidad ni calibración; curvas de 60 lecturas,
+  estado textual del firmware antiguo y diagnóstico de datos recibidos.
 - Leer pH, turbidez, TDS y temperatura; orientar desde la primera trama íntegra
   reciente. La estabilidad posterior mejora la confianza, pero no bloquea el análisis.
 - Mostrar ICA orientativo de 0 a 100 y cuatro mediciones visibles. El índice
@@ -74,7 +76,7 @@ esto no prueba compatibilidad en todos los modelos. El dispositivo necesita SPP.
 
 ## Verificación disponible
 
-54 pruebas: golden y combinaciones del motor, parser, SQLite real con adaptador
+61 pruebas: golden y combinaciones del motor, parser, monitoreo, SQLite real con adaptador
 de prueba y sesión con Bluetooth simulado. El motor exige 100 % de cobertura.
 El recorrido web DEMO se revisó a 390 y 320 px en 0.2.0; la primera lectura y el
 resultado directo para cocinar se comprobaron en navegador en 0.3.0. La recuperación del borrador

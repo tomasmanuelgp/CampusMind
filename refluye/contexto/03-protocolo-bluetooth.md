@@ -6,6 +6,25 @@
 
 ## Por qué existe este documento
 
+### Compatibilidad de recepción en la app 0.3.1
+
+El firmware nuevo mantiene `ESTADO:0/1/2`. Para recibir equipos anteriores, la
+app tolera `ESTADO` textual y un ICA auxiliar ilegible: los registra como avisos,
+sin invalidar los sensores. No traduce esas etiquetas a un permiso de uso. El
+motor calcula su propio índice y decisión. Los errores de sensores y de `VER`
+siguen bloqueando el análisis, pero no ocultan los demás valores en vivo.
+
+Cada trama cerrada con `---` actualiza la pantalla inmediatamente, sin exigir
+estabilidad ni calibración para visualizar. Se conservan hasta 60 tramas en
+memoria para las curvas; se cortan en valores inválidos y huecos de cinco
+segundos. Una lectura con más de cinco segundos o una desconexión deja de
+presentarse como actual. La captura para análisis sigue siendo una sola trama
+íntegra y reciente, nunca una mezcla de sensores de momentos distintos.
+
+El panel «Ver datos recibidos por Bluetooth» muestra la última trama, hora,
+cantidad retenida y avisos para diagnóstico. Este arreglo no requiere cambiar
+el firmware del prototipo que envía `ESTADO` textual.
+
 El repositorio original tiene **tres protocolos incompatibles** circulando al
 mismo tiempo:
 

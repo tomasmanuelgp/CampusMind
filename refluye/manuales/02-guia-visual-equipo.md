@@ -2,7 +2,7 @@
 
 **Formato de entrega:** hoja A4, dos caras, en [PDF listo para imprimir](../../output/pdf/refluye-guia-visual-equipo-a4.pdf). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
 
-**Edición de prototipo · 30 de septiembre de 2026.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
+**Edición de prototipo · 2 de octubre de 2026.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
 
 ## Cara 1 · Abre, conecta, mide
 
@@ -19,7 +19,7 @@
 ### 2 · Enciende y conecta
 
 - Enciende el equipo con la alimentación **etiquetada en tu unidad**.
-- Si aún no tienes la app, descarga la APK 0.3.0 desde el enlace/QR de esta hoja.
+- Si aún no tienes la app, descarga la APK 0.3.1 desde el enlace/QR de esta hoja.
 - Abre Re-Fluye en Android: **Medir agua → Buscar equipos cercanos**.
 - Acepta el permiso Bluetooth de Android. Elige **ReFluye-V2** y verifica su identificador; el firmware de referencia documenta PIN `1234`, si Android lo pide.
 - Sin equipo, toca **Practicar sin equipo · DEMO**; los resultados simulados no describen tu fuente.
@@ -28,7 +28,7 @@
 
 - Introduce únicamente sus extremos de medición en una muestra tomada de forma segura. No mojes la caja, conectores ni placas.
 - Evita chocar el bulbo de vidrio del pH contra el recipiente. No uses agua caliente con la sonda TDS de referencia.
-- Mantén las sondas quietas. Con la primera lectura completa ya puedes abrir una orientación; si varía, el resultado será **preliminar** y no autoriza consumo. Una lectura repetida tampoco prueba calibración.
+- Mantén las sondas quietas. Los números y curvas se actualizan con cada trama, sin esperar estabilidad. Con la primera lectura completa ya puedes abrir una orientación; si varía, el resultado será **preliminar** y no autoriza consumo. Una lectura repetida tampoco prueba calibración.
 
 ### 4 · Cuenta lo que ves
 
