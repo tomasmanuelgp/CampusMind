@@ -99,3 +99,7 @@ de la Universidad Autónoma de Bucaramanga (UNAB):
 Se conserva el contexto y firmware en `refluye`. El LICENSE de `mobile` pertenece
 a la plantilla Expo y no relicencia los materiales heredados. Véase la deuda de
 formalización de licencia en la documentación.
+
+### Actualización Re-Fluye 0.3.2
+
+[Descargar APK 0.3.2](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.2): conclusión visible desde el inicio y orientación que cambia con respuestas y sensores, sin guardar el análisis. Instalar sobre 0.3.1 sin desinstalar. Las guías de 0.3.1 se conservan; los cambios de esta pantalla están documentados en la iteración B-007.

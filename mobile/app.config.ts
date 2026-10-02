@@ -1,10 +1,10 @@
 import type { ExpoConfig } from 'expo/config';
 
 const config: ExpoConfig = {
-  name: 'Re-Fluye', slug: 'refluye', version: '0.3.1', scheme: 'refluye',
+  name: 'Re-Fluye', slug: 'refluye', version: '0.3.2', scheme: 'refluye',
   orientation: 'default', userInterfaceStyle: 'light', platforms: ['android', 'web'],
   android: {
-    package: 'co.refluye.campo', versionCode: 4, allowBackup: false,
+    package: 'co.refluye.campo', versionCode: 5, allowBackup: false,
     permissions: ['android.permission.BLUETOOTH', 'android.permission.BLUETOOTH_ADMIN',
       'android.permission.BLUETOOTH_SCAN', 'android.permission.BLUETOOTH_CONNECT',
       'android.permission.ACCESS_FINE_LOCATION'],

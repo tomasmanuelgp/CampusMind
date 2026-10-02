@@ -101,3 +101,7 @@ Contexto y continuidad: [CampusMind](https://github.com/tomasmanuelgp/CampusMind
 El archivo LICENSE de esta carpeta procede de la plantilla Expo; no cambia la
 licencia declarada de los materiales heredados. La formalización de la licencia
 global permanece pendiente antes de distribuir públicamente.
+
+## Actualización 0.3.2 · Conclusión dinámica
+
+La conclusión aparece desde el inicio de Medir y cambia con los sensores y respuestas, sin guardar. Junto a las observaciones se muestran los pasos del uso elegido. Sin datos/calibración/observaciones verificadas no se autoriza tratamiento; olor o aspecto de riesgo conserva el veto. Motor 0.3.0 sin cambios; 69 pruebas aprobadas. Iteración B-007. APK con versionCode 5.

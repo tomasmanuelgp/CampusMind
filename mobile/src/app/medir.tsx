@@ -5,7 +5,9 @@ import {Pantalla,Tarjeta,Texto,Boton,Campo,s,colores} from '../ui/componentes';
 import {useSesion} from '../aplicacion/sesion';
 import {esEstable,lecturaRecienteValida} from '../infraestructura/bluetooth/estabilidad';
 import {calcularIca} from '../dominio/motor';
-import type {Observacion,OlorTipo,Uso} from '../dominio/tipos';
+import type {Observacion,OlorTipo,Uso,Calibracion} from '../dominio/tipos';
+import {resumirEnVivo} from '../dominio/resumenEnVivo';
+import {leerAjuste} from '../infraestructura/db/repositorio';
 import Svg,{Polyline,Circle} from 'react-native-svg';
 import {lecturaEnVivo,segmentosSensor} from '../infraestructura/bluetooth/monitoreo';
 
@@ -28,7 +30,14 @@ function Grupo<T extends string>({titulo,ayuda,opciones,valor,elegir}:{titulo:st
 }
 
 export default function Medir(){
-  const {lecturas,estado,demo,nombreEquipo,error}=useSesion();
+  const {lecturas,estado,demo,nombreEquipo,equipo,error}=useSesion();
+  const [calibracion,setCalibracion]=useState<Calibracion|null>(null);
+  useEffect(()=>{
+    try{
+      const dato=demo?null:leerAjuste('calibracion:'+equipo);
+      setCalibracion(demo?{verificadaEn:0,venceEn:8640000000000000,responsable:'DEMO',referencia:'SIMULACIÓN'}:dato?JSON.parse(dato):null);
+    }catch{setCalibracion(null);}
+  },[equipo,demo]);
   const [ahora,setAhora]=useState(Date.now()),[fuente,setFuente]=useState('');
   const [uso,setUso]=useState<Uso|undefined>(),[observacion,setObservacion]=useState<Partial<Observacion>>({});
   const [guardando,setGuardando]=useState(false),[diagnostico,setDiagnostico]=useState(false);
@@ -37,6 +46,16 @@ export default function Medir(){
   const vivo=lecturaEnVivo(lecturas,estado,ahora);
   const estable=Boolean(lectura&&esEstable(lecturas,ahora));
   const ica=vivo?calcularIca(vivo):null;
+  const resumen=resumirEnVivo(vivo,observacion,calibracion,uso,estable);
+  const conclusion=(detallada=false)=><Tarjeta tono={resumen.tono}>
+    <Text style={s.etiqueta}>{demo?'PRÁCTICA · CONCLUSIÓN SIMULADA':'¿PUEDO CONSUMIR ESTA AGUA?'}</Text>
+    <Text accessibilityRole="header" accessibilityLiveRegion="polite" style={est.seccion}>{resumen.titulo}</Text>
+    <Texto>{resumen.detalle}</Texto>
+    {!resumen.confiable?<Texto suave>Evaluación preliminar no confiable: lectura inicial, datos u observaciones pendientes, o calibración sin verificar.</Texto>:null}
+    {resumen.uso?<Texto><Text style={{fontWeight:'800'}}>{resumen.uso}: </Text>{resumen.estadoUso}</Texto>:null}
+    {detallada?resumen.pasos.map((paso,i)=><Texto key={paso}>{i+1}. {paso}</Texto>):null}
+    <Texto suave>{resumen.descargo}</Texto>
+  </Tarjeta>;
   const completa=Boolean(fuente.trim()&&uso&&observacion.origen&&observacion.olor&&observacion.visual);
   const falta=[!fuente.trim()?'nombre de la fuente':null,!uso?'uso':null,!observacion.origen?'origen':null,!observacion.olor?'olor':null,!observacion.visual?'aspecto':null].filter(Boolean).join(', ');
   const elegirOlor=(valor:Observacion['olor'])=>setObservacion(v=>valor==='raro'?{...v,olor:valor}:{...v,olor:valor,olorTipo:undefined});
@@ -50,6 +69,7 @@ export default function Medir(){
   }catch(e){setGuardando(false);Alert.alert('No se guardó el análisis',e instanceof Error?e.message:'Reintenta. Tu lectura puede estar guardada como pendiente.');}};
   return <Pantalla titulo="Mide y observa" demo={demo} compacto>
     <Texto>Tu lectura y lo que observas, en un solo lugar. Nunca pruebes el agua.</Texto>
+    {conclusion()}
     {error?<Tarjeta tono="ambar"><Texto>{error}</Texto></Tarjeta>:null}
     <Tarjeta tono={vivo?'verde':'ambar'}><Text style={s.etiqueta}>{vivo?'● DATOS EN VIVO':estado==='desconectado'?'EQUIPO DESCONECTADO':'ESPERANDO DATOS…'}</Text>
       <Texto>{vivo?`Actualizado hace ${Math.max(0,Math.floor((ahora-vivo.recibidaEn)/1000))} s. Los valores cambian con cada lectura del equipo.`:'No hay una lectura reciente. Revisa la conexión y que el equipo esté enviando datos.'}</Texto>
@@ -78,6 +98,7 @@ export default function Medir(){
       {observacion.olor==='raro'?<Grupo titulo="¿A qué se parece?" ayuda="Este detalle no cambia la advertencia por olor." opciones={tiposOlor} valor={observacion.olorTipo} elegir={(v:OlorTipo)=>setObservacion(o=>({...o,olorTipo:v}))}/>:null}
       <Grupo titulo="¿Cómo se ve?" ayuda="Mira el agua y su superficie." opciones={aspectos} valor={observacion.visual} elegir={v=>setObservacion(o=>({...o,visual:v}))}/>
     </Tarjeta>
+    {conclusion(true)}
     {!completa?<Texto suave>Para analizar, completa: {falta}.</Texto>:null}
     <Boton texto="Ver qué puedo hacer con esta agua" disabled={!lectura||!completa||guardando} onPress={analizar}/>
     <Boton secundario texto="Volver a conectar" onPress={()=>router.replace('/conectar')}/>

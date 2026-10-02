@@ -1,5 +1,15 @@
 # 05 · Estado actual y deuda técnica
 
+## Conclusión dinámica · 2026-10-02
+
+La app 0.3.2 añade una conclusión visible al inicio de Medir y junto a las
+respuestas, con pasos por uso sin guardar ni completar nombre de fuente.
+Actualiza orientación con cada respuesta y lectura reciente. Se reutiliza el
+motor 0.3.0; no se certifica potabilidad. TypeScript y 69 pruebas aprobados;
+motor con cobertura 100 %. Recorrido web DEMO: favorable, olor extraño, agua
+verde y corrección de respuestas; anchos 390/320 px. La aceptación en Android
+físico sigue pendiente. Detalle en [B-007](../prompts/iteraciones/B-007.md).
+
 ## Corrección Bluetooth · 2026-10-02
 
 La app 0.3.1 corrige sensores ocultos por `ESTADO` textual del equipo histórico.

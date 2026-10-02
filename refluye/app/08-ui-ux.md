@@ -513,3 +513,15 @@ respeta en lo esencial:
 
 Se conserva: el semáforo, la paleta, guardar en historial y compartir por
 WhatsApp. Se descarta: el lenguaje de "APTA / potable" (ver doc 04).
+
+## B-007 · Conclusión en vivo (0.3.2)
+
+La pantalla Medir muestra la conclusión antes de los sensores y la repite junto
+a las respuestas con pasos para el uso seleccionado. Cambia con cada respuesta
+y lectura, sin guardar ni exigir nombre de fuente. Sin respuestas se muestra
+«No consumir todavía»; ante vetos «No consumir; busca otra fuente»; cuando el
+motor permite orientar tratamiento «Posible tratamiento antes de consumir».
+Las observaciones faltantes equivalen a «No sé». Se mantienen calibración,
+descargo microbiológico y restricciones del motor; nunca se confirma potabilidad.
+DEMO distingue la conclusión simulada. El botón final conserva el guardado del
+análisis completo; no es necesario pulsarlo para ver la orientación preliminar.

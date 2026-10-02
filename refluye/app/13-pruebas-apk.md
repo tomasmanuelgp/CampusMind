@@ -56,3 +56,11 @@ Registrar evidencia de estos casos y corregir cualquier bloqueo antes de una
 distribución fuera del equipo de pruebas. Validación de recomendaciones con el
 responsable sanitario y contraste de sensores con laboratorio siguen siendo
 trabajos distintos de la verificación de funcionamiento de la app.
+
+## Casos de aceptación 0.3.2 (pendientes en Android físico)
+1. Abrir Medir sin responder: conclusión visible No consumir todavía.
+2. Con lectura completa y calibración vigente, responder agua corriente, sin olor y clara, elegir Cocinar: posible tratamiento y pasos sin guardar ni nombre.
+3. Marcar Huele raro: veto inmediato; retirar pasos de hervido aunque ICA alto.
+4. Marcar verde o aceite: buscar otra fuente; corregir respuestas debe reevaluar.
+5. Desconectar o dejar de recibir cinco segundos: retirar posibilidad de tratamiento; mantener vetos por observaciones.
+6. Cambiar uso a baño/cultivos: orientación específica sin autorización de consumo.
