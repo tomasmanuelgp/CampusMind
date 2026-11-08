@@ -10,7 +10,7 @@ export default function EquipoPantalla(){
   const [responsable,setResponsable]=useState(''),[referencia,setReferencia]=useState(''),[fecha,setFecha]=useState(''),[vence,setVence]=useState('');
   useEffect(()=>{try{const e=leerAjuste('equipo');if(e){const valor=JSON.parse(e);setEquipo(valor);const c=leerAjuste('calibracion:'+valor.id);if(c)setCalibracion(JSON.parse(c));}}catch{Alert.alert('Registro no disponible','Puedes buscar el equipo otra vez.');}},[]);
   return <Pantalla titulo="Mi equipo">
-    <Tarjeta><Texto>{equipo?.nombre??'Todavía no has conectado un equipo'}</Texto><Texto>{calibracion?`Calibración registrada por ${calibracion.responsable}. Vigencia hasta ${new Date(calibracion.venceEn).toLocaleString('es-CO')}.`:'Calibración sin verificar. Tus resultados se marcarán no confiables hasta registrar evidencia técnica vigente.'}</Texto></Tarjeta>
+    <Tarjeta><Texto>{equipo?.nombre??'Todavía no has conectado un equipo'}</Texto><Texto>{calibracion?`Calibración declarada por ${calibracion.responsable}, vigente hasta ${new Date(calibracion.venceEn).toLocaleDateString('es-CO')}. La app guarda lo que se registra; no comprueba la sonda.`:'Calibración sin verificar. Tus resultados se marcarán no confiables hasta registrar evidencia técnica vigente.'}</Texto></Tarjeta>
     <Boton texto="Conectar o cambiar equipo" onPress={()=>router.push('/conectar')}/>
     <Boton secundario texto="Desconectar equipo" onPress={()=>void useSesion.getState().desconectar()}/>
     {equipo?<Boton secundario texto={editar?'Cerrar registro técnico':'Registrar calibración realizada'} onPress={()=>setEditar(!editar)}/>:null}

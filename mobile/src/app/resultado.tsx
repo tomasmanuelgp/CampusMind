@@ -45,7 +45,7 @@ export default function ResultadoPantalla(){
       {uso!=='cultivo'?<Texto>🌱 Cultivos: {r.destinos.riego}</Texto>:null}
     </Tarjeta>
     <Boton secundario texto={detalles?'Ocultar detalles técnicos':'Ver detalles técnicos'} onPress={()=>setDetalles(!detalles)}/>
-    {detalles?<Tarjeta><Texto>Origen: {c.observacion.origen} · Olor: {c.observacion.olor} · Aspecto: {c.observacion.visual}</Texto><Texto suave>Reglas {r.reglas.join(', ')} · Motor {r.version}</Texto></Tarjeta>:null}
+    {detalles?<Tarjeta><Texto>Origen: {c.observacion.origen} · Olor: {c.observacion.olor} · Aspecto: {c.observacion.visual}</Texto><Texto suave>Reglas {r.reglas.join(', ')} · Motor {r.version}</Texto><Texto suave>{c.demo?'Calibración simulada (DEMO).':c.calibracion?`Calibración declarada, vigente hasta ${new Date(c.calibracion.venceEn).toLocaleDateString('es-CO')}. La app no comprueba la sonda.`:'Sin calibración registrada.'}</Texto></Tarjeta>:null}
     <Texto suave>✓ Guardada en este teléfono{c.demo?' como práctica':''}. No necesitas internet.</Texto>
     <Boton secundario texto="Compartir resultado" onPress={()=>{void Share.share({message:resumen}).catch(()=>Alert.alert('No se pudo compartir','La medición sigue guardada en tu teléfono.'));}}/>
     <Boton texto="Nueva medición" onPress={()=>router.replace('/conectar')}/>
