@@ -2,8 +2,8 @@
 #
 # - En cada PR que toque la app: compila y deja la APK como
 #   artefacto descargable de la ejecución (comprobación de que la app compila).
-# - Al subir una etiqueta vX.Y.Z: además crea la publicación en «Releases» con la
-#   APK, su SHA-256 y los manuales en Word y PDF.
+# - Al subir una etiqueta vX.Y.Z, o al publicar un «Release» desde la web: crea
+#   o completa la publicación con la APK, su SHA-256 y los manuales en Word y PDF.
 #
 # Firma: si el repositorio tiene los secretos REFLUYE_KEYSTORE_BASE64,
 # REFLUYE_KEYSTORE_PASSWORD, REFLUYE_KEY_ALIAS y REFLUYE_KEY_PASSWORD, la APK se
@@ -16,6 +16,8 @@ on:
     paths: ['mobile/**', '.github/workflows/apk.yml']
   push:
     tags: ['v*']
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -132,4 +134,10 @@ jobs:
           También se adjuntan la guía de la app, la guía visual del equipo y el manual técnico (Word y PDF).
           Novedades: ver el [registro de cambios](https://github.com/${{ github.repository }}/blob/$ETIQUETA/CHANGELOG.md).
           NOTAS
-          gh release create "$ETIQUETA" salida/* --title "RE-FLUYE $VERSION" --notes-file notas.md $PRUEBAS
+          if gh release view "$ETIQUETA" >/dev/null 2>&1; then
+            # La publicación ya existe (creada desde la web): adjuntar archivos sin tocar sus notas.
+            gh release upload "$ETIQUETA" salida/* --clobber
+            if [ -n "$PRUEBAS" ]; then gh release edit "$ETIQUETA" --prerelease; fi
+          else
+            gh release create "$ETIQUETA" salida/* --title "RE-FLUYE $VERSION" --notes-file notas.md $PRUEBAS
+          fi
