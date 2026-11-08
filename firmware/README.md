@@ -34,7 +34,7 @@ Sobre esa base se aplicaron:
 - La lógica híbrida sale del firmware: el ESP32 solo preclasifica por sensores
 - `ESTADO:` numérico en vez de textual
 
-**Las correcciones F1–F4** (`refluye/contexto/02-hardware-y-firmware.md`):
+**Las correcciones F1–F4** (`docs/contexto/02-hardware-y-firmware.md`):
 - **F1** — `requestTemperatures()` con `setWaitForConversion(false)` y pedido
   adelantado: deja de bloquear ~750 ms por iteración
 - **F2** — promediado de 10 muestras por sensor
@@ -42,7 +42,7 @@ Sobre esa base se aplicaron:
   calibración de fábrica del ADC, que no es lineal
 - **F4** — cada sub-índice del ICA acotado a 0–100
 
-**El protocolo versionado** (`refluye/contexto/03-protocolo-bluetooth.md`):
+**El protocolo versionado** (`docs/protocolo-bluetooth.md`):
 - Línea `VER:1` al inicio de cada trama
 
 ### Los tres errores que se corrigieron
@@ -113,4 +113,4 @@ electrodo es distinto.** Procedimiento en la guía técnica parte 2 §7.3:
 
 Es el **riesgo mejor identificado y peor atendido del proyecto original**
 (probabilidad ALTA, impacto ALTO en su propia matriz de riesgos). La app debe
-guiarlo — ver `refluye/app/12-roadmap.md` fase 5.
+guiarlo — ver `docs/app/12-roadmap.md` fase 5.

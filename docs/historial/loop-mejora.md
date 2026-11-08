@@ -6,7 +6,7 @@ el proyecto Re-Fluye.
 **Uso con Claude Code:**
 
 ```
-/loop refluye/prompts/loop-mejora.md
+/loop docs/historial/loop-mejora.md
 ```
 
 O pegando el bloque de abajo directamente. Sin intervalo, el modelo se autorregula
@@ -25,8 +25,8 @@ temperatura.
 ## Antes de tocar nada
 
 Lee, en este orden:
-1. refluye/README.md
-2. refluye/contexto/05-estado-actual-y-deuda.md
+1. docs/README.md
+2. docs/contexto/05-estado-actual-y-deuda.md
 3. El documento específico del área en la que vas a trabajar
 
 No propongas cambios sin haber leído el documento del área correspondiente. La
@@ -79,7 +79,7 @@ el campo. Prometer más de lo que el equipo sabe es el peor error posible.
 5. ACTUALIZA LA DOCUMENTACIÓN. Un cambio no documentado es deuda inmediata.
    Este proyecto ya murió una vez por desincronización entre documentos y código.
 
-6. REGISTRA. Añade una línea a refluye/prompts/bitacora.md:
+6. REGISTRA. Añade una línea a docs/historial/bitacora.md:
    fecha · área · qué cambió · por qué · cómo se verificó
 
 ## Cómo elegir qué mejorar
@@ -173,7 +173,7 @@ Añade al final del prompt:
 
 ```
 Esta iteración trabaja únicamente en el área [X]. No propongas cambios en otras
-áreas aunque los detectes; anótalos en refluye/prompts/pendientes.md y sigue.
+áreas aunque los detectes; anótalos en docs/historial/pendientes.md y sigue.
 ```
 
 ### Iteración de auditoría (sin escribir código)
@@ -201,6 +201,6 @@ NO elimina. Redacta uno completo antes de empezar el siguiente.
 
 | Archivo | Contenido |
 |---|---|
-| `refluye/prompts/bitacora.md` | Una línea por iteración: fecha, área, cambio, verificación |
-| `refluye/prompts/pendientes.md` | Hallazgos detectados fuera del área de la iteración |
-| `refluye/prompts/decisiones.md` | Decisiones que requirieron criterio humano |
+| `docs/historial/bitacora.md` | Una línea por iteración: fecha, área, cambio, verificación |
+| `docs/historial/pendientes.md` | Hallazgos detectados fuera del área de la iteración |
+| `docs/historial/decisiones.md` | Decisiones que requirieron criterio humano |

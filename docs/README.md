@@ -26,7 +26,7 @@ a construir**.
 |---|---|---|
 | 01 | [`contexto/01-proyecto.md`](contexto/01-proyecto.md) | Qué es Re-Fluye, para quién, qué problema resuelve, quiénes son los actores |
 | 02 | [`contexto/02-hardware-y-firmware.md`](contexto/02-hardware-y-firmware.md) | El ESP32, los sensores, la PCB, el firmware y sus seis versiones |
-| 03 | [`contexto/03-protocolo-bluetooth.md`](contexto/03-protocolo-bluetooth.md) | **El contrato entre app y dispositivo.** Documento normativo |
+| 03 | [`protocolo-bluetooth.md`](protocolo-bluetooth.md) | **El contrato entre app y dispositivo.** Documento normativo |
 | 04 | [`contexto/04-dominio-agua.md`](contexto/04-dominio-agua.md) | ICA, normativa, rangos por destino, qué mide y qué NO mide el equipo |
 | 05 | [`contexto/05-estado-actual-y-deuda.md`](contexto/05-estado-actual-y-deuda.md) | Auditoría: bloqueos, contradicciones, defectos verificados |
 
@@ -46,16 +46,16 @@ a construir**.
 
 | Archivo | Uso |
 |---|---|
-| [`prompts/loop-mejora.md`](prompts/loop-mejora.md) | Prompt del ciclo iterativo de mejora |
+| [`historial/loop-mejora.md`](historial/loop-mejora.md) | Prompt del ciclo iterativo de mejora |
 | [`../CLAUDE.md`](../CLAUDE.md) | Contexto permanente para agentes que trabajen en el repo |
 
 ### Manuales de la versión 0.3.1
 
 | Pieza | Destinatario | Formato |
 |---|---|---|
-| [Guía de la app](manuales/01-guia-app.md) | Persona que mide y facilitador | Lectura digital y [Word editable](../output/word/refluye-guia-app.docx) |
-| [Guía visual del equipo](../output/pdf/refluye-guia-visual-equipo-a4.pdf) | Persona que recibe el prototipo | A4 a doble cara; [Word editable](../output/word/refluye-guia-visual-equipo-a4.docx) y [texto fuente](manuales/02-guia-visual-equipo.md) |
-| [Manual técnico](manuales/03-manual-tecnico.md) | Soporte, desarrollo y calibración | Documento versionable y [Word editable](../output/word/refluye-manual-tecnico.docx) |
+| [Guía de la app](manuales/01-guia-app.md) | Persona que mide y facilitador | Lectura digital; Word en cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) |
+| [Guía visual del equipo](manuales/02-guia-visual-equipo.md) | Persona que recibe el prototipo | A4 a doble cara; PDF y Word en cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) y [texto fuente](manuales/02-guia-visual-equipo.md) |
+| [Manual técnico](manuales/03-manual-tecnico.md) | Soporte, desarrollo y calibración | Documento versionable; Word en cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) |
 
 La guía impresa requiere completar los datos reales de alimentación, sondas,
 calibración y soporte de cada unidad antes de entregarla. Ningún manual sustituye

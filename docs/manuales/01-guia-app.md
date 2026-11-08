@@ -33,7 +33,7 @@ La versión web permite recorrer DEMO desde un computador con `npm run web`; el 
 3. Selecciona **ReFluye-V2** y comprueba los últimos caracteres de su identificador si hay varios equipos con el mismo nombre. Si Android solicita PIN, el firmware de referencia documenta `1234`; confirma con la persona responsable si el prototipo usa otro.
 4. Espera **recibiendo datos**. Si no conecta, revisa alimentación, distancia, permisos y emparejamiento; vuelve a buscar. La app recuerda el equipo y ofrece conectarlo en la siguiente sesión. Ante un corte de radio, intenta recuperar ese mismo equipo hasta tres veces; puedes tocar **Desconectar equipo** para cancelar.
 
-La app no envía órdenes de medición ni calibra a distancia: el ESP32 emite datos por Bluetooth Classic SPP. La primera conexión y la reconexión deben comprobarse con el prototipo físico. [Contrato de comunicación](../contexto/03-protocolo-bluetooth.md).
+La app no envía órdenes de medición ni calibra a distancia: el ESP32 emite datos por Bluetooth Classic SPP. La primera conexión y la reconexión deben comprobarse con el prototipo físico. [Contrato de comunicación](../protocolo-bluetooth.md).
 
 ## 5. Medir y observar en una sola pantalla
 

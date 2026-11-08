@@ -8,7 +8,7 @@ Actualiza orientación con cada respuesta y lectura reciente. Se reutiliza el
 motor 0.3.0; no se certifica potabilidad. TypeScript y 69 pruebas aprobados;
 motor con cobertura 100 %. Recorrido web DEMO: favorable, olor extraño, agua
 verde y corrección de respuestas; anchos 390/320 px. La aceptación en Android
-físico sigue pendiente. Detalle en [B-007](../prompts/iteraciones/B-007.md).
+físico sigue pendiente. Detalle en [B-007](../historial/iteraciones/B-007.md).
 
 ## Corrección Bluetooth · 2026-10-02
 
@@ -16,7 +16,7 @@ La app 0.3.1 corrige sensores ocultos por `ESTADO` textual del equipo histórico
 Cada trama reciente se muestra en vivo, con curvas de 60 lecturas y diagnóstico
 del texto recibido, aunque otro campo impida analizar. TypeScript y 61 pruebas
 aprobados; el motor mantiene cobertura total. Evidencia de compilación y de
-prueba física en [F-002](../prompts/iteraciones/F-002.md). Los manuales Word y
+prueba física en [F-002](../historial/iteraciones/F-002.md). Los manuales Word y
 la hoja PDF se actualizaron a 0.3.1. La APK pasa build, firma y checksum; el
 Redmi 13 conectado por USB aparece con error 10 en Windows y no en ADB. La
 prueba real por Bluetooth queda para el equipo usuario con la APK nueva.

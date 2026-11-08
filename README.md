@@ -42,7 +42,7 @@ aceptación. No certifica potabilidad ni detecta microorganismos.
    marca como provisional; la estabilidad temporal y la calibración vigente
    cambian la fiabilidad, y ninguna lectura certifica que el agua sea bebible.
 
-El [guion de aceptación](refluye/app/13-pruebas-apk.md) indica qué revisar en el
+El [guion de aceptación](docs/app/13-pruebas-apk.md) indica qué revisar en el
 teléfono. Una pantalla DEMO no verifica la conexión con el dispositivo físico.
 
 ## Abrir el proyecto en otro computador
@@ -78,13 +78,13 @@ Incluye reconexión limitada, persistencia SQLite, historial, guía y modo DEMO.
 No incluye todavía backend, IA, geolocalización ni dosificación de cloro.
 
 - [Instrucciones de desarrollo y compilación Android](mobile/README.md)
-- [Documentación del proyecto](refluye/README.md)
-- [Guion de aceptación en teléfono](refluye/app/13-pruebas-apk.md)
-- [Guía de la app](refluye/manuales/01-guia-app.md)
-- [Guía visual A4 del equipo](output/pdf/refluye-guia-visual-equipo-a4.pdf)
-- [Manual técnico del sistema](refluye/manuales/03-manual-tecnico.md)
-- Manuales en Word: [app](output/word/refluye-guia-app.docx), [guía visual A4](output/word/refluye-guia-visual-equipo-a4.docx) y [técnico](output/word/refluye-manual-tecnico.docx)
-- [Bitácora del ciclo de mejora](refluye/prompts/bitacora.md)
+- [Documentación del proyecto](docs/README.md)
+- [Guion de aceptación en teléfono](docs/app/13-pruebas-apk.md)
+- [Guía de la app](docs/manuales/01-guia-app.md)
+- [Guía visual A4 del equipo](docs/manuales/02-guia-visual-equipo.md)
+- [Manual técnico del sistema](docs/manuales/03-manual-tecnico.md)
+- Manuales en Word y PDF: adjuntos a cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases)
+- [Bitácora del ciclo de mejora](docs/historial/bitacora.md)
 
 Las dependencias se recuperan con `npm ci`; el SDK Android, JDK, cachés, datos
 locales y archivos de compilación no se incluyen en Git. Para compilar otra APK,

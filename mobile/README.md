@@ -2,7 +2,7 @@
 
 APK de pruebas actual: [Re-Fluye 0.3.1](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.1).
 Pendiente instalar y probar en un
-Android físico. [Arreglo de Bluetooth y compilación](../refluye/prompts/iteraciones/F-002.md).
+Android físico. [Arreglo de Bluetooth y compilación](../docs/historial/iteraciones/F-002.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
 la observación humana y la identidad del proyecto Re-Fluye de CCD/UNAB.
@@ -113,8 +113,8 @@ resultado directo para cocinar se comprobaron en navegador en 0.3.0. La recupera
 pertenece al flujo anterior y debe comprobarse de nuevo con esta interfaz.
 Estas comprobaciones no sustituyen Android físico.
 
-Guion pendiente: [Pruebas de campo](../refluye/app/13-pruebas-apk.md).
-Iteraciones y evidencia: [bitácora](../refluye/prompts/bitacora.md).
+Guion pendiente: [Pruebas de campo](../docs/app/13-pruebas-apk.md).
+Iteraciones y evidencia: [bitácora](../docs/historial/bitacora.md).
 
 ## Estructura
 

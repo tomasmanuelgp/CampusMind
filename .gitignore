@@ -8,3 +8,4 @@ tmp/pdfs/
 .env
 .env.*
 !.env.example
+output/

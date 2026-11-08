@@ -14,7 +14,7 @@ El proyecto original de Alfredo Antonio Díaz Claros, CCD de la Universidad Aut�
 | Pieza | Ubicación | Estado comprobado |
 |---|---|---|
 | Firmware ESP32 V2.3 | `firmware/refluye_v2/refluye_v2.ino` | Compilación de referencia; no validación con toda la unidad física. |
-| Protocolo | `refluye/contexto/03-protocolo-bluetooth.md` | Contrato `VER:1`, SPP, texto por líneas; parser probado. |
+| Protocolo | `docs/protocolo-bluetooth.md` | Contrato `VER:1`, SPP, texto por líneas; parser probado. |
 | App | `mobile/src` | TypeScript, 61 pruebas y APK Android 0.3.0 de pruebas. |
 | APK interna | [Publicación 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0) | Compilación y verificación técnica documentadas; instalación real pendiente. |
 | PCB y carcasa originales | Repositorio `adiacla/refluye` | Diseño histórico auditado; no se verificó el ensamblaje exacto de cada equipo actual. |
@@ -120,13 +120,13 @@ npx expo prebuild --platform android --no-install
 npm run android
 ```
 
-Para una APK de pruebas en este workspace, configura `JAVA_HOME` y `ANDROID_HOME` y ejecuta `./scripts/compilar-apk.ps1`. El script ejecuta TypeScript/pruebas, prebuild y Gradle; genera `mobile/artifacts/refluye-campo-0.3.1-pruebas.apk` y `.sha256`. Si la unidad `R:` ya está ocupada, pasa `-Unidad S` u otra letra libre. Requiere Ninja moderno y memoria suficiente; en la compilación anterior se empleó Ninja 1.13.2 y ruta corta temporal. El directorio `android/` lo genera Expo, así que los cambios permanentes de permisos/configuración están en `mobile/app.config.ts` y `mobile/plugins/with-permisos-campo.js`. [Detalle de compilación anterior](../prompts/iteraciones/D-005.md).
+Para una APK de pruebas en este workspace, configura `JAVA_HOME` y `ANDROID_HOME` y ejecuta `./scripts/compilar-apk.ps1`. El script ejecuta TypeScript/pruebas, prebuild y Gradle; genera `mobile/artifacts/refluye-campo-0.3.1-pruebas.apk` y `.sha256`. Si la unidad `R:` ya está ocupada, pasa `-Unidad S` u otra letra libre. Requiere Ninja moderno y memoria suficiente; en la compilación anterior se empleó Ninja 1.13.2 y ruta corta temporal. El directorio `android/` lo genera Expo, así que los cambios permanentes de permisos/configuración están en `mobile/app.config.ts` y `mobile/plugins/with-permisos-campo.js`. [Detalle de compilación anterior](../historial/iteraciones/D-005.md).
 
 Para **instalar la APK sin desarrollar**, abre la publicación 0.3.1 en el teléfono, descarga el archivo APK desde Assets, permite instalar desde esa fuente cuando Android lo pida, abre Re-Fluye y prueba DEMO antes de Bluetooth. El código de versión sube a 4; hay que comprobar que la firma coincide con 0.2.0 y que el historial se conserva en un Android real. No desinstales la versión vieja si necesitas conservar datos. [Guía de la app](01-guia-app.md).
 
 ## 9. Pruebas, estudios y criterios de liberación
 
-`npm run test:coverage` ejecuta 61 pruebas, incluidos 22 escenarios golden, parser, estabilidad/sesión y SQLite con adaptador de prueba. El motor alcanza 100 % de cobertura de ramas, líneas, funciones y sentencias; esto detecta regresiones de código, **no valida el agua real**. `npm run typecheck` verifica TypeScript. La APK 0.3.1 pasó compilación release, firma, permisos y checksum; la interfaz nueva se recorrió en la web DEMO. Android físico sigue pendiente. [Evidencia 0.3.0 D-007](../prompts/iteraciones/D-007.md). La compilación y corrección 0.3.1 se registran en [F-002](../prompts/iteraciones/F-002.md).
+`npm run test:coverage` ejecuta 61 pruebas, incluidos 22 escenarios golden, parser, estabilidad/sesión y SQLite con adaptador de prueba. El motor alcanza 100 % de cobertura de ramas, líneas, funciones y sentencias; esto detecta regresiones de código, **no valida el agua real**. `npm run typecheck` verifica TypeScript. La APK 0.3.1 pasó compilación release, firma, permisos y checksum; la interfaz nueva se recorrió en la web DEMO. Android físico sigue pendiente. [Evidencia 0.3.0 D-007](../historial/iteraciones/D-007.md). La compilación y corrección 0.3.1 se registran en [F-002](../historial/iteraciones/F-002.md).
 
 Para dar por aceptada una unidad física faltan, al menos: identificar BOM exacta y alimentación; comprobar tensiones, temperatura, carcasa y partes sumergibles; corregir o descartar defectos de PCB histórica; calibrar con patrones trazables y caracterizar rangos/repetibilidad contra laboratorio; probar Android 7–16 con varios teléfonos SPP; verificar actualización 0.3.0→0.3.1, pérdida de conexión, batería, permisos, TalkBack, voz sin internet, lectura bajo sol y usuarios reales. El [guion de aceptación](../app/13-pruebas-apk.md) registra cada caso. Ningún documento disponible demuestra sensibilidad/especificidad para contaminantes o validez sanitaria de recomendaciones para ganado, cultivos y baño.
 
@@ -141,7 +141,7 @@ Para dar por aceptada una unidad física faltan, al menos: identificar BOM exact
 ## 10. Fuentes y trazabilidad documental
 
 - Repositorio actual: [CampusMind](https://github.com/tomasmanuelgp/CampusMind), carpetas `firmware/`, `mobile/` y `refluye/`. Repositorio original: [adiacla/refluye](https://github.com/adiacla/refluye).
-- Contratos internos: [hardware y firmware](../contexto/02-hardware-y-firmware.md), [Bluetooth](../contexto/03-protocolo-bluetooth.md), [dominio del agua](../contexto/04-dominio-agua.md), [motor implementado](../app/09-motor-recomendaciones.md), [bitácora](../prompts/bitacora.md).
+- Contratos internos: [hardware y firmware](../contexto/02-hardware-y-firmware.md), [Bluetooth](../protocolo-bluetooth.md), [dominio del agua](../contexto/04-dominio-agua.md), [motor implementado](../app/09-motor-recomendaciones.md), [bitácora](../historial/bitacora.md).
 - Fichas primarias: [DFRobot SEN0161 pH](https://wiki.dfrobot.com/sen0161/docs/19898), [SEN0189 turbidez](https://wiki.dfrobot.com/sen0189), [SEN0244 TDS](https://wiki.dfrobot.com/sen0244), [Analog Devices DS18B20](https://www.analog.com/en/products/ds18b20.html).
 - Guías técnicas externas: [CDC, agua en emergencias](https://www.cdc.gov/water-emergency/about/index.html), [Android, permisos Bluetooth](https://developer.android.com/develop/connectivity/bluetooth/bt-permissions), [Expo SDK 57](https://docs.expo.dev/versions/v57.0.0/).
 

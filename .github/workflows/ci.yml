@@ -36,6 +36,13 @@ jobs:
         # Expo SDK 58 (ver AUDITORIA.md, A4). Este umbral se subirá a «high».
         run: npm audit --omit=dev --audit-level=critical
 
+  documentacion:
+    name: Enlaces de la documentación
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 scripts/verificar-enlaces.py
+
   firmware:
     name: Firmware ESP32
     runs-on: ubuntu-latest

@@ -5,8 +5,8 @@
  * (Alfredo Antonio Diaz Claros - CCD, UNAB), con:
  *   - los tres cambios intencionales de la V2.1 (sin pulsadores, logica
  *     observacional delegada a la app, ESTADO numerico)
- *   - las correcciones F1-F4 documentadas en refluye/contexto/02
- *   - la linea VER del protocolo (refluye/contexto/03)
+ *   - las correcciones F1-F4 documentadas en docs/contexto/02
+ *   - la linea VER del protocolo (docs/protocolo-bluetooth.md)
  *   - V2.3: la pantalla y los LED ya no muestran un veredicto (regla S1).
  *     El equipo solo con sensores no puede saber si el agua sirve para
  *     beber: no ve microbios, olor ni color. La trama Bluetooth no cambia.
@@ -16,7 +16,7 @@
  *   Las observaciones humanas (origen, olor, aspecto) las captura la app,
  *   que es quien calcula el veredicto final.
  *
- * PROTOCOLO (normativo: refluye/contexto/03-protocolo-bluetooth.md)
+ * PROTOCOLO (normativo: docs/protocolo-bluetooth.md)
  *   Bluetooth Classic SPP - nombre "ReFluye-V2" - PIN 1234 - trama cada 1.5 s
  *
  *     VER:1
@@ -37,7 +37,7 @@
  *   Amarillo -> parpadea en cada medicion (el equipo esta midiendo)
  *   Rojo     -> algun sensor esta en el limite de su escala o no responde
  *
- * DEFECTOS CONOCIDOS DE LA PCB (ver refluye/contexto/02)
+ * DEFECTOS CONOCIDOS DE LA PCB (ver docs/contexto/02)
  *   P1: el SCL del LCD esta ruteado al pin Tx, no a GPIO22 -> el LCD no
  *       funcionara en la placa fabricada. En protoboard, cablear a GPIO22.
  *   P2: falta el pull-up de 4.7k del DS18B20 -> TEMP llegara como -127.

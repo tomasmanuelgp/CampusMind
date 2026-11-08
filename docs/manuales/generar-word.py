@@ -14,7 +14,7 @@ from docx.shared import Cm, Pt, RGBColor
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCES = ROOT / "refluye" / "manuales"
+SOURCES = ROOT / "docs" / "manuales"
 OUTPUT = ROOT / "output" / "word"
 BLUE = RGBColor(18, 72, 102)
 TEAL = RGBColor(0, 112, 116)

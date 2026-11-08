@@ -1,6 +1,6 @@
 # Re-Fluye · Guía visual para acompañar el producto
 
-**Formato de entrega:** hoja A4, dos caras, en [PDF listo para imprimir](../../output/pdf/refluye-guia-visual-equipo-a4.pdf). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
+**Formato de entrega:** hoja A4, dos caras, en PDF listo para imprimir, adjunto a cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) (se genera con `generar-guia-visual.py`). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
 
 **Edición de prototipo · 2 de octubre de 2026.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
 
@@ -74,4 +74,4 @@ Las indicaciones específicas de pH y TDS corresponden a las referencias DFRobot
 | Vigente hasta | ______________________________ |
 | Contacto de soporte | ______________________________ |
 
-**Versión de app:** 0.3.0 · **Documento:** guía de prototipo 0.2 · **Origen:** CCD / UNAB, proyecto Re-Fluye. Para el procedimiento completo de la app: `refluye/manuales/01-guia-app.md`. Para mantenimiento y montaje: `refluye/manuales/03-manual-tecnico.md`.
+**Versión de app:** 0.3.0 · **Documento:** guía de prototipo 0.2 · **Origen:** CCD / UNAB, proyecto Re-Fluye. Para el procedimiento completo de la app: `docs/manuales/01-guia-app.md`. Para mantenimiento y montaje: `docs/manuales/03-manual-tecnico.md`.

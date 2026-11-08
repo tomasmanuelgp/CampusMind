@@ -17,7 +17,7 @@ panel. Una sola trama íntegra y reciente habilita el análisis, aunque aún var
 El resultado distingue lectura inicial de lectura repetida, prioriza **qué hacer
 ahora** y presenta para beber o cocinar los pasos de aclarado y hervor sin abrir
 la guía detallada. El índice no autoriza consumo; olor, aspecto, calibración y
-variación pueden cambiar la orientación. [B-006](../prompts/iteraciones/B-006.md).
+variación pueden cambiar la orientación. [B-006](../historial/iteraciones/B-006.md).
 
 Los bocetos de medición con botón inactivo hasta estabilidad, más abajo, son
 históricos y ya no describen la pantalla 0.3.0.
@@ -31,10 +31,10 @@ teléfono. DEMO está separado de las capturas reales. Las preguntas y los pasos
 vuelven al inicio al avanzar; el historial incluye el descargo microbiológico.
 Las preguntas se reúnen en la pantalla de medición; el flujo anterior de tres
 pantallas queda para recuperar borradores anteriores. La persona nombra la fuente,
-elige un uso y marca origen, olor y aspecto antes de analizar: [B-004](../prompts/iteraciones/B-004.md).
-Recorrido web DEMO revisado a 390 y 320 px: [B-002](../prompts/iteraciones/B-002.md).
+elige un uso y marca origen, olor y aspecto antes de analizar: [B-004](../historial/iteraciones/B-004.md).
+Recorrido web DEMO revisado a 390 y 320 px: [B-002](../historial/iteraciones/B-002.md).
 La condición para beber o cocinar y el descargo microbiológico ahora se leen antes
-del primer desplazamiento en resultado, incluso a 320 px: [B-003](../prompts/iteraciones/B-003.md).
+del primer desplazamiento en resultado, incluso a 320 px: [B-003](../historial/iteraciones/B-003.md).
 Faltan pruebas Android de TalkBack, escalado 130 %, voz instalada y uso en campo.
 Los bocetos siguientes son la visión completa: no hay todavía videos, fotos,
 asistente, fuentes geográficas ni cloración en la aplicación inicial.

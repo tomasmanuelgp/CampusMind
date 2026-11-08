@@ -2,7 +2,7 @@
 
 Código: `../../mobile/src/dominio/motor.ts`. Instrucciones: `protocolos.ts`.
 Casos esperados: `__tests__/casos-golden.json` en ese mismo directorio.
-El [diseño inicial](../historico/09-diseno-inicial-no-vigente.md) se conserva como
+El [diseño inicial](../historial/09-diseno-inicial-no-vigente.md) se conserva como
 historia; sus dosis, cadenas y autorizaciones por destino no están vigentes.
 
 ## Contrato y fiabilidad
@@ -77,7 +77,7 @@ son decisiones del proyecto; no certifican cumplimiento sanitario.
 Solo el tercer plan orienta tratamiento para consumo humano; nunca declara el
 agua potable. Los demás dicen «No consumir con esta evaluación». Animales y
 riego requieren evaluación específica; con alternativa se muestran no recomendados.
-La [iteración A-003](../prompts/iteraciones/A-003.md) añade destinos para baño,
+La [iteración A-003](../historial/iteraciones/A-003.md) añade destinos para baño,
 utensilios de comida y ropa. Un resultado favorable no autoriza el baño: los
 sensores no detectan microorganismos. Si se sospecha combustible u otro peligro
 que activa `alternativa`, no se recomienda contacto ni limpieza con esta agua.

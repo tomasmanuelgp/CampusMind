@@ -19,7 +19,7 @@ El resto del documento describe la arquitectura objetivo: sincronización, backe
 IA, fuentes geográficas, videos y traducciones aún no están implementados. No hay
 coordenadas ni solicitudes de red en el flujo de medición. Las pruebas actuales usan
 Vitest, incluida integración con SQLite real mediante `node:sqlite`; falta comprobar
-el puente nativo en Android. Véase [D-002](../prompts/iteraciones/D-002.md).
+el puente nativo en Android. Véase [D-002](../historial/iteraciones/D-002.md).
 
 ## Stack
 
