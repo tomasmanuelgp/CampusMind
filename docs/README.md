@@ -27,6 +27,7 @@ propio RE-FLUYE:
 | [motor-de-reglas.md](motor-de-reglas.md) | Cómo decide la app, regla por regla, y cómo se prueba |
 | [datos.md](datos.md) | Qué se guarda, dónde, diccionario de datos y privacidad |
 | [materiales.csv](materiales.csv) | Lista de materiales con precios de noviembre de 2026 |
+| [publicar.md](publicar.md) | Paso a paso para publicar una versión y dejar el repositorio listo |
 
 Licencia de esta carpeta: [CC BY-NC-SA 4.0](LICENSE) (ver [LICENCIAS.md](../LICENCIAS.md)).
 

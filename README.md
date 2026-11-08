@@ -78,6 +78,7 @@ Documentación principal:
 - [Protocolo Bluetooth](docs/protocolo-bluetooth.md): cómo se hablan el equipo y la app.
 - [Motor de reglas](docs/motor-de-reglas.md): cómo decide la app, regla por regla.
 - [Datos](docs/datos.md): qué se guarda, dónde y el diccionario de datos.
+- [Cómo publicar una versión](docs/publicar.md): paso a paso para mantenedores.
 - [Índice completo de la documentación](docs/README.md).
 
 ## Construye tu RE-FLUYE

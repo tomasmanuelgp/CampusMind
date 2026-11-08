@@ -71,9 +71,11 @@ coincidan con el dominio (`veredicto`, `turbidez`, `esEstancada`).
 
 ## Estado actual
 
-Aplicación de campo en `mobile/` (0.3.2): Bluetooth Classic, modo DEMO, motor
-determinista, SQLite (esquema v2), observaciones, resultados, guías y derechos
-del titular (borrar y exportar). Firmware V2.3 en `firmware/`. Las cifras de
+Aplicación de campo en `mobile/` (1.0.0): nuevo frontend, Bluetooth Classic,
+modo DEMO, motor determinista 0.4.0 (con R17), SQLite (esquema v2),
+observaciones, resultados, guías y derechos del titular (borrar y exportar).
+La APK se compila y publica en GitHub (`.github/workflows/apk.yml`); cómo
+publicar: `docs/publicar.md`. Firmware V2.3 en `firmware/`. Las cifras de
 pruebas y cobertura **no se copian a mano**: las da la CI (`.github/workflows/ci.yml`);
 todo `src/dominio/` exige 100 % de cobertura. Aceptación en Android físico
 pendiente. Backend e IA aún no implementados.
