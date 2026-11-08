@@ -1,0 +1,54 @@
+# Revisión automática de cada cambio: tipos, pruebas, cobertura del motor,
+# dependencias y compilación del firmware. Si algo falla, el cambio no entra.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    name: Aplicación (mobile)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Revisar tipos
+        run: npm run typecheck
+      - name: Pruebas y cobertura del dominio
+        run: npm run test:coverage
+      - name: Vulnerabilidades críticas en dependencias de la app
+        # Las altas restantes vienen de expo-router 57 y se corrigen al migrar a
+        # Expo SDK 58 (ver AUDITORIA.md, A4). Este umbral se subirá a «high».
+        run: npm audit --omit=dev --audit-level=critical
+
+  firmware:
+    name: Firmware ESP32
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: esp32:esp32:esp32
+          platforms: |
+            - name: esp32:esp32
+              source-url: https://espressif.github.io/arduino-esp32/package_esp32_index.json
+              version: 2.0.17
+          libraries: |
+            - name: LiquidCrystal I2C
+            - name: OneWire
+            - name: DallasTemperature
+          sketch-paths: |
+            - firmware/refluye_v2
