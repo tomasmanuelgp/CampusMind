@@ -16,6 +16,7 @@ export default function Inicio(){
     <Boton secundario texto="Mis mediciones" icono="≡" onPress={()=>router.push('/historial')}/>
     <Boton secundario texto="Mi equipo y calibración" icono="◎" onPress={()=>router.push('/equipo')}/>
     <Boton secundario texto="Aprender a medir" icono="?" onPress={()=>router.push('/aprender')}/>
+    <Boton secundario texto="Tus datos" icono="⚿" onPress={()=>router.push('/datos')}/>
     <Texto suave>Medimos pH, turbidez, sólidos disueltos y temperatura. El equipo no detecta microorganismos.</Texto>
   </Pantalla>;
 }

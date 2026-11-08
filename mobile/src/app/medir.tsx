@@ -89,7 +89,7 @@ export default function Medir(){
       <Texto>{estable?'Variación pequeña entre las últimas lecturas.':'Los valores pueden variar; eso no impide verlos.'}</Texto>
       {ultima?.avisos?.map(a=><Texto key={a}>{a}</Texto>)}<Text selectable style={est.trama}>{ultima?.tramaOriginal||'Todavía no se recibió una trama de sensores cerrada con ---.'}</Text></Tarjeta>:null}
     {!demo?<Texto suave>Sin registro de calibración vigente, el resultado no se considera confiable aunque las cifras se repitan.</Texto>:null}
-    <Tarjeta tono="cielo"><Text style={est.seccion}>Nombra la fuente</Text><Campo etiqueta="¿Dónde tomaste esta agua?" placeholder="Ej. Quebrada de la finca" value={fuente} maxLength={80} onChangeText={setFuente}/></Tarjeta>
+    <Tarjeta tono="cielo"><Text style={est.seccion}>Nombra la fuente</Text><Campo etiqueta="¿Dónde tomaste esta agua?" placeholder="Ej. Quebrada de la finca" value={fuente} maxLength={80} onChangeText={setFuente}/><Texto suave>Usa el nombre del lugar, no de personas.</Texto></Tarjeta>
     <Tarjeta tono="lima"><Text style={est.seccion}>¿Para qué usarás el agua?</Text><Texto suave>Elige el uso que necesitas ahora.</Texto>
       <View style={est.opciones}>{usos.map(([id,texto])=><Opcion key={id} texto={texto} elegida={uso===id} onPress={()=>setUso(id)}/>)}</View></Tarjeta>
     <Tarjeta tono="ambar"><Text style={est.seccion}>¿Qué notas en el agua?</Text><Texto suave>Tu conocimiento del lugar también cuenta. Si dudas, elige «No sé».</Texto>
