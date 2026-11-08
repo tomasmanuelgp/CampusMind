@@ -16,7 +16,7 @@ explícitamente.
 | P1 | **Licencia mixta.** AGPL-3.0 para el código escrito desde cero (`mobile/`). CC BY-NC-SA 4.0 se mantiene para lo derivado del proyecto original (firmware y textos de contexto heredados). Existe una autorización del autor que no se puede entregar todavía; cuando se formalice, se migra todo a AGPL. | PR-14 |
 | P2 | Los registros de trabajo con IA (`refluye/prompts/`) **se publican**, como historial de diseño. | PR-13 los mueve a `docs/historial/` |
 | P3 | El correo en el historial de git **puede quedar público**. No se reescribe el historial. | Ninguna |
-| P4 | La página https://re-fluye.vercel.app/ se conecta con este repositorio. **No fue accesible** desde el entorno (red bloqueada y proyecto ausente de la cuenta de Vercel conectada). | PR-16 deja los enlaces listos; revisar la página cuando haya acceso |
+| P4 | La página https://re-fluye.vercel.app/ se conecta con este repositorio. **Revisada el 2026-11-08** (ver `AUDITORIA.md §7`). | PR-16 resuelve sus marcadores; PR-17 corrige el sitio |
 | P5 | Nuevo nombre del repositorio: **por confirmar** (la respuesta se transcribió como «Refugio»; se asume `re-fluye`). El cambio de nombre lo hace el propietario en GitHub → Settings. | PR-16 usa el nombre confirmado |
 | P6 | Un equipo sin línea `VER` (`VER:0`) **sigue considerándose confiable**. El motor no cambia. | PR-05 documenta y fija este comportamiento con una prueba |
 
@@ -161,7 +161,24 @@ explícitamente.
   - `docs/protocolo-bluetooth.md`: es el documento normativo actual movido; se actualiza la referencia en `CLAUDE.md`.
   - `docs/motor-de-reglas.md`.
   - `docs/hardware.md`, con componentes y costos.
-- **Costos:** solo está documentado el de la PCB ($48.000 COP). Los demás se marcarán como «precio de referencia, fecha X» salvo que me pases los reales.
+- **Costos:** `docs/hardware.md` y `docs/materiales.csv` usan los precios del sitio: núcleo electrónico de $322.319 a $394.319 COP (noviembre de 2026), más los $48.000 COP de la PCB. Los componentes que el sitio marca `[PENDIENTE]` quedan marcados igual en el repositorio.
+- **Créditos:** «Semillero InnovaMinds, Colegio Técnico Industrial José Elías Puyana» sin nombres de integrantes (W2), más la atribución al proyecto original.
+- **Marca:** la sección de marca en `LICENCIAS.md` (W6).
+
+### PR-17 · Correcciones del sitio web (en el repositorio del sitio)
+El código del sitio no está en este repositorio. Hay dos opciones:
+- **(a)** Lo traes aquí como `web/` (Astro), con la misma licencia que la app o la que decidas para el diseño.
+- **(b)** Lo corriges en su propio repositorio con esta lista.
+
+Cambios:
+1. Sección «Origen y atribución» y línea en el pie, con enlace a adiacla/refluye (**W1, crítico**).
+2. Confirmar las autorizaciones escritas de los 11 integrantes o retirar sus nombres (**W2**).
+3. Ajustar el TRL o enlazar la evidencia de las pruebas de campo (**W4**).
+4. Rellenar los marcadores con los valores de `AUDITORIA.md §7 · W5`.
+5. Tras PR-03: actualizar `/construye/firmware/`, que hoy explica «EXCELENTE» y el LED verde.
+
+### Para tu aprobación (toca el motor)
+- **W3:** una lectura de TDS mayor de 1000 ppm (fuera del rango validado del SEN0244) haría el resultado **no confiable**, con un caso golden nuevo. No lo incluyo en ningún PR sin tu visto bueno.
 
 ---
 

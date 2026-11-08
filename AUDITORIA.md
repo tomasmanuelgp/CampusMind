@@ -392,7 +392,7 @@ Las pruebas y el 100 % de cobertura solo se comprueban a mano o en `compilar-apk
 | `refluye/historico/09-diseno-inicial-no-vigente.md` | Puede confundir | Marcarlo como archivo histórico |
 | `CLAUDE.md`, `mobile/AGENTS.md`, `mobile/CLAUDE.md` | Instrucciones para agentes; `CLAUDE.md` está desactualizado | Actualizar o mover a `docs/` |
 | Datos reales de personas, menores, fotos | **No encontrados** | — |
-| Página `https://re-fluye.vercel.app/` | **No se pudo revisar**: el dominio no está permitido en la red de este entorno | Revisar en la Fase 2 (ver P4) |
+| Página `https://re-fluye.vercel.app/` | Revisada el 2026-11-08 | Ver la sección 7 (W1–W6) |
 
 ### 4.3 Nombre del repositorio
 
@@ -408,6 +408,75 @@ El repositorio se llama `CampusMind` y los enlaces de descarga apuntan a `github
 | — | `README.md:5-12,104-106` | Remite a 0.3.1 como versión principal y añade 0.3.2 al final |
 | — | `mobile/README.md:76-78` | 61 pruebas |
 | — | `refluye/contexto/05-estado-actual-y-deuda.md:137,210` | Propone `LICENSE` CC BY-NC-SA 4.0: choca con el objetivo AGPL (C1) |
+
+---
+
+## 7. Sitio web https://re-fluye.vercel.app/ (revisado el 2026-11-08)
+
+Sitio estático Astro con 20 rutas: 8 páginas, la guía «Construye» de 10 pasos, 2 videos MP4 y `materiales.csv`. Se recorrió completo con Playwright.
+
+- No tiene formularios ni cookies de rastreo.
+- No tiene ningún enlace externo; el video de YouTube solo carga al tocarlo.
+- Su código fuente **no está** en este repositorio.
+
+**Coincide con el repositorio:** pines, divisores 10 k/20 k, PIN 1234, trama `VER:1`, reglas S1–S8 (página `/codigo`), descargo microbiológico en el encabezado y el pie de todas las páginas, y AGPL 3.0 para la aplicación. Ninguna página dice «potable», «apta» ni «segura» a secas.
+
+### W1 · CRÍTICO — El sitio no atribuye al proyecto original
+
+Ninguna de las 20 rutas menciona a Alfredo Antonio Díaz Claros, al CCD ni a la UNAB. Las páginas `/` e `/impacto` presentan el origen como propio («Nació en una vereda de Santander»).
+
+La cláusula **BY** de CC BY-NC-SA 4.0 exige atribución en toda redistribución de la obra derivada: el firmware V2.2, las guías de circuito y de calibración, y la fórmula del ICA. El firmware que el sitio ofrece descargar (`/construye/firmware/`) lleva la atribución dentro del código (`refluye_v2.ino:4-5`), pero el sitio no.
+
+**Acción:** añadir una sección «Origen y atribución» en `/impacto` y `/codigo`, y una línea en el pie de página, con enlace a [adiacla/refluye](https://github.com/adiacla/refluye).
+
+### W2 · ALTO — Nombres de 11 estudiantes y de la docente publicados
+
+La página `/equipo` lista nombre y apellido de los 11 integrantes del semillero InnovaMinds (Colegio Técnico Industrial José Elías Puyana, Floridablanca) y de la docente. Es muy probable que sean menores de edad.
+
+El propio sitio (`/privacidad`) dice que publica nombres de menores «solo con autorización escrita de sus acudientes». Ley 1581, art. 7: los datos de niños, niñas y adolescentes requieren especial protección.
+
+**Acción:**
+
+- Confirmar que existen las 11 autorizaciones escritas.
+- En el **repositorio** no se publicarán nombres de integrantes. Se usará «Semillero InnovaMinds» salvo autorización expresa (aplica en PR-15 y PR-16).
+
+### W3 · MEDIO — El rango de TDS del motor supera el validado del sensor
+
+`/construye/calibracion/` indica que el SEN0244 tiene rango de 0 a 1000 ppm, «por encima no hay lectura validada». Sin embargo, la app procesa las lecturas de 1000 a 2000 ppm como si fueran válidas:
+
+- el parser acepta hasta 2000 ppm (`parser.ts:4`);
+- el ICA usa ese mismo rango (`motor.ts:12`);
+- la regla `R09` (veto) se activa con `tds >= 1500` (`motor.ts:34`);
+- el firmware acota a 2000 (`refluye_v2.ino:136`).
+
+Por el lado de la seguridad, el veto sigue funcionando y orienta hacia otra fuente. Pero el ICA y la regla `R12` usan valores no validados.
+
+**Propuesta (requiere tu aprobación porque toca el motor):** marcar `tds > 1000` como «fuera del rango validado del sensor» ⇒ resultado no confiable (R05), con un caso golden nuevo.
+
+### W4 · MEDIO — El nivel de madurez anunciado contradice el repositorio
+
+`/impacto` declara **TRL 5**: «dispositivo y aplicación integrados y probados con usuarios en un entorno relevante, en La Mesa de Los Santos». El repositorio dice que la aceptación en un Android físico está **pendiente**:
+
+- `CLAUDE.md`, «Estado actual»;
+- `README.md:24-26`;
+- `refluye/contexto/05-estado-actual-y-deuda.md:20-24`.
+
+**Acción:** documentar la evidencia de esas pruebas en el repositorio (protocolo, fecha, versión de la APK, resultado, sin datos personales) o ajustar el TRL del sitio.
+
+### W5 · BAJO — Marcadores `[PENDIENTE]` que este repositorio puede resolver
+
+| Marcador en el sitio | Valor que aporta el repositorio |
+|---|---|
+| Enlace del repositorio (`/codigo`) | URL del repositorio renombrado (P5) |
+| Enlace del firmware (`/construye/firmware/`) | `firmware/refluye_v2/refluye_v2.ino` |
+| Enlace de la APK (`/construye/aplicacion/`) | Página de *releases* firmada (PR-04) |
+| Licencia de firmware, diseño y guías | CC BY-NC-SA 4.0 (decisión P1) |
+| Correo de contacto, responsable del tratamiento | **Lo debes definir tú** (debe ser una persona adulta o una entidad) |
+| Precios de LCD, resistencias, LED, protoboard, cables, carcasa y buffers (`materiales.csv`) | **Faltan** también en el repositorio |
+
+### W6 · BAJO — La marca registrada no está documentada en el repositorio
+
+El sitio dice «La marca RE-FLUYE está protegida». AGPL-3.0 no concede derechos de marca, pero conviene decirlo explícitamente en `LICENCIAS.md` para que los forks usen otro nombre.
 
 ---
 
