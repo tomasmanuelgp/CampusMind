@@ -12,16 +12,26 @@ qué hacer con ella. Funciona **sin internet**.
 > potable, y para beber o cocinar siempre pide desinfectar. No reemplaza un
 > análisis de laboratorio.
 
-Sitio del proyecto: **https://re-fluye.vercel.app/**
-
-<p>
-  <img src="docs/img/app-inicio.png" alt="Pantalla de inicio de la app RE-FLUYE" width="200">
-  <img src="docs/img/app-sensores.png" alt="Lecturas en vivo de pH, turbidez, sólidos disueltos y temperatura con el ICA orientativo" width="200">
-  <img src="docs/img/app-resultado.png" alt="Resultado: posible tratamiento, con aclarado y hervido de 3 minutos" width="200">
-  <img src="docs/img/app-veto.png" alt="Resultado: busca otra fuente, por olor a combustible" width="200">
+<p align="center">
+  <a href="https://github.com/tomasmanuelgp/CampusMind/releases/latest"><b>⬇️ Descargar la app para Android</b></a>
+  ·
+  <a href="https://re-fluye.vercel.app/">Sitio del proyecto</a>
+  ·
+  <a href="docs/hardware.md">Construye tu equipo</a>
 </p>
 
-<sub>Capturas del modo DEMO (datos simulados) de la versión 0.3.3.</sub>
+<p align="center">
+  <img src="docs/img/app-inicio.png" alt="Inicio: conoce tu agua y decide qué hacer, con el botón Medir agua" width="200">
+  <img src="docs/img/app-sensores.png" alt="Lecturas en vivo con el ICA orientativo y el estado de cada parámetro" width="200">
+  <img src="docs/img/app-observar.png" alt="Observaciones con pictogramas: cómo se ve el agua" width="200">
+</p>
+<p align="center">
+  <img src="docs/img/app-resultado.png" alt="Resultado en verde: trátala antes de consumir, con aclarado y hervido de 3 minutos" width="200">
+  <img src="docs/img/app-veto.png" alt="Resultado en rojo: busca otra fuente, por olor a combustible" width="200">
+  <img src="docs/img/app-historial.png" alt="Historial de mediciones con el color de cada resultado" width="200">
+</p>
+
+<p align="center"><sub>RE-FLUYE 1.0 en modo DEMO (datos simulados).</sub></p>
 
 ## El problema
 
@@ -118,10 +128,10 @@ La guía completa, con diagramas y problemas comunes, está en
 
 ### En un teléfono Android
 
-1. Descarga la APK más reciente en
-   [**Publicaciones**](https://github.com/tomasmanuelgp/CampusMind/releases)
-   (sección *Assets*). Requiere Android 7.0 o superior con Bluetooth Classic.
-   La app no funciona en iPhone por ahora.
+1. Descarga la APK de la
+   [**última publicación**](https://github.com/tomasmanuelgp/CampusMind/releases/latest)
+   (sección *Assets*, archivo `refluye-1.0.0-….apk`). Requiere Android 7.0 o
+   superior con Bluetooth Classic. La app no funciona en iPhone por ahora.
 2. Ábrela desde **Archivos** o **Descargas**. Si Android lo pide, permite
    instalar apps de esa fuente.
 3. Toca **Instalar** y luego **Abrir**. Si tienes una versión anterior,
@@ -130,9 +140,11 @@ La guía completa, con diagramas y problemas comunes, está en
 5. Para medir de verdad: enciende el equipo, activa Bluetooth, toca **Buscar
    equipos cercanos**, acepta el permiso y elige **ReFluye-V2**.
 
-> Las APK publicadas hasta la 0.3.2 son versiones de prueba con firma de
-> desarrollo. Instala solo el archivo publicado allí, nunca una copia
-> reenviada. Ver [SECURITY.md](SECURITY.md#apk-oficial).
+> Cada APK se compila en GitHub a partir de este código y se publica con su
+> suma SHA-256. Si su nombre termina en `pruebas-firma-desarrollo`, es una
+> versión de pruebas. Instala solo el archivo publicado allí, nunca una copia
+> reenviada. Ver [SECURITY.md](SECURITY.md#apk-oficial) y el
+> [registro de cambios](CHANGELOG.md).
 
 ### En el computador (para desarrollar)
 

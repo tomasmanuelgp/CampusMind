@@ -1,6 +1,6 @@
 # Re-Fluye · App Android de campo
 
-Versión del código: **0.3.3** (esquema de datos v2). Última APK de pruebas
+Versión del código: **1.0.0** (nuevo frontend, esquema de datos v2). Última APK de pruebas
 publicada: [Publicaciones](https://github.com/tomasmanuelgp/CampusMind/releases).
 Aceptación en Android físico pendiente: [guion de pruebas](../docs/app/13-pruebas-apk.md).
 
@@ -47,6 +47,14 @@ npm run android
 
 Bluetooth Classic necesita código nativo: Expo Go no sirve para conectarse al
 equipo. La vista `npm run web` permite revisar el flujo DEMO; no mide por Bluetooth.
+
+## Compilar la APK en GitHub (sin instalar nada)
+
+Cada PR que toca la app compila la APK en GitHub Actions y la deja como
+artefacto de la ejecución. Para publicar una versión, crea una etiqueta
+`vX.Y.Z` (por ejemplo desde _Releases → Draft a new release_): el flujo
+[`apk.yml`](../.github/workflows/apk.yml) compila, firma y adjunta la APK,
+su SHA-256 y los manuales.
 
 ## Compilar una APK local
 
@@ -103,7 +111,13 @@ Para una APK que sí se puede publicar:
 
 3. Ejecuta `scripts/compilar-apk.ps1`. El plugin `plugins/with-firma-publicacion.js`
    usa esas variables; el archivo de salida termina en `-publicacion.apk`.
-4. Publica junto a la APK la huella SHA-256 del certificado
+4. **En GitHub (recomendado):** guarda el keystore como secretos del
+   repositorio en _Settings → Secrets and variables → Actions_:
+   `REFLUYE_KEYSTORE_BASE64` (el archivo en base64:
+   `base64 -w0 refluye-publicacion.keystore`), `REFLUYE_KEYSTORE_PASSWORD`,
+   `REFLUYE_KEY_ALIAS` y `REFLUYE_KEY_PASSWORD`. El flujo
+   [`apk.yml`](../.github/workflows/apk.yml) firmará cada publicación con él.
+5. Publica junto a la APK la huella SHA-256 del certificado
    (`keytool -list -v -keystore ...`) y anótala en `SECURITY.md`.
 
 ## Verificación disponible

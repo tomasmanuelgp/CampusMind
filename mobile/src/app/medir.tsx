@@ -258,7 +258,7 @@ const est = StyleSheet.create({
   barra: { height: 8, borderRadius: radio.total, backgroundColor: colores.borde },
   barraLista: { backgroundColor: '#1B7A3E' },
   progresoTexto: { fontSize: 14, fontWeight: '800', color: colores.suave, textAlign: 'center' },
-  vivo: { flexDirection: 'row', alignItems: 'center', gap: 12, borderRadius: radio.l, padding: 14 },
-  puntoVivo: { width: 14, height: 14, borderRadius: 7 },
+  vivo: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, borderRadius: radio.l, padding: 14 },
+  puntoVivo: { width: 14, height: 14, borderRadius: 7, marginTop: 7 },
   filaBotones: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
 });
