@@ -1,0 +1,39 @@
+name: Error
+description: Algo no funciona como debería en la app, el firmware o la documentación.
+labels: [error]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportarlo. Si el error puede hacer que la app diga que un agua sirve cuando no debería,
+        **no lo publiques aquí**: usa el reporte privado de seguridad (ver SECURITY.md).
+  - type: dropdown
+    id: componente
+    attributes:
+      label: ¿Dónde está el error?
+      options: [App Android, App en modo DEMO (web), Firmware del ESP32, Documentación o guía]
+    validations:
+      required: true
+  - type: textarea
+    id: que-paso
+    attributes:
+      label: ¿Qué pasó?
+      description: Cuéntalo paso a paso. ¿Qué esperabas que pasara?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión de la app y del firmware
+      placeholder: App 0.3.2, firmware V2.3
+  - type: input
+    id: telefono
+    attributes:
+      label: Teléfono y versión de Android
+      placeholder: Redmi 13, Android 14
+  - type: textarea
+    id: trama
+    attributes:
+      label: Datos recibidos por Bluetooth (opcional)
+      description: En Medir → «Ver datos recibidos por Bluetooth». Copia la trama. No incluyas nombres de personas.
+      render: text
