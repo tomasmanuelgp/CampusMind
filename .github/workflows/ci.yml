@@ -41,8 +41,11 @@ jobs:
       - uses: actions/checkout@v5
       - name: Instalar arduino-cli, núcleo ESP32 2.0.17 y librerías
         run: |
-          curl -sSL https://downloads.arduino.cc/arduino-cli/arduino-cli_1.1.1_Linux_64bit.tar.gz | tar xz -C /usr/local/bin arduino-cli
-          pip install pyserial
+          mkdir -p "$HOME/bin" && echo "$HOME/bin" >> "$GITHUB_PATH"
+          curl -sSL https://downloads.arduino.cc/arduino-cli/arduino-cli_1.1.1_Linux_64bit.tar.gz | tar xz -C "$HOME/bin" arduino-cli
+          # esptool del núcleo 2.0.17 necesita pyserial; pip está bloqueado por PEP 668.
+          sudo apt-get update -qq && sudo apt-get install -y -qq python3-serial
+          export PATH="$HOME/bin:$PATH"
           export ARDUINO_BOARD_MANAGER_ADDITIONAL_URLS=https://espressif.github.io/arduino-esp32/package_esp32_index.json
           arduino-cli core update-index
           arduino-cli core install esp32:esp32@2.0.17
