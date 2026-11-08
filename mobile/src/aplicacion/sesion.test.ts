@@ -6,7 +6,8 @@ const mocks=vi.hoisted(()=>({
 vi.mock('expo-crypto',()=>({randomUUID:()=> 'captura-prueba'}));
 vi.mock('../infraestructura/bluetooth/servicio',()=>({conectarEquipo:mocks.conectar}));
 vi.mock('../infraestructura/db/repositorio',()=>({guardarAjuste:mocks.ajuste,leerAjuste:mocks.leer,
-  guardarBorrador:mocks.borrador,completarCaptura:mocks.completar}));
+  guardarBorrador:mocks.borrador,completarCaptura:mocks.completar,
+  referenciaEquipo:(mac:string)=>mac==='DEMO'?'DEMO':'equipo-ref'}));
 import {useSesion} from './sesion';
 const trama=(ph=7.4)=>`VER:1\npH:${ph}\nTDS:100\nTURB:2\nTEMP:24\n---\n`;
 beforeEach(async()=>{
@@ -21,6 +22,17 @@ async function estable(){
   for(let n=0;n<4;n++){vi.setSystemTime(100000+n*1500);mocks.recibir!(trama());}
 }
 describe('sesión de campo',()=>{
+  it('la medición guardada no lleva la MAC ni el nombre de quien calibró',async()=>{
+    mocks.leer.mockImplementation((clave:string)=>clave==='calibracion:A'
+      ?JSON.stringify({verificadaEn:0,venceEn:9e15,responsable:'Ana Pérez',referencia:'Acta 7'}):null);
+    await estable();
+    const captura=useSesion.getState().capturar('Pozo',  'beber');
+    const guardada=mocks.borrador.mock.calls[0][0];
+    expect(guardada).toBe(captura);
+    expect(guardada.equipo).toBe('equipo-ref');
+    expect(guardada.calibracion).toEqual({verificadaEn:0,venceEn:9e15,responsable:'registrado en Mi equipo',referencia:'Acta 7'});
+    expect(JSON.stringify(guardada)).not.toMatch(/Ana Pérez|"A"/);
+  });
   it('actualiza cada trama textual cambiante y limita el historial en vivo',async()=>{
     await useSesion.getState().conectar('A','Re-Fluye A');
     for(let n=0;n<65;n++){

@@ -20,7 +20,8 @@ export default function EquipoPantalla(){
       <Campo etiqueta="Vence (AAAA-MM-DD)" value={vence} onChangeText={setVence} placeholder="Fecha indicada por el técnico"/>
       <Boton texto="Guardar registro técnico" onPress={()=>{
         const fechas=[fecha,vence];if(fechas.some(f=>!/^\d{4}-\d{2}-\d{2}$/.test(f)||!Number.isFinite(Date.parse(f))||new Date(f).toISOString().slice(0,10)!==f)||!responsable.trim()||!referencia.trim()){Alert.alert('Revisa el registro','Completa responsable, referencia y fechas válidas.');return;}
-        const verificadaEn=new Date(fecha+'T00:00:00').getTime(),venceEn=new Date(vence+'T00:00:00').getTime();
+        // Fechas en UTC (medianoche), igual que la validación anterior y que el esquema de datos.
+        const verificadaEn=Date.parse(fecha),venceEn=Date.parse(vence);
         if(verificadaEn>Date.now()||venceEn<=Date.now()||venceEn<=verificadaEn){Alert.alert('Fechas no válidas','La calibración debe haberse realizado y tener una vigencia futura.');return;}
         try{const c={verificadaEn,venceEn,responsable:responsable.trim(),referencia:referencia.trim()};guardarAjuste('calibracion:'+equipo.id,JSON.stringify(c));setCalibracion(c);setEditar(false);}catch{Alert.alert('No se guardó','Reintenta el registro.');}
       }}/></Tarjeta>:null}

@@ -4,7 +4,8 @@ import type {Captura,Lectura,Observacion,Calibracion,Uso} from '../dominio/tipos
 import {ParserTramas} from '../infraestructura/bluetooth/parser';
 import {esEstable,lecturaRecienteValida} from '../infraestructura/bluetooth/estabilidad';
 import {conectarEquipo} from '../infraestructura/bluetooth/servicio';
-import {guardarAjuste,leerAjuste,guardarBorrador,completarCaptura} from '../infraestructura/db/repositorio';
+import {guardarAjuste,leerAjuste,guardarBorrador,completarCaptura,referenciaEquipo} from '../infraestructura/db/repositorio';
+import {calibracionParaCaptura} from '../dominio/privacidad';
 import {evaluar} from '../dominio/motor';
 
 type Estado='desconectado'|'conectando'|'recibiendo'|'esperando';
@@ -80,8 +81,9 @@ export const useSesion=create<Sesion>((set,get)=>({
     let calibracion:Calibracion|null=null;
     if(s.demo) calibracion={verificadaEn:0,venceEn:8640000000000000,responsable:'DEMO',referencia:'SIMULACIÓN'};
     else { const dato=leerAjuste('calibracion:'+s.equipo); if(dato) calibracion=JSON.parse(dato); }
-    const captura:Captura={id:randomUUID(),fuente:fuente.trim()||'Fuente sin nombre',equipo:s.equipo,demo:s.demo,uso,estabilidad,
-      lectura:JSON.parse(JSON.stringify(lectura)),calibracion,observacion:{}};
+    // Minimización (Ley 1581): la medición no guarda la MAC ni el nombre de quien calibró.
+    const captura:Captura={id:randomUUID(),fuente:fuente.trim()||'Fuente sin nombre',equipo:referenciaEquipo(s.equipo),demo:s.demo,uso,estabilidad,
+      lectura:JSON.parse(JSON.stringify(lectura)),calibracion:calibracionParaCaptura(calibracion),observacion:{}};
     guardarBorrador(captura); set({captura}); return captura;
   },
   observar:datos=>{
