@@ -144,6 +144,15 @@ describe('S7 · calibración ausente o vencida no es confiable', () => {
       ).confiable,
     ).toBe(false);
   });
+  it('decisión W3 (2026-11-08): sólidos por encima de 1000 ppm nunca son confiables ni tratables', () => {
+    const o = { origen: 'corriente', olor: 'normal', visual: 'limpia' } as const;
+    for (const tds of [1001, 1200, 1499, 1500, 2000]) {
+      const r = evaluar({ ...lectura, tds }, o, calibracion);
+      expect(r.confiable).toBe(false);
+      expect(r.plan).toBe('alternativa');
+    }
+    expect(evaluar({ ...lectura, tds: 1000 }, o, calibracion).reglas).not.toContain('R17');
+  });
   it('decisión P6 (2026-11-08): un equipo sin línea VER (VER:0) se acepta como confiable', () => {
     const r = evaluar(
       { ...lectura, versionProtocolo: 0 },

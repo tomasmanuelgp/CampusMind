@@ -49,7 +49,8 @@ primera que se cumpla, en este orden. Los vetos van antes que las advertencias.
 
 | Código | Se activa si… |
 |---|---|
-| R05 | La lectura **no es confiable**: sin calibración vigente, con errores, de un protocolo desconocido o todavía inicial (variable) |
+| R17 | Sólidos disueltos **por encima de 1000 ppm**: fuera del rango validado del sensor SEN0244. La lectura deja de ser confiable |
+| R05 | La lectura **no es confiable**: sin calibración vigente, con errores, de un protocolo desconocido, sólidos fuera del rango validado o todavía inicial (variable) |
 | R07 | El agua es **verdosa** (aunque corra): nunca se resuelve solo hirviendo |
 | R10 | pH fuera de 6,5 – 8,5 (rango de referencia para consumo humano) |
 | R11 | Turbidez de 25 NTU o más |
@@ -73,7 +74,7 @@ Después de las reglas, el motor elige uno de tres planes:
 
 ```mermaid
 flowchart TD
-    A[Todas las reglas evaluadas] --> B{¿Hay un veto de nivel 2,<br/>o R07, R10, R11 o R12?}
+    A[Todas las reglas evaluadas] --> B{¿Hay un veto de nivel 2,<br/>o R07, R10, R11, R12 o R17?}
     B -- Sí --> ALT[«Busca otra fuente»<br/>plan: alternativa]
     B -- No --> C{¿Faltan calibración o datos válidos,<br/>o hay respuestas «No sé»?}
     C -- Sí --> REP[«Necesitamos otra medición»<br/>plan: repetir]
@@ -133,8 +134,8 @@ explica en el *pull request* qué cambia para la persona que mide. Ver
 ## Límites conocidos
 
 - La calibración es **declarada**: el motor confía en lo que se registró en «Mi equipo».
-- El sensor de sólidos solo está validado hasta 1000 ppm; el motor acepta
-  lecturas hasta 2000. Hay una propuesta pendiente para marcar como no confiable
-  toda lectura por encima de 1000 ppm.
+- El sensor de sólidos solo está validado hasta 1000 ppm. Desde el motor 0.4.0
+  (2026-11-08), toda lectura por encima de ese valor activa R17, se marca como
+  no confiable y lleva a buscar otra fuente.
 - Un equipo sin línea `VER` (firmware antiguo) se acepta como confiable si todo
   lo demás está en orden (decisión del equipo, 2026-11-08).

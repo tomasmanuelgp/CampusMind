@@ -221,5 +221,5 @@ Todos los cambios están en la rama `claude/wizardly-goodall-ofuz8p`, con un com
 | PR-15 Archivos de comunidad | ✅ | ver commit «docs: archivos de comunidad» |
 | PR-16 README y documentación para estudiantes | ✅ | ver commit «docs: README y guías» |
 | PR-17 Correcciones del sitio web | ⏳ el código del sitio no está en este repositorio | — |
-| W3 TDS > 1000 ppm no confiable | ⏳ espera aprobación (toca el motor) | — |
+| W3 TDS > 1000 ppm no confiable | ✅ aprobado el 2026-11-08; regla R17, motor 0.4.0 | ver commit «feat(motor): R17» |
 | Expo SDK 58 | ⏳ futuro | — |

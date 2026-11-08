@@ -143,4 +143,4 @@ La conclusión aparece desde el inicio de Medir y cambia con los sensores y resp
 Esquema SQLite v2 con columnas tipadas y migración automática; borrar y exportar
 mediciones; calibración mostrada como declarada; catálogo único de opciones;
 firma de publicación por variables de entorno; ESLint y Prettier. El motor
-(0.3.0) no cambia. Detalle en [AUDITORIA.md](../AUDITORIA.md) y [PLAN.md](../PLAN.md).
+cambia solo en W3: desde el motor 0.4.0, sólidos por encima de 1000 ppm (rango validado del sensor) activan R17 y el resultado deja de ser confiable. Detalle en [AUDITORIA.md](../AUDITORIA.md) y [PLAN.md](../PLAN.md).

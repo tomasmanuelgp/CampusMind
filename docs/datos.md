@@ -54,7 +54,7 @@ en **UTC** (`*_utc` en texto ISO-8601, `*_ms` en milisegundos desde 1970).
 |---|---|---|---|
 | `ph` | REAL | 0 – 14 (adimensional) | Acidez o alcalinidad |
 | `turbidez_ntu` | REAL | NTU, 0 – 200 | Partículas en suspensión |
-| `tds_ppm` | REAL | ppm (mg/L), 0 – 2000 | Sólidos disueltos. Validado por el fabricante solo hasta 1000 |
+| `tds_ppm` | REAL | ppm (mg/L), 0 – 2000 | Sólidos disueltos. Validado por el fabricante solo hasta 1000: por encima, el resultado es no confiable (regla R17) |
 | `temperatura_c` | REAL | °C, −55 – 125 | `NULL` si la sonda no respondió (−127 en la trama) |
 | `ica_equipo` | REAL | 0 – 100 | ICA calculado por el firmware. Solo informativo |
 | `estado_equipo` | INTEGER | 0 · 1 · 2 | Preclasificación del firmware. **No es un veredicto** |
@@ -83,9 +83,9 @@ en **UTC** (`*_utc` en texto ISO-8601, `*_ms` en milisegundos desde 1970).
 
 | Columna | Tipo | Valores | Descripción |
 |---|---|---|---|
-| `version_motor` | TEXT | p. ej. `0.3.0` | Versión del [motor de reglas](motor-de-reglas.md) que decidió |
+| `version_motor` | TEXT | p. ej. `0.4.0` | Versión del [motor de reglas](motor-de-reglas.md) que decidió |
 | `nivel` | INTEGER | 0 · 1 · 2 | 2 = veto, 1 = advertencia, 0 = sin alertas |
-| `regla_principal` | TEXT | `R01` … `R16` | Motivo principal |
+| `regla_principal` | TEXT | `R01` … `R17` | Motivo principal |
 | `reglas_json` | TEXT | JSON, lista | Todas las reglas que se cumplieron |
 | `plan` | TEXT | `alternativa` · `repetir` · `hervido` | Qué se recomendó |
 | `ica_app` | REAL | 0 – 100 | ICA calculado por la app |

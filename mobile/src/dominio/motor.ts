@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import type { Calibracion, Lectura, Observacion } from './tipos';
-export const VERSION_MOTOR = '0.3.0';
+export const VERSION_MOTOR = '0.4.0';
+/** Máximo del rango validado por el fabricante del sensor de sólidos disueltos SEN0244 (ppm). */
+export const TDS_VALIDADO_MAX = 1000;
 export const DESCARGO = 'Este equipo no detecta bacterias, virus ni parásitos. No certifica potabilidad.';
 export type PlanId = 'alternativa' | 'repetir' | 'hervido';
 export interface Resultado {
@@ -43,8 +45,14 @@ export function calibracionVigente(c: Calibracion | null, fecha: number): boolea
 /** Evalúa todos los peligros antes de seleccionar motivo. Fiabilidad nunca elimina vetos. */
 export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lecturaEstable = true): Resultado {
   const ica = calcularIca(l);
+  // Por encima de 1000 ppm el SEN0244 no tiene lectura validada: el dato no puede ser confiable (W3).
+  const tdsFueraDeRangoValidado = enRango(l.tds, 0, 2000) && l.tds > TDS_VALIDADO_MAX;
   const datosVerificados =
-    ica !== null && l.errores.length === 0 && l.versionProtocolo <= 1 && calibracionVigente(c, l.recibidaEn);
+    ica !== null &&
+    l.errores.length === 0 &&
+    l.versionProtocolo <= 1 &&
+    !tdsFueraDeRangoValidado &&
+    calibracionVigente(c, l.recibidaEn);
   const confiable = datosVerificados && lecturaEstable;
   const reglas: { id: string; nivel: 0 | 1 | 2; motivo: string }[] = [];
   const agregar = (condicion: boolean, id: string, nivel: 0 | 1 | 2, motivo: string) => {
@@ -86,6 +94,12 @@ export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lectu
     'R09',
     2,
     'Hay muchos sólidos disueltos. Hervir no elimina las sales.',
+  );
+  agregar(
+    tdsFueraDeRangoValidado,
+    'R17',
+    1,
+    'Los sólidos disueltos superan lo que el sensor mide con confianza (1000 ppm). Busca otra fuente y pide un análisis de laboratorio.',
   );
   agregar(
     !confiable,
@@ -146,7 +160,8 @@ export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lectu
   // La lista se ordenó con todos los vetos antes de las condiciones de nivel 1.
   const principal = reglas[0];
   const ids = reglas.map(r => r.id);
-  const alternativa = principal.nivel === 2 || ids.some(id => ['R07', 'R10', 'R11', 'R12'].includes(id));
+  const alternativa =
+    principal.nivel === 2 || ids.some(id => ['R07', 'R10', 'R11', 'R12', 'R17'].includes(id));
   // La variación se comunica como incertidumbre, sin bloquear la orientación
   // preliminar. Una calibración ausente o datos inválidos sí impiden tratar.
   const plan: PlanId = alternativa
