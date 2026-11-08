@@ -46,7 +46,9 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Falló la compilación. Revisa el log y la versión de Ninja indicada en el README.' }
   $salida = Join-Path $mobile 'artifacts'
   New-Item -ItemType Directory -Force -Path $salida | Out-Null
-  $apk = Join-Path $salida 'refluye-campo-0.3.2-pruebas.apk'
+  $version = (Get-Content -LiteralPath (Join-Path $mobile 'package.json') -Raw | ConvertFrom-Json).version
+  $sufijo = if ($env:REFLUYE_KEYSTORE_FILE) { 'publicacion' } else { 'pruebas-firma-desarrollo' }
+  $apk = Join-Path $salida "refluye-campo-$version-$sufijo.apk"
   Copy-Item -LiteralPath './app/build/outputs/apk/release/app-release.apk' -Destination $apk -Force
   $hash = Get-FileHash -LiteralPath $apk -Algorithm SHA256
   ($hash.Hash + '  ' + (Split-Path $apk -Leaf)) | Set-Content -LiteralPath ($apk + '.sha256') -Encoding ascii

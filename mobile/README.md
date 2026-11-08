@@ -74,6 +74,36 @@ fuera del equipo de pruebas hay que configurar firma de distribución y su custo
 La configuración declara Android API 24 como mínimo y API 36 como objetivo;
 esto no prueba compatibilidad en todos los modelos. El dispositivo necesita SPP.
 
+### Firma de publicación
+
+Sin configuración, la APK release se firma con la **clave de desarrollo** de
+Expo. Esa clave es pública: cualquiera podría firmar otra APK que se instale
+encima de la tuya. El archivo se llama `...-pruebas-firma-desarrollo.apk` y
+**no debe publicarse**.
+
+Para una APK que sí se puede publicar:
+
+1. Crea un keystore **una sola vez** y guárdalo fuera del repositorio, con copia
+   de seguridad. Si se pierde, los teléfonos no podrán actualizar la app.
+
+   ```sh
+   keytool -genkeypair -v -storetype PKCS12 -keystore refluye-publicacion.keystore -alias refluye -keyalg RSA -keysize 4096 -validity 10000
+   ```
+
+2. Antes de compilar, define las variables de entorno (PowerShell):
+
+   ```powershell
+   $env:REFLUYE_KEYSTORE_FILE = 'D:\claves\refluye-publicacion.keystore'
+   $env:REFLUYE_KEYSTORE_PASSWORD = '...'
+   $env:REFLUYE_KEY_ALIAS = 'refluye'
+   $env:REFLUYE_KEY_PASSWORD = '...'
+   ```
+
+3. Ejecuta `scripts/compilar-apk.ps1`. El plugin `plugins/with-firma-publicacion.js`
+   usa esas variables; el archivo de salida termina en `-publicacion.apk`.
+4. Publica junto a la APK la huella SHA-256 del certificado
+   (`keytool -list -v -keystore ...`) y anótala en `SECURITY.md`.
+
 ## Verificación disponible
 
 61 pruebas: golden y combinaciones del motor, parser, monitoreo, SQLite real con adaptador

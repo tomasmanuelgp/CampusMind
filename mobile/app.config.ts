@@ -12,7 +12,7 @@ const config: ExpoConfig = {
       'android.permission.READ_MEDIA_VIDEO', 'android.permission.WRITE_EXTERNAL_STORAGE',
       'android.permission.READ_EXTERNAL_STORAGE', 'android.permission.SYSTEM_ALERT_WINDOW'],
   },
-  plugins: ['expo-router', 'expo-sqlite', './plugins/with-permisos-campo'],
+  plugins: ['expo-router', 'expo-sqlite', './plugins/with-permisos-campo', './plugins/with-firma-publicacion'],
   web: { bundler: 'metro', output: 'single' },
 };
 export default config;
