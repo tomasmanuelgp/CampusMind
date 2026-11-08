@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { openDatabaseSync } from 'expo-sqlite';
 import { randomUUID } from 'expo-crypto';
 import type { Captura } from '../../dominio/tipos';

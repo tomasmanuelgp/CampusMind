@@ -1,6 +1,12 @@
 {
   "name": "refluye-mobile",
   "version": "0.3.2",
+  "description": "Re-Fluye: app Android de campo para orientar el uso del agua (offline, Bluetooth Classic).",
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomasmanuelgp/CampusMind.git"
+  },
   "main": "index.ts",
   "dependencies": {
     "expo": "~57.0.32",

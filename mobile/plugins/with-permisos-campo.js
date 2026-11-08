@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 const { withAndroidManifest, withGradleProperties } = require('expo/config-plugins');
 module.exports = config => {
   config = withGradleProperties(config, config => {

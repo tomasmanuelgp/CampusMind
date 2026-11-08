@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { Linking, Text } from 'react-native';

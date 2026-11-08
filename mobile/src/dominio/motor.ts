@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import type { Calibracion, Lectura, Observacion } from './tipos';
 export const VERSION_MOTOR = '0.3.0';
 export const DESCARGO = 'Este equipo no detecta bacterias, virus ni parásitos. No certifica potabilidad.';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Fachada de datos para las pantallas. Las pantallas no hablan con SQLite ni
 // leen JSON a mano: piden aquí datos ya tipados. Si un ajuste guardado está
 // dañado, se devuelve null en lugar de romper la pantalla.

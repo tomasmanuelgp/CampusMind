@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { Pantalla, Tarjeta, Texto, Boton, Campo } from '../ui/componentes';

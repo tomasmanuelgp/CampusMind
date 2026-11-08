@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { StyleSheet, Text } from 'react-native';
 import type { resumirEnVivo } from '../dominio/resumenEnVivo';
 import { Tarjeta, Texto, colores, s } from './componentes';

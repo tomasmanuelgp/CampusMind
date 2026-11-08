@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { Opcion as OpcionCatalogo } from '../dominio/catalogos';
 import { Texto, colores, s } from './componentes';

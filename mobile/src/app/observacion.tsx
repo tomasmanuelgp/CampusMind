@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Recupera una medición pendiente (borrador) pregunta por pregunta.
 // Desde 0.3.0 la medición normal se completa en «Medir»; esta pantalla solo se
 // abre desde el inicio o el historial cuando quedó una observación sin terminar.

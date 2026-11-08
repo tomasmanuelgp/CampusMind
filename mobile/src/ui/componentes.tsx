@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { useEffect, useState, type PropsWithChildren } from 'react';
 import {
   ActivityIndicator,

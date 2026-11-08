@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { describe, it, expect } from 'vitest';
 import { evaluar, calcularIca, calibracionVigente, DESCARGO } from './motor';
 import type { Lectura, Observacion, Calibracion } from './tipos';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { PermissionsAndroid, Platform } from 'react-native';
 import Bluetooth, { type BluetoothDevice } from 'react-native-bluetooth-classic';
 export interface Equipo {

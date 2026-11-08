@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Validación del registro de una calibración que un técnico ya hizo.
 // La app no calibra ni comprueba la sonda: solo acepta un registro coherente.
 import type { Calibracion } from './tipos';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { Pantalla, Tarjeta, Texto, Audio } from '../ui/componentes';
 const guias = [
   [

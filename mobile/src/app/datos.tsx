@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { router } from 'expo-router';
 import { Text } from 'react-native';
 import { Pantalla, Tarjeta, Texto, Boton, s } from '../ui/componentes';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import type { Captura } from '../../dominio/tipos';
 import { capturaAFila, registrosACsv, type Registro } from './esquema';
 

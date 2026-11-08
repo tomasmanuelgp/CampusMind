@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import type { Lectura } from './tipos';
 
 /** Una sola trama íntegra y reciente basta para orientar, aunque aún varíe. */

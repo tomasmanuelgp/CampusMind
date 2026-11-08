@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { evaluar, DESCARGO } from './motor';
 import { orientarUso, nombresUso } from './orientacion';
 import type { Lectura, Observacion, Calibracion, Uso } from './tipos';

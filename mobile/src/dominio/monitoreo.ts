@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import type { Lectura } from './tipos';
 
 /** Mostrar sensores no requiere estabilidad, calibración ni validez de otros campos. */

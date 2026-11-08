@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { useCallback, useState } from 'react';
 import { router, useFocusEffect } from 'expo-router';
 import { Share, Text } from 'react-native';

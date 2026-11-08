@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { create } from 'zustand';
 import { randomUUID } from 'expo-crypto';
 import type { Captura, Lectura, Observacion, Uso } from '../dominio/tipos';

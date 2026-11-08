@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: CC-BY-NC-SA-4.0
+// Obra derivada de Re-Fluye (Alfredo Antonio Díaz Claros, CCD-UNAB).
 /*
  * Re-Fluye V2.3 - ESP32
  *

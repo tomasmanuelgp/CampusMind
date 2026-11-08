@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Catálogo único de opciones que ve la persona. Medir y Observación usan estas
 // mismas listas para que una respuesta se llame igual en toda la app.
 import type { Calibracion, OlorTipo, Origen, Olor, Uso, Visual } from './tipos';

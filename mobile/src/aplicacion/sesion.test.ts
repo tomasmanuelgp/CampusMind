@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
 const mocks = vi.hoisted(() => ({
   conectar: vi.fn(),

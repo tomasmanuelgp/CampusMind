@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Minimización de datos personales (Ley 1581 de 2012).
 // Una medición solo necesita saber que la calibración está registrada y
 // vigente; el nombre de quien calibró se queda en «Mi equipo».

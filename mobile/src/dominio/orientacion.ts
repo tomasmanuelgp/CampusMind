@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 import type { Uso } from './tipos';
 import type { Resultado } from './motor';
 import { USOS } from './catalogos';

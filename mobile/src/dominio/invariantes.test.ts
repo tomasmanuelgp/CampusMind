@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Invariantes de seguridad S1–S8 (ver CLAUDE.md).
 // Estas pruebas no describen un caso concreto: recorren muchas combinaciones
 // y el código fuente para que ningún cambio futuro rompa una regla sin que

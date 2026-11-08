@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Esquema local de datos (SQLite, user_version = 2).
 // Fuente de verdad del diccionario publicado en docs/datos.md: si cambias una
 // columna aquí, cambia también ese documento y añade una migración.

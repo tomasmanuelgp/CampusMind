@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-only
 // Firma de publicación de la APK.
 //
 // Las credenciales del keystore NUNCA van en el repositorio. Se leen de
