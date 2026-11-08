@@ -2,7 +2,16 @@ import { openDatabaseSync } from 'expo-sqlite';
 import { randomUUID } from 'expo-crypto';
 import type { Captura } from '../../dominio/tipos';
 import { calibracionParaCaptura } from '../../dominio/privacidad';
-import { COLUMNAS, SQL_ESQUEMA, VERSION_ESQUEMA, capturaAFila, filaARegistro, registrosACsv, type Fila, type Registro } from './esquema';
+import {
+  COLUMNAS,
+  SQL_ESQUEMA,
+  VERSION_ESQUEMA,
+  capturaAFila,
+  filaARegistro,
+  registrosACsv,
+  type Fila,
+  type Registro,
+} from './esquema';
 
 export type { Registro } from './esquema';
 
@@ -24,16 +33,24 @@ function db() {
  * la tabla antigua. Todo en una transacción: si algo falla, nada cambia.
  */
 function migrar(base: ReturnType<typeof openDatabaseSync>) {
-  const version = base.getFirstSync<{user_version: number}>('PRAGMA user_version')?.user_version ?? 0;
+  const version = base.getFirstSync<{ user_version: number }>('PRAGMA user_version')?.user_version ?? 0;
   if (version >= VERSION_ESQUEMA) return;
   base.withTransactionSync(() => {
     base.execSync(SQL_ESQUEMA);
-    const existeV1 = base.getFirstSync<{n: number}>("SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name='capturas'")?.n;
+    const existeV1 = base.getFirstSync<{ n: number }>(
+      "SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name='capturas'",
+    )?.n;
     if (existeV1) {
-      const filas = base.getAllSync<{datos: string; completa: number; resultado: string | null}>('SELECT datos, completa, resultado FROM capturas');
+      const filas = base.getAllSync<{ datos: string; completa: number; resultado: string | null }>(
+        'SELECT datos, completa, resultado FROM capturas',
+      );
       for (const fila of filas) {
         const anterior = JSON.parse(fila.datos) as Captura;
-        const captura: Captura = {...anterior, equipo: referenciaEquipo(anterior.equipo, base), calibracion: calibracionParaCaptura(anterior.calibracion)};
+        const captura: Captura = {
+          ...anterior,
+          equipo: referenciaEquipo(anterior.equipo, base),
+          calibracion: calibracionParaCaptura(anterior.calibracion),
+        };
         const resultado = fila.completa && fila.resultado ? JSON.parse(fila.resultado) : null;
         insertar(base, capturaAFila(captura, resultado, captura.lectura.recibidaEn));
       }
@@ -44,11 +61,16 @@ function migrar(base: ReturnType<typeof openDatabaseSync>) {
 }
 
 const marcadores = COLUMNAS.map(() => '?').join(', ');
-const actualizables = COLUMNAS.filter(c => c !== 'id' && c !== 'creada_utc').map(c => `${c}=excluded.${c}`).join(', ');
+const actualizables = COLUMNAS.filter(c => c !== 'id' && c !== 'creada_utc')
+  .map(c => `${c}=excluded.${c}`)
+  .join(', ');
 
 function insertar(base: ReturnType<typeof openDatabaseSync>, fila: Fila) {
-  base.runSync(`INSERT INTO medicion (${COLUMNAS.join(', ')}) VALUES (${marcadores})
-    ON CONFLICT(id) DO UPDATE SET ${actualizables} WHERE medicion.estado='borrador'`, ...COLUMNAS.map(c => fila[c]));
+  base.runSync(
+    `INSERT INTO medicion (${COLUMNAS.join(', ')}) VALUES (${marcadores})
+    ON CONFLICT(id) DO UPDATE SET ${actualizables} WHERE medicion.estado='borrador'`,
+    ...COLUMNAS.map(c => fila[c]),
+  );
 }
 
 /**
@@ -58,7 +80,10 @@ function insertar(base: ReturnType<typeof openDatabaseSync>, fila: Fila) {
 export function referenciaEquipo(mac: string, base = db()): string {
   if (mac === 'DEMO') return 'DEMO';
   const clave = 'equipo-ref:' + mac;
-  const existente = base.getFirstSync<{valor: string}>('SELECT valor FROM ajustes WHERE clave = ?', clave)?.valor;
+  const existente = base.getFirstSync<{ valor: string }>(
+    'SELECT valor FROM ajustes WHERE clave = ?',
+    clave,
+  )?.valor;
   if (existente) return existente;
   const nueva = 'equipo-' + randomUUID();
   base.runSync('INSERT INTO ajustes(clave, valor) VALUES (?, ?)', clave, nueva);
@@ -69,7 +94,9 @@ export function guardarAjuste(clave: string, valor: string) {
   db().runSync('INSERT OR REPLACE INTO ajustes(clave, valor) VALUES (?, ?)', clave, valor);
 }
 export function leerAjuste(clave: string): string | null {
-  return db().getFirstSync<{valor: string}>('SELECT valor FROM ajustes WHERE clave = ?', clave)?.valor ?? null;
+  return (
+    db().getFirstSync<{ valor: string }>('SELECT valor FROM ajustes WHERE clave = ?', clave)?.valor ?? null
+  );
 }
 export function guardarBorrador(captura: Captura) {
   insertar(db(), capturaAFila(captura, null, Date.now()));
@@ -78,16 +105,31 @@ export function completarCaptura(captura: Captura, resultado: unknown) {
   db().withTransactionSync(() => {
     guardarBorrador(captura);
     const fila = capturaAFila(captura, resultado, Date.now());
-    const columnas = ['estado','version_motor','nivel','regla_principal','reglas_json','plan','ica_app','confiable','resultado_json'] as const;
-    db().runSync(`UPDATE medicion SET ${columnas.map(c => c + '=?').join(', ')} WHERE id=? AND estado='borrador'`,
-      ...columnas.map(c => fila[c]), captura.id);
+    const columnas = [
+      'estado',
+      'version_motor',
+      'nivel',
+      'regla_principal',
+      'reglas_json',
+      'plan',
+      'ica_app',
+      'confiable',
+      'resultado_json',
+    ] as const;
+    db().runSync(
+      `UPDATE medicion SET ${columnas.map(c => c + '=?').join(', ')} WHERE id=? AND estado='borrador'`,
+      ...columnas.map(c => fila[c]),
+      captura.id,
+    );
   });
 }
 export function listarCapturas(limite = 100, desde = 0): Registro[] {
-  return db().getAllSync<Fila>('SELECT * FROM medicion ORDER BY recibida_ms DESC LIMIT ? OFFSET ?', limite, desde).map(filaARegistro);
+  return db()
+    .getAllSync<Fila>('SELECT * FROM medicion ORDER BY recibida_ms DESC LIMIT ? OFFSET ?', limite, desde)
+    .map(filaARegistro);
 }
 export function contarCapturas(): number {
-  return db().getFirstSync<{n: number}>('SELECT count(*) AS n FROM medicion')?.n ?? 0;
+  return db().getFirstSync<{ n: number }>('SELECT count(*) AS n FROM medicion')?.n ?? 0;
 }
 export function obtenerCaptura(id: string): Registro | null {
   const fila = db().getFirstSync<Fila>('SELECT * FROM medicion WHERE id=?', id);

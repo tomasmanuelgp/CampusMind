@@ -1,0 +1,6 @@
+coverage
+dist
+android
+ios
+.expo
+package-lock.json
