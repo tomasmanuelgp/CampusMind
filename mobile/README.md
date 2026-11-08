@@ -1,8 +1,8 @@
 # Re-Fluye · App Android de campo
 
-APK de pruebas actual: [Re-Fluye 0.3.1](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.1).
-Pendiente instalar y probar en un
-Android físico. [Arreglo de Bluetooth y compilación](../refluye/prompts/iteraciones/F-002.md).
+Versión del código: **1.0.0** (nuevo frontend, esquema de datos v2). Última APK de pruebas
+publicada: [Publicaciones](https://github.com/tomasmanuelgp/CampusMind/releases).
+Aceptación en Android físico pendiente: [guion de pruebas](../docs/app/13-pruebas-apk.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
 la observación humana y la identidad del proyecto Re-Fluye de CCD/UNAB.
@@ -22,6 +22,8 @@ El repositorio original no contenía una aplicación móvil recuperable.
   guía opcional con temporizador, audio, historial y compartir.
 - Registrar evidencia técnica de calibración. Sin registro vigente: no confiable.
 - Practicar en modo DEMO, con capturas identificadas como simuladas.
+- Ver, exportar (CSV) y borrar mediciones; pantalla «Tus datos» (Ley 1581).
+  Las mediciones no guardan la dirección del equipo ni el nombre de quien calibró.
 - Elegir un uso (consumo, baño, utensilios, ropa, ganado o cultivo) y registrar
   origen, olor y aspecto junto al nombre de la fuente en una sola pantalla.
 - Ver límites y acciones breves para ese uso sin convertir los sensores en una
@@ -45,6 +47,14 @@ npm run android
 
 Bluetooth Classic necesita código nativo: Expo Go no sirve para conectarse al
 equipo. La vista `npm run web` permite revisar el flujo DEMO; no mide por Bluetooth.
+
+## Compilar la APK en GitHub (sin instalar nada)
+
+Cada PR que toca la app compila la APK en GitHub Actions y la deja como
+artefacto de la ejecución. Para publicar una versión, crea una etiqueta
+`vX.Y.Z` (por ejemplo desde _Releases → Draft a new release_): el flujo
+[`apk.yml`](../.github/workflows/apk.yml) compila, firma y adjunta la APK,
+su SHA-256 y los manuales.
 
 ## Compilar una APK local
 
@@ -74,22 +84,60 @@ fuera del equipo de pruebas hay que configurar firma de distribución y su custo
 La configuración declara Android API 24 como mínimo y API 36 como objetivo;
 esto no prueba compatibilidad en todos los modelos. El dispositivo necesita SPP.
 
+### Firma de publicación
+
+Sin configuración, la APK release se firma con la **clave de desarrollo** de
+Expo. Esa clave es pública: cualquiera podría firmar otra APK que se instale
+encima de la tuya. El archivo se llama `...-pruebas-firma-desarrollo.apk` y
+**no debe publicarse**.
+
+Para una APK que sí se puede publicar:
+
+1. Crea un keystore **una sola vez** y guárdalo fuera del repositorio, con copia
+   de seguridad. Si se pierde, los teléfonos no podrán actualizar la app.
+
+   ```sh
+   keytool -genkeypair -v -storetype PKCS12 -keystore refluye-publicacion.keystore -alias refluye -keyalg RSA -keysize 4096 -validity 10000
+   ```
+
+2. Antes de compilar, define las variables de entorno (PowerShell):
+
+   ```powershell
+   $env:REFLUYE_KEYSTORE_FILE = 'D:\claves\refluye-publicacion.keystore'
+   $env:REFLUYE_KEYSTORE_PASSWORD = '...'
+   $env:REFLUYE_KEY_ALIAS = 'refluye'
+   $env:REFLUYE_KEY_PASSWORD = '...'
+   ```
+
+3. Ejecuta `scripts/compilar-apk.ps1`. El plugin `plugins/with-firma-publicacion.js`
+   usa esas variables; el archivo de salida termina en `-publicacion.apk`.
+4. **En GitHub (recomendado):** guarda el keystore como secretos del
+   repositorio en _Settings → Secrets and variables → Actions_:
+   `REFLUYE_KEYSTORE_BASE64` (el archivo en base64:
+   `base64 -w0 refluye-publicacion.keystore`), `REFLUYE_KEYSTORE_PASSWORD`,
+   `REFLUYE_KEY_ALIAS` y `REFLUYE_KEY_PASSWORD`. El flujo
+   [`apk.yml`](../.github/workflows/apk.yml) firmará cada publicación con él.
+5. Publica junto a la APK la huella SHA-256 del certificado
+   (`keytool -list -v -keystore ...`) y anótala en `SECURITY.md`.
+
 ## Verificación disponible
 
-61 pruebas: golden y combinaciones del motor, parser, monitoreo, SQLite real con adaptador
-de prueba y sesión con Bluetooth simulado. El motor exige 100 % de cobertura.
-El recorrido web DEMO se revisó a 390 y 320 px en 0.2.0; la primera lectura y el
-resultado directo para cocinar se comprobaron en navegador en 0.3.0. La recuperación del borrador
-pertenece al flujo anterior y debe comprobarse de nuevo con esta interfaz.
-Estas comprobaciones no sustituyen Android físico.
+Pruebas de golden y combinaciones del motor, invariantes de seguridad S1–S7,
+parser, monitoreo, SQLite real (incluida la migración v1 → v2) y sesión con
+Bluetooth simulado. Todo `src/dominio/` exige 100 % de cobertura. Las cifras
+exactas las publica la integración continua en cada cambio
+([`ci.yml`](../.github/workflows/ci.yml)); no se copian aquí para que no se
+desactualicen. Estas comprobaciones no sustituyen un Android físico.
 
-Guion pendiente: [Pruebas de campo](../refluye/app/13-pruebas-apk.md).
-Iteraciones y evidencia: [bitácora](../refluye/prompts/bitacora.md).
+Guion pendiente: [Pruebas de campo](../docs/app/13-pruebas-apk.md).
+Iteraciones y evidencia: [bitácora](../docs/historial/bitacora.md).
 
 ## Estructura
 
-`src/dominio`: reglas, catálogo y golden. `src/infraestructura`: parser/SPP y SQLite.
-`src/aplicacion`: sesión. `src/app`: rutas. `src/ui`: componentes y tokens.
+Ver [docs/arquitectura.md](../docs/arquitectura.md). En resumen: `src/dominio`
+(reglas, catálogos, golden; TypeScript puro), `src/aplicacion` (sesión y datos para
+pantallas), `src/infraestructura` (SPP y SQLite), `src/app` (pantallas) y `src/ui`
+(componentes).
 Android es generado por Expo; cambios permanentes van en app.config.ts y plugins.
 `package-lock.json` fija las dependencias. No versionar SDK, builds ni secretos.
 
@@ -98,10 +146,15 @@ Android es generado por Expo; cambios permanentes van en app.config.ts y plugins
 Proyecto original: Alfredo Antonio Díaz Claros, CCD, Universidad Autónoma de
 Bucaramanga, [adiacla/refluye](https://github.com/adiacla/refluye).
 Contexto y continuidad: [CampusMind](https://github.com/tomasmanuelgp/CampusMind).
-El archivo LICENSE de esta carpeta procede de la plantilla Expo; no cambia la
-licencia declarada de los materiales heredados. La formalización de la licencia
-global permanece pendiente antes de distribuir públicamente.
+La app está bajo [AGPL-3.0](../LICENSE); ver [LICENCIAS.md](../LICENCIAS.md).
 
 ## Actualización 0.3.2 · Conclusión dinámica
 
 La conclusión aparece desde el inicio de Medir y cambia con los sensores y respuestas, sin guardar. Junto a las observaciones se muestran los pasos del uso elegido. Sin datos/calibración/observaciones verificadas no se autoriza tratamiento; olor o aspecto de riesgo conserva el veto. Motor 0.3.0 sin cambios; 69 pruebas aprobadas. Iteración B-007. APK con versionCode 5.
+
+## Actualización 0.3.3 · Preparación open source
+
+Esquema SQLite v2 con columnas tipadas y migración automática; borrar y exportar
+mediciones; calibración mostrada como declarada; catálogo único de opciones;
+firma de publicación por variables de entorno; ESLint y Prettier. El motor
+cambia solo en W3: desde el motor 0.4.0, sólidos por encima de 1000 ppm (rango validado del sensor) activan R17 y el resultado deja de ser confiable. Detalle en [AUDITORIA.md](../AUDITORIA.md) y [PLAN.md](../PLAN.md).

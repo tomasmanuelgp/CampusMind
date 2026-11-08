@@ -1,0 +1,30 @@
+name: Hallazgo de campo
+description: Algo que viste al usar o construir RE-FLUYE con una comunidad.
+labels: [campo]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Privacidad:** no escribas nombres de personas, teléfonos ni la ubicación exacta de una fuente.
+        Basta con el municipio o la región. No subas fotos donde se vean personas sin su autorización.
+  - type: textarea
+    id: situacion
+    attributes:
+      label: ¿Qué pasó?
+      description: Qué se intentaba hacer, qué mostró la app o el equipo y qué hizo la persona.
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo de hallazgo
+      options:
+        - Un paso de la guía no se entendió
+        - La app mostró algo confuso
+        - El equipo falló en campo (agua, sol, batería)
+        - Diferencia con un análisis de laboratorio
+        - Otro
+  - type: input
+    id: region
+    attributes:
+      label: Municipio o región (sin dirección exacta)

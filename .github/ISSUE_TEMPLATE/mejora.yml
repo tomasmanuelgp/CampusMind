@@ -1,0 +1,22 @@
+name: Mejora
+description: Una idea para que RE-FLUYE sirva mejor.
+labels: [mejora]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: ¿Qué problema resuelve?
+      description: Piensa en la persona que mide junto a una quebrada, sin señal y con el sol en la pantalla.
+    validations:
+      required: true
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: ¿Qué propones?
+  - type: checkboxes
+    id: reglas
+    attributes:
+      label: Reglas de seguridad
+      options:
+        - label: La propuesta respeta las reglas S1–S8 de CONTRIBUTING.md
+          required: true

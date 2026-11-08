@@ -1,0 +1,63 @@
+# Revisión automática de cada cambio: tipos, pruebas, cobertura del motor,
+# dependencias y compilación del firmware. Si algo falla, el cambio no entra.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    name: Aplicación (mobile)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Revisar tipos
+        run: npm run typecheck
+      - name: Revisar estilo (ESLint y Prettier)
+        run: npm run lint && npm run format:check
+      - name: Pruebas y cobertura del dominio
+        run: npm run test:coverage
+      - name: Vulnerabilidades críticas en dependencias de la app
+        # Las altas restantes vienen de expo-router 57 y se corrigen al migrar a
+        # Expo SDK 58 (ver AUDITORIA.md, A4). Este umbral se subirá a «high».
+        run: npm audit --omit=dev --audit-level=critical
+
+  documentacion:
+    name: Enlaces de la documentación
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 scripts/verificar-enlaces.py
+
+  firmware:
+    name: Firmware ESP32
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Instalar arduino-cli, núcleo ESP32 2.0.17 y librerías
+        run: |
+          mkdir -p "$HOME/bin" && echo "$HOME/bin" >> "$GITHUB_PATH"
+          curl -sSL https://downloads.arduino.cc/arduino-cli/arduino-cli_1.1.1_Linux_64bit.tar.gz | tar xz -C "$HOME/bin" arduino-cli
+          # esptool del núcleo 2.0.17 necesita pyserial; pip está bloqueado por PEP 668.
+          sudo apt-get update -qq && sudo apt-get install -y -qq python3-serial
+          export PATH="$HOME/bin:$PATH"
+          export ARDUINO_BOARD_MANAGER_ADDITIONAL_URLS=https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32@2.0.17
+          arduino-cli lib install "LiquidCrystal I2C" OneWire DallasTemperature
+      - name: Compilar firmware
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 firmware/refluye_v2

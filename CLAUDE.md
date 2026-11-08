@@ -8,8 +8,8 @@ Re-Fluye: dispositivo IoT de bajo costo + aplicación móvil que ayuda a familia
 rurales de Colombia a evaluar la calidad del agua y tratarla de forma segura.
 Proyecto del Centro de Competencias Digitales de la UNAB.
 
-La documentación completa está en `refluye/`. **Empieza siempre por
-`refluye/README.md`.**
+La documentación completa está en `docs/`. **Empieza siempre por
+`docs/README.md`.**
 
 ## Las tres cosas que no puedes ignorar
 
@@ -54,7 +54,7 @@ vía Edge Function como proxy.
 - **El motor de reglas exige 100 % de cobertura de ramas.** Toda regla nueva o
   modificada entra con su caso en `dominio/__tests__/casos-golden.json`.
 - **Un cambio en el protocolo Bluetooth es un cambio en
-  `refluye/contexto/03-protocolo-bluetooth.md`**, que es normativo. Firmware y
+  `docs/protocolo-bluetooth.md`**, que es normativo. Firmware y
   app se ajustan al documento, no al revés.
 - **Nunca pongas la clave de la API de Claude en el cliente.** Todo pasa por la
   Edge Function.
@@ -71,13 +71,17 @@ coincidan con el dominio (`veredicto`, `turbidez`, `esEstancada`).
 
 ## Estado actual
 
-Aplicación inicial implementada en `mobile/`: Bluetooth Classic, modo DEMO,
-motor determinista, SQLite, observaciones, resultados y guías. 43 pruebas pasan;
-el motor tiene 100 % de cobertura. APK 0.1.0 compilada con firma de desarrollo;
-aceptación en Android físico pendiente. Backend e IA aún no implementados.
-Leer `README.md`, `mobile/README.md` y `refluye/contexto/05-estado-actual-y-deuda.md`.
+Aplicación de campo en `mobile/` (1.0.0): nuevo frontend, Bluetooth Classic,
+modo DEMO, motor determinista 0.4.0 (con R17), SQLite (esquema v2),
+observaciones, resultados, guías y derechos del titular (borrar y exportar).
+La APK se compila y publica en GitHub (`.github/workflows/apk.yml`); cómo
+publicar: `docs/publicar.md`. Firmware V2.3 en `firmware/`. Las cifras de
+pruebas y cobertura **no se copian a mano**: las da la CI (`.github/workflows/ci.yml`);
+todo `src/dominio/` exige 100 % de cobertura. Aceptación en Android físico
+pendiente. Backend e IA aún no implementados.
+Leer `README.md`, `mobile/README.md` y `docs/contexto/05-estado-actual-y-deuda.md`.
 
 ## Ciclo de mejora
 
-`refluye/prompts/loop-mejora.md` contiene el prompt para iterar mejoras.
-Registra cada iteración en `refluye/prompts/bitacora.md`.
+`docs/historial/loop-mejora.md` contiene el prompt para iterar mejoras.
+Registra cada iteración en `docs/historial/bitacora.md`.
