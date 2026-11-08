@@ -1,16 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import { useEffect, useMemo, useState } from 'react';
 import { router } from 'expo-router';
-import { Alert, AppState, Text } from 'react-native';
-import { Pantalla, Tarjeta, Texto, Boton, Campo, s } from '../ui/componentes';
+import { Alert, AppState, StyleSheet, Text, View } from 'react-native';
+import { Boton, Campo, Chip, Pantalla, Paso, Tarjeta, Texto, s } from '../ui/componentes';
 import { GrupoOpciones } from '../ui/opciones';
 import { DiagnosticoBluetooth, TarjetaSensores } from '../ui/sensores';
-import { TarjetaConclusion, estilosSeccion } from '../ui/conclusion';
+import { ConclusionCompacta, TarjetaConclusion } from '../ui/conclusion';
+import { Icono } from '../ui/iconos';
+import { colores, radio } from '../ui/tema';
 import { useSesion } from '../aplicacion/sesion';
 import { calibracionDeSesion } from '../aplicacion/almacen';
 import { esEstable, lecturaRecienteValida } from '../dominio/estabilidad';
 import { lecturaEnVivo } from '../dominio/monitoreo';
 import { resumirEnVivo } from '../dominio/resumenEnVivo';
+import { avanceMedicion } from '../dominio/presentacion';
 import { ASPECTOS, OLORES, ORIGENES, TIPOS_OLOR, USOS } from '../dominio/catalogos';
 import type { Observacion, Uso } from '../dominio/tipos';
 
@@ -44,20 +47,14 @@ export default function Medir() {
   const vivo = lecturaEnVivo(lecturas, estado, ahora);
   const estable = Boolean(lectura && esEstable(lecturas, ahora));
   const resumen = resumirEnVivo(vivo, observacion, calibracion, uso, estable);
+  const avance = avanceMedicion({ lectura, fuente, uso, observacion });
 
-  const falta = [
-    !fuente.trim() ? 'nombre de la fuente' : null,
-    !uso ? 'uso' : null,
-    !observacion.origen ? 'origen' : null,
-    !observacion.olor ? 'olor' : null,
-    !observacion.visual ? 'aspecto' : null,
-  ].filter(Boolean);
   const observar = (datos: Partial<Observacion>) => setObservacion(o => ({ ...o, ...datos }));
   const elegirOlor = (olor: Observacion['olor']) =>
     setObservacion(o => (olor === 'raro' ? { ...o, olor } : { ...o, olor, olorTipo: undefined }));
 
   const analizar = () => {
-    if (!uso || falta.length) return;
+    if (!uso || !avance.completo) return;
     try {
       setGuardando(true);
       const sesion = useSesion.getState();
@@ -73,9 +70,38 @@ export default function Medir() {
     }
   };
 
+  const segundos = vivo ? Math.max(0, Math.floor((ahora - vivo.recibidaEn) / 1000)) : null;
+
   return (
-    <Pantalla titulo="Mide y observa" demo={demo} compacto>
-      <Texto>Tu lectura y lo que observas, en un solo lugar. Nunca pruebes el agua.</Texto>
+    <Pantalla
+      titulo="Mide y observa"
+      demo={demo}
+      compacto
+      pie={
+        <>
+          <ConclusionCompacta resumen={resumen} />
+          <Boton
+            icono="flecha"
+            texto="Ver qué puedo hacer con esta agua"
+            detalle={avance.completo ? undefined : `Falta: ${avance.falta.join(', ')}`}
+            disabled={!avance.completo || guardando}
+            onPress={analizar}
+          />
+        </>
+      }
+    >
+      <View
+        style={est.progreso}
+        accessibilityLabel={`Pasos completos: ${avance.pasos.filter(p => p.listo).length} de 3`}
+      >
+        {avance.pasos.map(p => (
+          <View key={p.titulo} style={est.progresoItem}>
+            <View style={[est.barra, p.listo && est.barraLista]} />
+            <Text style={[est.progresoTexto, p.listo && { color: '#1B7A3E' }]}>{p.titulo}</Text>
+          </View>
+        ))}
+      </View>
+
       <TarjetaConclusion resumen={resumen} demo={demo} />
       {error ? (
         <Tarjeta tono="ambar">
@@ -83,43 +109,76 @@ export default function Medir() {
         </Tarjeta>
       ) : null}
 
-      <Tarjeta tono={vivo ? 'verde' : 'ambar'}>
-        <Text style={s.etiqueta}>
-          {vivo ? '● DATOS EN VIVO' : estado === 'desconectado' ? 'EQUIPO DESCONECTADO' : 'ESPERANDO DATOS…'}
-        </Text>
-        <Texto>
-          {vivo
-            ? `Actualizado hace ${Math.max(0, Math.floor((ahora - vivo.recibidaEn) / 1000))} s. Los valores cambian con cada lectura del equipo.`
-            : 'No hay una lectura reciente. Revisa la conexión y que el equipo esté enviando datos.'}
-        </Texto>
-        <Texto>
-          {lectura
-            ? 'Ya puedes analizar; no necesitas esperar estabilidad.'
-            : vivo
-              ? 'Puedes observar los valores disponibles. Para analizar, revisa los datos indicados abajo.'
-              : 'Los números anteriores no se muestran como datos actuales.'}
-        </Texto>
-        {vivo?.errores.map(e => (
-          <Texto key={e}>{e}</Texto>
-        ))}
-      </Tarjeta>
-
-      <TarjetaSensores vivo={vivo} lecturas={lecturas} />
-      <Boton
-        secundario
-        texto={diagnostico ? 'Ocultar datos del equipo' : 'Ver datos recibidos por Bluetooth'}
-        onPress={() => setDiagnostico(!diagnostico)}
+      <Paso
+        numero={1}
+        titulo="Lectura del equipo"
+        listo={avance.pasos[0].listo}
+        ayuda="Pon las sondas en el agua y espera unos segundos."
       />
+      <View style={[est.vivo, { backgroundColor: vivo ? '#E3F4E8' : '#FFF1D6' }]}>
+        <View style={[est.puntoVivo, { backgroundColor: vivo ? '#1B7A3E' : '#8A5300' }]} />
+        <View style={{ flex: 1 }}>
+          <Text style={[s.texto, s.fuerte]}>
+            {vivo
+              ? `Datos en vivo · hace ${segundos} s`
+              : estado === 'desconectado'
+                ? 'Equipo desconectado'
+                : 'Esperando datos…'}
+          </Text>
+          <Text style={[s.texto, s.suave, { fontSize: 15 }]}>
+            {lectura
+              ? 'Ya puedes analizar; no necesitas esperar estabilidad.'
+              : vivo
+                ? 'Revisa los datos marcados abajo para poder analizar.'
+                : 'Revisa la conexión y que el equipo esté enviando datos.'}
+          </Text>
+        </View>
+        {estable ? <Chip texto="ESTABLE" color="#1B6B37" fondo="#FFFFFF" /> : null}
+      </View>
+      {vivo?.errores.map(e => (
+        <View key={e} style={s.fila}>
+          <Icono nombre="alerta" color="#7A4A00" tamano={20} />
+          <Text style={[s.texto, { flex: 1 }]}>{e}</Text>
+        </View>
+      ))}
+      <TarjetaSensores vivo={vivo} lecturas={lecturas} />
+      <View style={est.filaBotones}>
+        <View style={{ flex: 1, minWidth: 220 }}>
+          <Boton
+            secundario
+            icono={diagnostico ? 'atras' : 'bluetooth'}
+            texto={diagnostico ? 'Ocultar datos del equipo' : 'Ver datos recibidos'}
+            onPress={() => setDiagnostico(!diagnostico)}
+          />
+        </View>
+        {estado === 'desconectado' && !demo ? (
+          <View style={{ flex: 1, minWidth: 220 }}>
+            <Boton
+              secundario
+              icono="repetir"
+              texto="Volver a conectar"
+              onPress={() => router.replace('/conectar')}
+            />
+          </View>
+        ) : null}
+      </View>
       {diagnostico ? <DiagnosticoBluetooth lecturas={lecturas} estable={estable} /> : null}
-      {!demo ? (
-        <Texto suave>
-          Sin registro de calibración vigente, el resultado no se considera confiable aunque las cifras se
-          repitan.
-        </Texto>
+      {!demo && !calibracion ? (
+        <Chip
+          texto="Sin calibración vigente: el resultado no será confiable"
+          icono="alerta"
+          color="#7A4A00"
+          fondo="#FFF1D6"
+        />
       ) : null}
 
-      <Tarjeta tono="cielo">
-        <Text style={estilosSeccion.titulo}>Nombra la fuente</Text>
+      <Paso
+        numero={2}
+        titulo="Tu agua"
+        listo={avance.pasos[1].listo}
+        ayuda="Dónde la tomaste y para qué la quieres."
+      />
+      <Tarjeta>
         <Campo
           etiqueta="¿Dónde tomaste esta agua?"
           placeholder="Ej. Quebrada de la finca"
@@ -128,21 +187,22 @@ export default function Medir() {
           onChangeText={setFuente}
         />
         <Texto suave>Usa el nombre del lugar, no de personas.</Texto>
-      </Tarjeta>
-
-      <Tarjeta tono="lima">
-        <Text style={estilosSeccion.titulo}>¿Para qué usarás el agua?</Text>
         <GrupoOpciones
-          ayuda="Elige el uso que necesitas ahora."
+          titulo="¿Para qué usarás el agua?"
           opciones={USOS}
           valor={uso}
           elegir={setUso}
+          detalles={false}
         />
       </Tarjeta>
 
-      <Tarjeta tono="ambar">
-        <Text style={estilosSeccion.titulo}>¿Qué notas en el agua?</Text>
-        <Texto suave>Tu conocimiento del lugar también cuenta. Si dudas, elige «No sé».</Texto>
+      <Paso
+        numero={3}
+        titulo="Observa el agua"
+        listo={avance.pasos[2].listo}
+        ayuda="Tu conocimiento del lugar cuenta. Si dudas, elige «No sé». Nunca pruebes el agua."
+      />
+      <Tarjeta>
         <GrupoOpciones
           titulo="¿El agua corre o está quieta?"
           ayuda="Piensa en la fuente, no en el recipiente."
@@ -152,7 +212,7 @@ export default function Medir() {
         />
         <GrupoOpciones
           titulo="¿Notas un olor extraño?"
-          ayuda="No acerques la cara si sospechas químicos. Nunca pruebes el agua."
+          ayuda="No acerques la cara si sospechas químicos."
           opciones={OLORES}
           valor={observacion.olor}
           elegir={elegirOlor}
@@ -176,15 +236,9 @@ export default function Medir() {
       </Tarjeta>
 
       <TarjetaConclusion resumen={resumen} demo={demo} detallada />
-      {falta.length ? <Texto suave>Para analizar, completa: {falta.join(', ')}.</Texto> : null}
-      <Boton
-        texto="Ver qué puedo hacer con esta agua"
-        disabled={!lectura || falta.length > 0 || guardando}
-        onPress={analizar}
-      />
-      <Boton secundario texto="Volver a conectar" onPress={() => router.replace('/conectar')} />
       <Boton
         secundario
+        icono="detener"
         texto="Desconectar equipo"
         onPress={() => {
           void useSesion.getState().desconectar();
@@ -197,3 +251,14 @@ export default function Medir() {
     </Pantalla>
   );
 }
+
+const est = StyleSheet.create({
+  progreso: { flexDirection: 'row', gap: 8 },
+  progresoItem: { flex: 1, gap: 6 },
+  barra: { height: 8, borderRadius: radio.total, backgroundColor: colores.borde },
+  barraLista: { backgroundColor: '#1B7A3E' },
+  progresoTexto: { fontSize: 14, fontWeight: '800', color: colores.suave, textAlign: 'center' },
+  vivo: { flexDirection: 'row', alignItems: 'center', gap: 12, borderRadius: radio.l, padding: 14 },
+  puntoVivo: { width: 14, height: 14, borderRadius: 7 },
+  filaBotones: { flexDirection: 'row', gap: 10, flexWrap: 'wrap' },
+});

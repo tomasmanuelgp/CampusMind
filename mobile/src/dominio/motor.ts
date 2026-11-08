@@ -1,8 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import type { Calibracion, Lectura, Observacion } from './tipos';
 export const VERSION_MOTOR = '0.4.0';
+/**
+ * Umbrales de las reglas. La app los usa también para colorear cada parámetro,
+ * así la pantalla y el veredicto nunca se contradicen.
+ */
+export const UMBRALES = {
+  ph: { extremoMin: 5.5, extremoMax: 9.5, referenciaMin: 6.5, referenciaMax: 8.5 },
+  turbidez: { atencion: 25, extremo: 100 },
+  tds: { atencion: 600, extremo: 1500 },
+} as const;
 /** Máximo del rango validado por el fabricante del sensor de sólidos disueltos SEN0244 (ppm). */
 export const TDS_VALIDADO_MAX = 1000;
+const U = UMBRALES;
 export const DESCARGO = 'Este equipo no detecta bacterias, virus ni parásitos. No certifica potabilidad.';
 export type PlanId = 'alternativa' | 'repetir' | 'hervido';
 export interface Resultado {
@@ -78,19 +88,19 @@ export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lectu
     'El agua verdosa y estancada puede contener toxinas que no se eliminan hirviendo.',
   );
   agregar(
-    enRango(l.ph, 0, 14) && (l.ph < 5.5 || l.ph > 9.5),
+    enRango(l.ph, 0, 14) && (l.ph < U.ph.extremoMin || l.ph > U.ph.extremoMax),
     'R04',
     2,
     'El pH está en un extremo. Busca otra fuente y solicita una revisión técnica.',
   );
   agregar(
-    enRango(l.turbidez, 0, 200) && l.turbidez >= 100,
+    enRango(l.turbidez, 0, 200) && l.turbidez >= U.turbidez.extremo,
     'R08',
     2,
     'La turbidez es muy alta. No inicies un tratamiento doméstico con esta lectura.',
   );
   agregar(
-    enRango(l.tds, 0, 2000) && l.tds >= 1500,
+    enRango(l.tds, 0, 2000) && l.tds >= U.tds.extremo,
     'R09',
     2,
     'Hay muchos sólidos disueltos. Hervir no elimina las sales.',
@@ -116,19 +126,19 @@ export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lectu
     'Observaste agua verdosa. Busca otra fuente; no intentes resolverlo solo hirviendo.',
   );
   agregar(
-    enRango(l.ph, 0, 14) && (l.ph < 6.5 || l.ph > 8.5),
+    enRango(l.ph, 0, 14) && (l.ph < U.ph.referenciaMin || l.ph > U.ph.referenciaMax),
     'R10',
     1,
     'El pH está fuera del rango de referencia para consumo humano. Consulta a un técnico.',
   );
   agregar(
-    enRango(l.turbidez, 0, 200) && l.turbidez >= 25,
+    enRango(l.turbidez, 0, 200) && l.turbidez >= U.turbidez.atencion,
     'R11',
     1,
     'El agua contiene muchas partículas. Necesita revisión y tratamiento antes de volver a medir.',
   );
   agregar(
-    enRango(l.tds, 0, 2000) && l.tds >= 600,
+    enRango(l.tds, 0, 2000) && l.tds >= U.tds.atencion,
     'R12',
     1,
     'Los sólidos disueltos están elevados. Busca una fuente con menor contenido de sales.',
