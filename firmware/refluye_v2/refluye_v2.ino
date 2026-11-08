@@ -1,5 +1,5 @@
 /*
- * Re-Fluye V2.2 - ESP32
+ * Re-Fluye V2.3 - ESP32
  *
  * Basado en el codigo V2.0 de "Re-Fluye_V2_ESP32_Guia_Tecnica_parte2.docx" 6.1
  * (Alfredo Antonio Diaz Claros - CCD, UNAB), con:
@@ -7,6 +7,9 @@
  *     observacional delegada a la app, ESTADO numerico)
  *   - las correcciones F1-F4 documentadas en refluye/contexto/02
  *   - la linea VER del protocolo (refluye/contexto/03)
+ *   - V2.3: la pantalla y los LED ya no muestran un veredicto (regla S1).
+ *     El equipo solo con sensores no puede saber si el agua sirve para
+ *     beber: no ve microbios, olor ni color. La trama Bluetooth no cambia.
  *
  * ARQUITECTURA
  *   El ESP32 mide y transmite. No decide y no recibe comandos.
@@ -28,6 +31,11 @@
  * HARDWARE
  *   ESP32 DevKit v1 + DFRobot pH V1.1 + TDS V1.0 + turbidez analogica
  *   + DS18B20 + LCD I2C 16x2 + 3 LEDs
+ *
+ * SIGNIFICADO DE LOS LED (ninguno autoriza consumir el agua)
+ *   Verde    -> la app esta conectada por Bluetooth
+ *   Amarillo -> parpadea en cada medicion (el equipo esta midiendo)
+ *   Rojo     -> algun sensor esta en el limite de su escala o no responde
  *
  * DEFECTOS CONOCIDOS DE LA PCB (ver refluye/contexto/02)
  *   P1: el SCL del LCD esta ruteado al pin Tx, no a GPIO22 -> el LCD no
@@ -78,8 +86,8 @@ const int NUM_MUESTRAS = 10;
 
 // --- Medicion --------------------------------------------------------------
 float valorPH, valorTurb, valorTDS, ica, valorTemp;
-int   clasificacion;
-String destino;
+int   clasificacion;      // preclasificacion enviada como ESTADO; no es veredicto
+bool  sensorEnLimite;     // algun sensor saturado o desconectado
 
 // Lee el voltaje real del sensor en mV, compensando el divisor.
 // Usa analogReadMilliVolts(), que aplica la calibracion de fabrica del ADC
@@ -107,7 +115,7 @@ void setup() {
   Wire.begin(21, 22);
   lcd.init();
   lcd.backlight();
-  lcd.setCursor(0, 0); lcd.print("RE-FLUYE V2.2");
+  lcd.setCursor(0, 0); lcd.print("RE-FLUYE V2.3");
   lcd.setCursor(0, 1); lcd.print("App -> Bluetooth");
   delay(2000);
   lcd.clear();
@@ -149,19 +157,23 @@ void loop() {
   float sTD = constrain(100.0 - (valorTDS  / 20.0),           0.0, 100.0);
   ica = constrain((sPH * 0.4) + (sTU * 0.3) + (sTD * 0.3), 0.0, 100.0);
 
-  // --- 3. Preclasificacion base (la app puede sobreescribirla) ------------
-  if (ica < 50 || valorPH < 5.0 || valorPH > 9.0) {
-    clasificacion = 2; destino = "NO APTA";
-  } else if (ica < 75) {
-    clasificacion = 1; destino = "CONDICION";
-  } else {
-    clasificacion = 0; destino = "EXCELENTE";
-  }
+  // --- 3. Preclasificacion base ------------------------------------------
+  // Solo se envia como ESTADO para compatibilidad del protocolo. La app la
+  // ignora como veredicto: decide con sensores + observaciones humanas.
+  if (ica < 50 || valorPH < 5.0 || valorPH > 9.0) clasificacion = 2;
+  else if (ica < 75)                                clasificacion = 1;
+  else                                              clasificacion = 0;
 
-  // --- 4. LCD --------------------------------------------------------------
+  sensorEnLimite = valorPH <= 0.0 || valorPH >= 14.0 ||
+                   valorTurb >= 200 || valorTDS >= 2000 ||
+                   valorTemp == DEVICE_DISCONNECTED_C;
+
+  // --- 4. LCD: datos, nunca un veredicto ----------------------------------
   lcd.setCursor(0, 0);
-  lcd.print(destino);
-  lcd.print("         ");
+  lcd.print("ICA ");
+  lcd.print((int)ica);
+  lcd.print(sensorEnLimite ? " REVISAR " : " VER APP ");
+  lcd.print("   ");
 
   lcd.setCursor(0, 1);
   lcd.print("pH:"); lcd.print(valorPH, 1);
@@ -176,7 +188,7 @@ void loop() {
   Serial.print("Turb: ");   Serial.println(valorTurb, 0);
   Serial.print("Temp: ");   Serial.println(valorTemp, 1);
   Serial.print("ICA: ");    Serial.println(ica, 1);
-  Serial.print("ESTADO: "); Serial.println(destino);
+  Serial.print("ESTADO (no es veredicto): "); Serial.println(clasificacion);
   Serial.println("=============================");
 
   // --- 6. Bluetooth: trama del protocolo -----------------------------------
@@ -189,8 +201,10 @@ void loop() {
   SerialBT.print("TEMP:");   SerialBT.println(valorTemp, 1);
   SerialBT.println("---");
 
-  // --- 7. LEDs -------------------------------------------------------------
-  digitalWrite(LED_VERDE,    (clasificacion == 0) ? HIGH : LOW);
-  digitalWrite(LED_AMARILLO, (clasificacion == 1) ? HIGH : LOW);
-  digitalWrite(LED_ROJO,     (clasificacion == 2) ? HIGH : LOW);
+  // --- 7. LEDs: estado del equipo, nunca calidad del agua -----------------
+  digitalWrite(LED_VERDE,    SerialBT.hasClient() ? HIGH : LOW);
+  digitalWrite(LED_AMARILLO, HIGH);   // se apaga al inicio del siguiente ciclo
+  digitalWrite(LED_ROJO,     sensorEnLimite ? HIGH : LOW);
+  delay(80);
+  digitalWrite(LED_AMARILLO, LOW);
 }

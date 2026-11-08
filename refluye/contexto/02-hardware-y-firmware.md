@@ -17,7 +17,9 @@ bits (0–4095), lógica de **3.3 V**, Bluetooth Classic y BLE integrados.
 | TDS | DFRobot Gravity TDS Meter V1.0 | Analógica | 5 V |
 | Temperatura | DS18B20 sumergible IP67 | Digital 1-Wire | 3.3–5 V |
 
-**Salidas:** LCD 16x2 I2C, tres LEDs indicadores (verde/amarillo/rojo).
+**Salidas:** LCD 16x2 I2C, tres LEDs indicadores (verde/amarillo/rojo). Desde el
+firmware V2.3 ninguna salida del equipo indica calidad del agua: verde = app
+conectada, amarillo = midiendo, rojo = sensor en el límite (ver `firmware/README.md`).
 
 ## El divisor de voltaje: por qué existe
 

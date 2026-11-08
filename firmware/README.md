@@ -1,6 +1,23 @@
 # Firmware Re-Fluye
 
-## `refluye_v2/refluye_v2.ino` — V2.2
+## `refluye_v2/refluye_v2.ino` — V2.3
+
+### Novedad de V2.3: el equipo no da veredictos
+
+La pantalla y los LED ya no dicen «EXCELENTE», «CONDICION» ni «NO APTA», y el
+LED verde ya no significa «buena calidad». El equipo solo mide; no ve microbios,
+olor ni color, así que no puede decidir si el agua sirve para beber (regla S1).
+
+| Salida | Qué muestra en V2.3 |
+|---|---|
+| LCD, línea 1 | `ICA 82 VER APP`, o `ICA 82 REVISAR` si un sensor está en el límite de su escala o no responde |
+| LCD, línea 2 | pH y temperatura (sin cambios) |
+| LED verde | La app está conectada por Bluetooth |
+| LED amarillo | Parpadea en cada medición (cada 1,5 s) |
+| LED rojo | Algún sensor saturado (pH 0 o 14, turbidez 200, TDS 2000) o temperatura `-127` |
+
+La trama Bluetooth **no cambia**: se sigue enviando `ESTADO:<0|1|2>` por
+compatibilidad (`VER:1`). La app nunca lo usa como veredicto.
 
 Firmware de referencia para el ESP32. Verificado: **compila sin errores**.
 

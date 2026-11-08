@@ -1,6 +1,6 @@
 # Re-Fluye · Manual técnico del sistema
 
-**Versión de referencia:** aplicación 0.3.1, motor 0.3.0, firmware de referencia V2.2, protocolo Bluetooth `VER:1`.
+**Versión de referencia:** aplicación 0.3.1, motor 0.3.0, firmware de referencia V2.3, protocolo Bluetooth `VER:1`.
 
 **Fecha:** 2 de octubre de 2026.
 **Público:** responsables de hardware, firmware, software, calibración y aceptación en campo.
@@ -13,7 +13,7 @@ El proyecto original de Alfredo Antonio Díaz Claros, CCD de la Universidad Aut�
 
 | Pieza | Ubicación | Estado comprobado |
 |---|---|---|
-| Firmware ESP32 V2.2 | `firmware/refluye_v2/refluye_v2.ino` | Compilación de referencia; no validación con toda la unidad física. |
+| Firmware ESP32 V2.3 | `firmware/refluye_v2/refluye_v2.ino` | Compilación de referencia; no validación con toda la unidad física. |
 | Protocolo | `refluye/contexto/03-protocolo-bluetooth.md` | Contrato `VER:1`, SPP, texto por líneas; parser probado. |
 | App | `mobile/src` | TypeScript, 61 pruebas y APK Android 0.3.0 de pruebas. |
 | APK interna | [Publicación 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0) | Compilación y verificación técnica documentadas; instalación real pendiente. |
@@ -49,7 +49,7 @@ La configuración documentada contiene ESP32 DevKit v1 de 38 pines, sensor de pH
 | Turbidez SEN0189 | Lectura óptica; salida analógica de hasta 4,5 V y alimentación de 5 V. | Limpiar suavemente ventana óptica, evitar rayas y comprobar cable. Mantener seco el adaptador de señal. [DFRobot SEN0189](https://wiki.dfrobot.com/sen0189). |
 | TDS SEN0244 | Conductividad convertida a estimación de sólidos disueltos. | Enjuagar electrodos, evitar depósitos; no medir a 55 °C o más. El **rango declarado por fabricante es 0–1000 ppm**, precisión ±10 % de escala completa a 25 °C; la sonda no trae termómetro. [DFRobot SEN0244](https://wiki.dfrobot.com/sen0244) y [cuidado térmico](https://wiki.dfrobot.com/sen0244/docs/20305). |
 | DS18B20 sellado | Temperatura por 1-Wire en GPIO4. | Enjuagar solo el extremo encapsulado y revisar sello/cable. El chip suelto no es sumergible; la impermeabilidad depende de la sonda de terceros. `-127 °C` indica falta de respuesta. [Analog Devices](https://www.analog.com/en/products/ds18b20.html), [nota de inmersión](https://ez.analog.com/dsp/otherdsp/a/documents/do19739/can-the-ds18b20-be-submerged-in-water). |
-| LCD / LEDs | Salida de preclasificación por sensores. | No asumir que el LCD funciona en la PCB original; comprobar cableado I2C. No leer verde o «EXCELENTE» como potabilidad. |
+| LCD / LEDs | Desde V2.3: ICA, pH y temperatura en el LCD; LED verde = app conectada, amarillo = midiendo, rojo = sensor en el límite. | No asumir que el LCD funciona en la PCB original; comprobar cableado I2C. Ninguna salida del equipo autoriza el consumo. Las unidades con V2.2 aún muestran «EXCELENTE»: actualizar el firmware. |
 | Caja, alimentación, cables | Configuración final no única en el repositorio. | Etiquetar tensión, polaridad, interruptor y partes sumergibles. Revisar sellos, alivio de tensión y ausencia de humedad antes de entregar. No afirmar IP65 sin ensayo de la unidad montada. |
 
 **Riesgos de diseño que requieren revisión eléctrica antes de energizar una placa histórica:** SCL del LCD aparece ruteado a `Tx` en lugar de GPIO22; falta la resistencia pull-up de 4,7 kΩ del DS18B20 entre DATA y **3,3 V**. El divisor 10 kΩ/20 kΩ documentado lleva 5,0 V de entrada a aproximadamente **3,33 V**, ligeramente por encima del nominal de 3,3 V del ESP32: verificar tensión real y márgenes del pin, no asumir que ese cálculo basta como protección. No sugerimos cortar pistas ni soldar sin inspección de esa revisión de PCB. [Auditoría de hardware](../contexto/02-hardware-y-firmware.md).
@@ -135,7 +135,7 @@ Para dar por aceptada una unidad física faltan, al menos: identificar BOM exact
 1. **TDS por encima de 1000 ppm:** confirmar sensor, rango y respuesta; alinear firmware y motor con el límite probado.
 2. **Alimentación, impermeabilidad y PCB:** cerrar especificación por unidad; no imprimir voltaje ni grado IP genérico.
 3. **Registro de calibración:** la app almacena evidencia declarada, pero no verifica físicamente la sonda. Definir trazabilidad y vencimiento por procedimiento real.
-4. **LCD y LEDs:** cambiar etiquetas de preclasificación para que «EXCELENTE»/verde no sugieran autorización de consumo.
+4. **LCD y LEDs:** resuelto en firmware V2.3 (sin veredicto en pantalla ni LED verde de calidad).
 5. **Conservación de datos:** comprobar migración y crear exportación/copia de seguridad antes de un despliegue amplio.
 
 ## 10. Fuentes y trazabilidad documental
