@@ -14,6 +14,27 @@ Claros. Repositorio de partida: `github.com/adiacla/refluye`.
 
 ---
 
+## Empieza aquí
+
+Guías escritas para que un estudiante de colegio pueda construir y entender su
+propio RE-FLUYE:
+
+| Documento | Qué responde |
+|---|---|
+| [arquitectura.md](arquitectura.md) | Cómo se conectan el equipo, el teléfono y las capas de la app (con diagramas) |
+| [hardware.md](hardware.md) | Componentes, costos, cómo conectar el ESP32, cargar el firmware y calibrar |
+| [protocolo-bluetooth.md](protocolo-bluetooth.md) | **Contrato normativo** entre el equipo y la app |
+| [motor-de-reglas.md](motor-de-reglas.md) | Cómo decide la app, regla por regla, y cómo se prueba |
+| [datos.md](datos.md) | Qué se guarda, dónde, diccionario de datos y privacidad |
+| [materiales.csv](materiales.csv) | Lista de materiales con precios de noviembre de 2026 |
+
+Licencia de esta carpeta: [CC BY-NC-SA 4.0](LICENSE) (ver [LICENCIAS.md](../LICENCIAS.md)).
+
+## Documentación de referencia
+
+Lo que sigue es la base de conocimiento detallada con la que se diseñó el
+proyecto. Algunos documentos describen planes que aún no existen (backend, IA).
+
 ## Cómo leer esta documentación
 
 Los documentos están numerados por orden de lectura recomendado. Los primeros
@@ -47,6 +68,7 @@ a construir**.
 | Archivo | Uso |
 |---|---|
 | [`historial/loop-mejora.md`](historial/loop-mejora.md) | Prompt del ciclo iterativo de mejora |
+| [`historial/`](historial/) | Bitácora, decisiones e iteraciones del trabajo con agentes de IA, y el diseño inicial no vigente |
 | [`../CLAUDE.md`](../CLAUDE.md) | Contexto permanente para agentes que trabajen en el repo |
 
 ### Manuales de la versión 0.3.1

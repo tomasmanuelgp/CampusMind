@@ -4,6 +4,7 @@ Una línea por iteración del ciclo de mejora.
 
 | Fecha | Área | Qué cambió | Por qué | Verificación |
 |---|---|---|---|---|
+| 2026-11-08 | OS — Preparación open source | Auditoría y plan; CI (tipos, lint, pruebas, firmware, enlaces, gitleaks); firmware V2.3 sin veredicto; firma por variables; invariantes S1–S7; esquema SQLite v2 minimizado; borrar/exportar; catálogo único y capas; repo en mobile/firmware/docs; licencias AGPL + CC BY-NC-SA; docs para estudiantes | Publicar RE-FLUYE como proyecto abierto sin secretos, con datos mínimos y documentación reproducible | CI verde; 99 pruebas; dominio 100 %; firmware compilado (esp32 2.0.17); recorrido DEMO en navegador; Android físico pendiente. Detalle: AUDITORIA.md y PLAN.md |
 | 2026-10-02 | F — Bluetooth (F-002) | Estado textual no bloquea sensores; monitoreo y curvas por trama, diagnóstico recibido | Los datos del prototipo quedaban ocultos en Android | 61 pruebas, TypeScript, motor 100 %, build/firma/hash APK; Android USB bloqueado por error 10, prueba Bluetooth del usuario pendiente |
 | 2026-09-30 | D — APK (D-007) | APK 0.3.0, manuales y hoja impresa actualizados | Entregar primera lectura e ICA en Android | Build, lint vital, firma, hash, paquete, ABI y permisos; teléfono pendiente |
 | 2026-09-30 | B — UI (B-006) | ICA indicativo y cuatro valores visibles; decisión y pasos por uso al abrir resultado | Evitar navegar para saber qué hacer | DEMO web, TypeScript y 54 pruebas; Android y usuarios pendientes |

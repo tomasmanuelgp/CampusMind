@@ -1,6 +1,6 @@
 # Plan de preparación open source · RE-FLUYE
 
-**Fecha:** 2026-11-08 · **Base:** [`AUDITORIA.md`](AUDITORIA.md) · **Estado:** pendiente de aprobación
+**Fecha:** 2026-11-08 · **Base:** [`AUDITORIA.md`](AUDITORIA.md) · **Estado:** aprobado y ejecutado el 2026-11-08 (ver «Estado de ejecución» al final)
 
 Orden: **seguridad → datos → limpieza y estructura → documentación**. Cada PR es
 pequeño, independiente y deja las pruebas en verde. Ningún PR cambia el veredicto
@@ -197,3 +197,29 @@ Solo puedo publicar en la rama `claude/wizardly-goodall-ofuz8p`. Hay dos opcione
 
 - **(a)** Un commit por PR temático en esa rama, y un único PR final. Es la opción por defecto.
 - **(b)** Que me autorices a crear una rama por tema (`refluye/pr-01-ci`, …), con un PR cada una.
+
+---
+
+## Estado de ejecución (2026-11-08)
+
+Todos los cambios están en la rama `claude/wizardly-goodall-ofuz8p`, con un commit por tema.
+
+| PR | Estado | Commit |
+|---|---|---|
+| PR-01 CI y barrera de seguridad | ✅ | `2a722c2`, `55cb898`, `48867d2` |
+| PR-02 Dependencias (23 → 7 vulnerabilidades) | ✅ | `f8b9d00` |
+| PR-03 Firmware V2.3 sin veredicto | ✅ compilado con esp32 2.0.17 | `b3157cd` |
+| PR-04 Firma de publicación | ✅ falta crear el keystore (tarea del propietario) | `186227f` |
+| PR-05 Invariantes S1–S7 | ✅ | `e2a1863` |
+| PR-06 Calibración declarada | ✅ | `4a2f4de` |
+| PR-07 y PR-08 Minimización y esquema v2 | ✅ | `71eac36` |
+| PR-09 Derechos del titular | ✅ | `cbf2d8f` |
+| PR-10 ESLint, Prettier, formato | ✅ | `ae9f79d` |
+| PR-11 y PR-12 Catálogo único y capas | ✅ | `af6cbd8` |
+| PR-13 Reorganización del repositorio | ✅ | `316e9e7` |
+| PR-14 Licencias | ✅ | `b66f3d2` |
+| PR-15 Archivos de comunidad | ✅ | ver commit «docs: archivos de comunidad» |
+| PR-16 README y documentación para estudiantes | ✅ | ver commit «docs: README y guías» |
+| PR-17 Correcciones del sitio web | ⏳ el código del sitio no está en este repositorio | — |
+| W3 TDS > 1000 ppm no confiable | ⏳ espera aprobación (toca el motor) | — |
+| Expo SDK 58 | ⏳ futuro | — |

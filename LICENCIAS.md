@@ -37,7 +37,7 @@ Cada archivo de código lleva en su primera línea una etiqueta
 La app calcula un índice orientativo con la misma ponderación que el firmware
 original (pH 40 %, turbidez 30 %, sólidos disueltos 30 %). Una fórmula es un
 método y no un texto protegido; aun así, damos crédito a su origen en
-`docs/motor-de-reglas.md`.
+[`docs/motor-de-reglas.md`](docs/motor-de-reglas.md).
 
 ## Cómo dar crédito
 

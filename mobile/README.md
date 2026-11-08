@@ -1,8 +1,8 @@
 # Re-Fluye · App Android de campo
 
-APK de pruebas actual: [Re-Fluye 0.3.1](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.1).
-Pendiente instalar y probar en un
-Android físico. [Arreglo de Bluetooth y compilación](../docs/historial/iteraciones/F-002.md).
+Versión del código: **0.3.3** (esquema de datos v2). Última APK de pruebas
+publicada: [Publicaciones](https://github.com/tomasmanuelgp/CampusMind/releases).
+Aceptación en Android físico pendiente: [guion de pruebas](../docs/app/13-pruebas-apk.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
 la observación humana y la identidad del proyecto Re-Fluye de CCD/UNAB.
@@ -22,6 +22,8 @@ El repositorio original no contenía una aplicación móvil recuperable.
   guía opcional con temporizador, audio, historial y compartir.
 - Registrar evidencia técnica de calibración. Sin registro vigente: no confiable.
 - Practicar en modo DEMO, con capturas identificadas como simuladas.
+- Ver, exportar (CSV) y borrar mediciones; pantalla «Tus datos» (Ley 1581).
+  Las mediciones no guardan la dirección del equipo ni el nombre de quien calibró.
 - Elegir un uso (consumo, baño, utensilios, ropa, ganado o cultivo) y registrar
   origen, olor y aspecto junto al nombre de la fuente en una sola pantalla.
 - Ver límites y acciones breves para ese uso sin convertir los sensores en una
@@ -106,20 +108,22 @@ Para una APK que sí se puede publicar:
 
 ## Verificación disponible
 
-61 pruebas: golden y combinaciones del motor, parser, monitoreo, SQLite real con adaptador
-de prueba y sesión con Bluetooth simulado. El motor exige 100 % de cobertura.
-El recorrido web DEMO se revisó a 390 y 320 px en 0.2.0; la primera lectura y el
-resultado directo para cocinar se comprobaron en navegador en 0.3.0. La recuperación del borrador
-pertenece al flujo anterior y debe comprobarse de nuevo con esta interfaz.
-Estas comprobaciones no sustituyen Android físico.
+Pruebas de golden y combinaciones del motor, invariantes de seguridad S1–S7,
+parser, monitoreo, SQLite real (incluida la migración v1 → v2) y sesión con
+Bluetooth simulado. Todo `src/dominio/` exige 100 % de cobertura. Las cifras
+exactas las publica la integración continua en cada cambio
+([`ci.yml`](../.github/workflows/ci.yml)); no se copian aquí para que no se
+desactualicen. Estas comprobaciones no sustituyen un Android físico.
 
 Guion pendiente: [Pruebas de campo](../docs/app/13-pruebas-apk.md).
 Iteraciones y evidencia: [bitácora](../docs/historial/bitacora.md).
 
 ## Estructura
 
-`src/dominio`: reglas, catálogo y golden. `src/infraestructura`: parser/SPP y SQLite.
-`src/aplicacion`: sesión. `src/app`: rutas. `src/ui`: componentes y tokens.
+Ver [docs/arquitectura.md](../docs/arquitectura.md). En resumen: `src/dominio`
+(reglas, catálogos, golden; TypeScript puro), `src/aplicacion` (sesión y datos para
+pantallas), `src/infraestructura` (SPP y SQLite), `src/app` (pantallas) y `src/ui`
+(componentes).
 Android es generado por Expo; cambios permanentes van en app.config.ts y plugins.
 `package-lock.json` fija las dependencias. No versionar SDK, builds ni secretos.
 
@@ -128,10 +132,15 @@ Android es generado por Expo; cambios permanentes van en app.config.ts y plugins
 Proyecto original: Alfredo Antonio Díaz Claros, CCD, Universidad Autónoma de
 Bucaramanga, [adiacla/refluye](https://github.com/adiacla/refluye).
 Contexto y continuidad: [CampusMind](https://github.com/tomasmanuelgp/CampusMind).
-El archivo LICENSE de esta carpeta procede de la plantilla Expo; no cambia la
-licencia declarada de los materiales heredados. La formalización de la licencia
-global permanece pendiente antes de distribuir públicamente.
+La app está bajo [AGPL-3.0](../LICENSE); ver [LICENCIAS.md](../LICENCIAS.md).
 
 ## Actualización 0.3.2 · Conclusión dinámica
 
 La conclusión aparece desde el inicio de Medir y cambia con los sensores y respuestas, sin guardar. Junto a las observaciones se muestran los pasos del uso elegido. Sin datos/calibración/observaciones verificadas no se autoriza tratamiento; olor o aspecto de riesgo conserva el veto. Motor 0.3.0 sin cambios; 69 pruebas aprobadas. Iteración B-007. APK con versionCode 5.
+
+## Actualización 0.3.3 · Preparación open source
+
+Esquema SQLite v2 con columnas tipadas y migración automática; borrar y exportar
+mediciones; calibración mostrada como declarada; catálogo único de opciones;
+firma de publicación por variables de entorno; ESLint y Prettier. El motor
+(0.3.0) no cambia. Detalle en [AUDITORIA.md](../AUDITORIA.md) y [PLAN.md](../PLAN.md).

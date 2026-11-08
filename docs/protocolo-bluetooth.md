@@ -1,8 +1,52 @@
-# 03 · Protocolo Bluetooth — contrato normativo
+# Protocolo Bluetooth — contrato normativo
 
 > **Este documento es normativo.** Es la única fuente de verdad del formato de
 > datos entre el dispositivo y la app. Firmware y aplicación deben ajustarse a
 > él, no al revés. Cualquier cambio aquí es un cambio de versión del protocolo.
+
+## En pocas palabras
+
+El equipo y el teléfono se hablan como dos personas que se escriben notas:
+
+- **Canal:** Bluetooth Classic, perfil de puerto serie (SPP). Nombre del equipo:
+  `ReFluye-V2`. PIN: `1234`.
+- **Ritmo:** cada 1,5 segundos el equipo envía una nota (una *trama*).
+- **Forma de la nota:** una línea por dato, `CLAVE:valor`, y una línea `---`
+  para decir «terminé».
+
+```
+VER:1
+ESTADO:0
+ICA:87.3
+pH:7.41
+TDS:145
+TURB:12
+TEMP:24.5
+---
+```
+
+| Clave | Qué es | Unidad | Rango aceptado |
+|---|---|---|---|
+| `VER` | Versión del protocolo | — | entero; hoy `1` |
+| `ESTADO` | Preclasificación del equipo. **No es un veredicto** | — | `0`, `1` o `2` |
+| `ICA` | Índice del equipo, solo informativo | — | 0 – 100 |
+| `pH` | Acidez | — | 0 – 14 |
+| `TDS` | Sólidos disueltos | ppm | 0 – 2000 |
+| `TURB` | Turbidez | NTU | 0 – 200 |
+| `TEMP` | Temperatura | °C | −55 – 125; `-127` = sonda desconectada |
+
+El equipo **solo envía**: no recibe órdenes. La app lee la nota, revisa que
+cada valor esté en su rango y decide con sus propias reglas. El código que lee
+las tramas está en
+[`mobile/src/infraestructura/bluetooth/parser.ts`](../mobile/src/infraestructura/bluetooth/parser.ts)
+y el que las envía, en [`firmware/refluye_v2/refluye_v2.ino`](../firmware/refluye_v2/refluye_v2.ino).
+
+Desde el firmware V2.3 la pantalla y los LED del equipo ya no muestran
+calidad del agua; la trama no cambió.
+
+---
+
+## Detalle del contrato
 
 ## Por qué existe este documento
 

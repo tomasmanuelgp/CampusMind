@@ -1,0 +1,17 @@
+Componente,Cantidad,Costo COP min,Costo COP max,Fuente,Fecha de precio,Notas
+ESP32 DevKit v1 38 pines,1,27000,39500,Mercado Libre · Electronilab,2026-11,Debe tener Bluetooth Classic (ESP32 original; no sirven C3 ni S3)
+Kit de pH DFRobot SEN0161,1,178500,238000,Sigma Electrónica,2026-11,La pieza más costosa y la que más se desgasta
+Sensor de turbidez DFRobot SEN0189,1,45344,45344,Didácticas Electrónicas,2026-11,
+Sensor de sólidos disueltos DFRobot SEN0244,1,61575,61575,Didácticas Electrónicas,2026-11,Rango validado del fabricante 0 a 1000 ppm
+Sonda de temperatura DS18B20 sellada,1,9900,9900,Electronilab,2026-11,Versión sumergible con cable
+Pantalla LCD I2C 16x2,1,,,PENDIENTE,,Opcional: la app es la pantalla confiable
+Resistencia 10 kΩ,3,,,PENDIENTE,,Divisores de voltaje (sensor → pin)
+Resistencia 20 kΩ,3,,,PENDIENTE,,Divisores de voltaje (pin → GND)
+Resistencia 4.7 kΩ,1,,,PENDIENTE,,Pull-up del DS18B20 a 3.3 V
+Resistencia 220 Ω,3,,,PENDIENTE,,En serie con cada LED
+LED verde amarillo y rojo,3,,,PENDIENTE,,
+Protoboard,2,,,PENDIENTE,,Dos unidas: el ESP32 de 38 pines no cabe en una
+Juego de cables de conexión,1,,,PENDIENTE,,
+Carcasa,1,,,PENDIENTE,,
+Soluciones buffer pH 4.0 y 7.0,1,,,PENDIENTE,,Para calibrar el pH
+PCB del proyecto original (opcional),1,48000,48000,Cotización del proyecto original,,Tiene defectos conocidos P1 y P2: ver hardware.md
