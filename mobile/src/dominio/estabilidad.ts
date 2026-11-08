@@ -1,4 +1,4 @@
-import type { Lectura } from '../../dominio/tipos';
+import type { Lectura } from './tipos';
 
 /** Una sola trama íntegra y reciente basta para orientar, aunque aún varíe. */
 export function lecturaRecienteValida(lecturas: Lectura[], ahora: number): Lectura | null {

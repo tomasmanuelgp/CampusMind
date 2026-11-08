@@ -52,8 +52,7 @@ export const protocolos: Record<PlanId, Protocolo> = {
       },
       {
         titulo: 'Completa la observación',
-        texto:
-          'Si no puedes identificar el origen, olor o aspecto, pide ayuda y conserva la opción «No estoy seguro».',
+        texto: 'Si no puedes identificar el origen, olor o aspecto, pide ayuda y conserva la opción «No sé».',
       },
     ],
   },

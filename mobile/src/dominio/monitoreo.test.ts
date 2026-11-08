@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { leerTrama } from './parser';
+import { leerTrama } from '../infraestructura/bluetooth/parser';
 import { lecturaEnVivo, segmentosSensor } from './monitoreo';
 const lectura = (ph: string, t = 1000) => leerTrama(`pH:${ph}\nTDS:145\nTURB:2\nTEMP:24`, t)!;
 describe('monitoreo independiente del análisis', () => {
@@ -28,5 +28,19 @@ describe('monitoreo independiente del análisis', () => {
     expect(segmentosSensor(l, 'ph').map(s => s.length)).toEqual([2, 1, 1]);
     expect(segmentosSensor([lectura('bad')], 'ph')).toEqual([]);
     expect(segmentosSensor([lectura('7'), lectura('7', 2500)], 'ph')[0].map(p => p[1])).toEqual([25, 25]);
+  });
+});
+
+describe('curvas: casos de borde', () => {
+  it('un primer punto inválido no crea un tramo vacío', () => {
+    const base = leerTrama('VER:1\npH:7\nTDS:100\nTURB:2\nTEMP:24', 0)!;
+    const lecturas = [
+      { ...base, ph: null },
+      { ...base, recibidaEn: 1500 },
+      { ...base, ph: 7.2, recibidaEn: 3000 },
+    ];
+    const tramos = segmentosSensor(lecturas, 'ph');
+    expect(tramos).toHaveLength(1);
+    expect(tramos[0]).toHaveLength(2);
   });
 });

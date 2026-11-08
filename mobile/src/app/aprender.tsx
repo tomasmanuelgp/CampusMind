@@ -10,7 +10,7 @@ const guias = [
   ],
   [
     '3. Observa el agua',
-    'Describe el origen, el olor y el aspecto. No pruebes el agua. Si no puedes identificar algo, elige «No estoy seguro».',
+    'Describe el origen, el olor y el aspecto. No pruebes el agua. Si no puedes identificar algo, elige «No sé».',
   ],
   [
     '4. Sigue las indicaciones',

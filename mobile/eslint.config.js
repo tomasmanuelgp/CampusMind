@@ -8,4 +8,6 @@ module.exports = defineConfig([
   expoConfig,
   prettier,
   { ignores: ['dist/*', 'coverage/*', 'android/*', 'ios/*', '.expo/*'] },
+  // En pruebas, vi.mock se declara antes de importar el módulo simulado.
+  { files: ['**/*.test.ts'], rules: { 'import/first': 'off' } },
 ]);

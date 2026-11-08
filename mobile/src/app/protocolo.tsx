@@ -2,28 +2,22 @@ import { useEffect, useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Text, Alert, AppState } from 'react-native';
 import { Pantalla, Tarjeta, Texto, Boton, Audio, s } from '../ui/componentes';
-import { obtenerCaptura, leerAjuste, guardarAjuste, type Registro } from '../infraestructura/db/repositorio';
+import { obtenerCaptura, leerProgreso, guardarProgreso } from '../aplicacion/almacen';
 import { protocolos } from '../dominio/protocolos';
 import { DESCARGO, type Resultado } from '../dominio/motor';
 export default function ProtocoloPantalla() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [registro, setRegistro] = useState<Registro | null>(null),
-    [paso, setPaso] = useState(0),
-    [fin, setFin] = useState<number | null>(null),
-    [ahora, setAhora] = useState(Date.now());
-  useEffect(() => {
+  // Lecturas síncronas del teléfono: se resuelven al montar, sin efectos.
+  const [registro] = useState(() => {
     try {
-      setRegistro(obtenerCaptura(id));
-      const dato = leerAjuste('progreso:' + id);
-      if (dato) {
-        const p = JSON.parse(dato);
-        setPaso(p.paso);
-        setFin(p.fin);
-      }
+      return obtenerCaptura(id);
     } catch {
-      Alert.alert('No pudimos recuperar el progreso', 'Revisa el procedimiento desde el principio.');
+      return null;
     }
-  }, [id]);
+  });
+  const [paso, setPaso] = useState(() => leerProgreso(id)?.paso ?? 0),
+    [fin, setFin] = useState(() => leerProgreso(id)?.fin ?? null),
+    [ahora, setAhora] = useState(() => Date.now());
   useEffect(() => {
     const t = setInterval(() => setAhora(Date.now()), 500);
     const sub = AppState.addEventListener('change', () => setAhora(Date.now()));
@@ -43,7 +37,7 @@ export default function ProtocoloPantalla() {
     actual = plan.pasos[paso];
   const guardar = (nuevoPaso: number, nuevoFin: number | null) => {
     try {
-      guardarAjuste('progreso:' + id, JSON.stringify({ paso: nuevoPaso, fin: nuevoFin }));
+      guardarProgreso(id, { paso: nuevoPaso, fin: nuevoFin });
       setPaso(nuevoPaso);
       setFin(nuevoFin);
     } catch {

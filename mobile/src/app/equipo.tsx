@@ -1,31 +1,33 @@
-import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { useState } from 'react';
 import { router } from 'expo-router';
 import { Pantalla, Tarjeta, Texto, Boton, Campo } from '../ui/componentes';
-import { leerAjuste, guardarAjuste } from '../infraestructura/db/repositorio';
 import { useSesion } from '../aplicacion/sesion';
-import type { Calibracion } from '../dominio/tipos';
+import { guardarCalibracion, leerCalibracion, leerEquipoRecordado } from '../aplicacion/almacen';
+import { validarRegistroCalibracion } from '../dominio/calibracion';
+
 export default function EquipoPantalla() {
-  const [equipo, setEquipo] = useState<{ id: string; nombre: string } | null>(null),
-    [calibracion, setCalibracion] = useState<Calibracion | null>(null),
-    [editar, setEditar] = useState(false);
-  const [responsable, setResponsable] = useState(''),
-    [referencia, setReferencia] = useState(''),
-    [fecha, setFecha] = useState(''),
-    [vence, setVence] = useState('');
-  useEffect(() => {
+  const [equipo] = useState(leerEquipoRecordado);
+  const [calibracion, setCalibracion] = useState(() => (equipo ? leerCalibracion(equipo.id) : null));
+  const [editar, setEditar] = useState(false);
+  const [registro, setRegistro] = useState({ responsable: '', referencia: '', realizada: '', vence: '' });
+  const [mensaje, setMensaje] = useState('');
+  const campo = (clave: keyof typeof registro) => (valor: string) =>
+    setRegistro(r => ({ ...r, [clave]: valor }));
+
+  const guardar = () => {
+    if (!equipo) return;
+    const v = validarRegistroCalibracion(registro, Date.now());
+    if (!v.ok) return setMensaje(v.error);
     try {
-      const e = leerAjuste('equipo');
-      if (e) {
-        const valor = JSON.parse(e);
-        setEquipo(valor);
-        const c = leerAjuste('calibracion:' + valor.id);
-        if (c) setCalibracion(JSON.parse(c));
-      }
+      guardarCalibracion(equipo.id, v.calibracion);
+      setCalibracion(v.calibracion);
+      setEditar(false);
+      setMensaje('');
     } catch {
-      Alert.alert('Registro no disponible', 'Puedes buscar el equipo otra vez.');
+      setMensaje('No se guardó. Reintenta el registro.');
     }
-  }, []);
+  };
+
   return (
     <Pantalla titulo="Mi equipo">
       <Tarjeta>
@@ -51,66 +53,34 @@ export default function EquipoPantalla() {
             Solo registra una calibración que un técnico ya realizó. Esta pantalla no calibra las sondas ni
             envía comandos al equipo. La vigencia debe proceder del protocolo técnico.
           </Texto>
-          <Campo etiqueta="Responsable técnico" value={responsable} onChangeText={setResponsable} />
+          <Campo
+            etiqueta="Responsable técnico"
+            value={registro.responsable}
+            onChangeText={campo('responsable')}
+          />
           <Campo
             etiqueta="Referencia del registro de calibración"
-            value={referencia}
-            onChangeText={setReferencia}
+            value={registro.referencia}
+            onChangeText={campo('referencia')}
           />
           <Campo
             etiqueta="Realizada (AAAA-MM-DD)"
-            value={fecha}
-            onChangeText={setFecha}
+            value={registro.realizada}
+            onChangeText={campo('realizada')}
             placeholder="2026-09-14"
           />
           <Campo
             etiqueta="Vence (AAAA-MM-DD)"
-            value={vence}
-            onChangeText={setVence}
+            value={registro.vence}
+            onChangeText={campo('vence')}
             placeholder="Fecha indicada por el técnico"
           />
-          <Boton
-            texto="Guardar registro técnico"
-            onPress={() => {
-              const fechas = [fecha, vence];
-              if (
-                fechas.some(
-                  f =>
-                    !/^\d{4}-\d{2}-\d{2}$/.test(f) ||
-                    !Number.isFinite(Date.parse(f)) ||
-                    new Date(f).toISOString().slice(0, 10) !== f,
-                ) ||
-                !responsable.trim() ||
-                !referencia.trim()
-              ) {
-                Alert.alert('Revisa el registro', 'Completa responsable, referencia y fechas válidas.');
-                return;
-              }
-              // Fechas en UTC (medianoche), igual que la validación anterior y que el esquema de datos.
-              const verificadaEn = Date.parse(fecha),
-                venceEn = Date.parse(vence);
-              if (verificadaEn > Date.now() || venceEn <= Date.now() || venceEn <= verificadaEn) {
-                Alert.alert(
-                  'Fechas no válidas',
-                  'La calibración debe haberse realizado y tener una vigencia futura.',
-                );
-                return;
-              }
-              try {
-                const c = {
-                  verificadaEn,
-                  venceEn,
-                  responsable: responsable.trim(),
-                  referencia: referencia.trim(),
-                };
-                guardarAjuste('calibracion:' + equipo.id, JSON.stringify(c));
-                setCalibracion(c);
-                setEditar(false);
-              } catch {
-                Alert.alert('No se guardó', 'Reintenta el registro.');
-              }
-            }}
-          />
+          {mensaje ? (
+            <Tarjeta tono="ambar">
+              <Texto>{mensaje}</Texto>
+            </Tarjeta>
+          ) : null}
+          <Boton texto="Guardar registro técnico" onPress={guardar} />
         </Tarjeta>
       ) : null}
       <Texto suave>

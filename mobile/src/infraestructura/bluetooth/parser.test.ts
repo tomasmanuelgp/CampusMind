@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { ParserTramas, leerTrama } from './parser';
-import { esEstable, lecturaRecienteValida } from './estabilidad';
+import { esEstable, lecturaRecienteValida } from '../../dominio/estabilidad';
 const trama = 'VER:1\r\nESTADO:0\r\nICA:96\r\npH:7.4\r\nTDS:145\r\nTURB:2\r\nTEMP:24\r\n---\r\n';
 describe('Contrato SPP', () => {
   it('tolera cualquier corte del transporte', () => {

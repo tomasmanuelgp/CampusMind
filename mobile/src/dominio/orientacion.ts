@@ -1,15 +1,8 @@
 import type { Uso } from './tipos';
 import type { Resultado } from './motor';
+import { USOS } from './catalogos';
 
-export const nombresUso: Record<Uso, string> = {
-  beber: 'Beber',
-  cocinar: 'Cocinar',
-  banarse: 'Bañarse',
-  utensilios: 'Lavar utensilios',
-  ropa: 'Lavar ropa',
-  ganado: 'Ganado',
-  cultivo: 'Cultivos',
-};
+export const nombresUso = Object.fromEntries(USOS.map(u => [u.id, u.texto])) as Record<Uso, string>;
 
 /** Presenta el resultado del motor sin convertir usos no evaluados en autorizaciones. */
 export function orientarUso(r: Resultado, uso: Uso) {

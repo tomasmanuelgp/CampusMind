@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { router, useFocusEffect } from 'expo-router';
 import { Text, View } from 'react-native';
 import { Pantalla, Tarjeta, Texto, Boton, Gota, s } from '../ui/componentes';
-import { listarCapturas, type Registro } from '../infraestructura/db/repositorio';
+import { listarCapturas, type Registro } from '../aplicacion/almacen';
 import { useSesion } from '../aplicacion/sesion';
 export default function Inicio() {
   const [registros, setRegistros] = useState<Registro[]>([]),

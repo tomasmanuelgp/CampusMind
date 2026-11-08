@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Text, Share, Alert, StyleSheet, View } from 'react-native';
 import { Pantalla, Tarjeta, Texto, Boton, Audio, s, colores } from '../ui/componentes';
-import { obtenerCaptura, type Registro } from '../infraestructura/db/repositorio';
+import { obtenerCaptura } from '../aplicacion/almacen';
 import type { Resultado } from '../dominio/motor';
 import { DESCARGO } from '../dominio/motor';
 import { nombresUso, orientarUso } from '../dominio/orientacion';
 export default function ResultadoPantalla() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [registro, setRegistro] = useState<Registro | null>(null),
-    [error, setError] = useState(''),
-    [detalles, setDetalles] = useState(false);
-  useEffect(() => {
+  const [{ registro, error }] = useState(() => {
     try {
-      setRegistro(obtenerCaptura(id));
+      return { registro: obtenerCaptura(id), error: '' };
     } catch {
-      setError('No pudimos leer la medición guardada.');
+      return { registro: null, error: 'No pudimos leer la medición guardada.' };
     }
-  }, [id]);
+  });
+  const [detalles, setDetalles] = useState(false);
   if (!registro?.resultado)
     return (
       <Pantalla titulo="Resultado no disponible">

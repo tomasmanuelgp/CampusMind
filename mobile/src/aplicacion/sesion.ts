@@ -1,16 +1,11 @@
 import { create } from 'zustand';
 import { randomUUID } from 'expo-crypto';
-import type { Captura, Lectura, Observacion, Calibracion, Uso } from '../dominio/tipos';
+import type { Captura, Lectura, Observacion, Uso } from '../dominio/tipos';
 import { ParserTramas } from '../infraestructura/bluetooth/parser';
-import { esEstable, lecturaRecienteValida } from '../infraestructura/bluetooth/estabilidad';
+import { esEstable, lecturaRecienteValida } from '../dominio/estabilidad';
 import { conectarEquipo } from '../infraestructura/bluetooth/servicio';
-import {
-  guardarAjuste,
-  leerAjuste,
-  guardarBorrador,
-  completarCaptura,
-  referenciaEquipo,
-} from '../infraestructura/db/repositorio';
+import { guardarBorrador, completarCaptura, referenciaEquipo } from '../infraestructura/db/repositorio';
+import { calibracionDeSesion, recordarEquipo } from './almacen';
 import { calibracionParaCaptura } from '../dominio/privacidad';
 import { evaluar } from '../dominio/motor';
 
@@ -94,7 +89,7 @@ export const useSesion = create<Sesion>((set, get) => ({
           if (recibidas.length) {
             set(s => ({ estado: 'recibiendo', lecturas: [...s.lecturas, ...recibidas].slice(-60) }));
             try {
-              guardarAjuste('equipo', JSON.stringify({ id, nombre }));
+              recordarEquipo({ id, nombre });
             } catch {
               set({ error: 'No pudimos recordar el equipo en este teléfono.' });
             }
@@ -147,18 +142,7 @@ export const useSesion = create<Sesion>((set, get) => ({
     if (!lectura || s.estado !== 'recibiendo')
       throw new Error('Espera una lectura completa y reciente antes de analizar.');
     const estabilidad = esEstable(s.lecturas, ahora) ? 'estable' : 'inicial';
-    let calibracion: Calibracion | null = null;
-    if (s.demo)
-      calibracion = {
-        verificadaEn: 0,
-        venceEn: 8640000000000000,
-        responsable: 'DEMO',
-        referencia: 'SIMULACIÓN',
-      };
-    else {
-      const dato = leerAjuste('calibracion:' + s.equipo);
-      if (dato) calibracion = JSON.parse(dato);
-    }
+    const calibracion = calibracionDeSesion(s.equipo, s.demo);
     // Minimización (Ley 1581): la medición no guarda la MAC ni el nombre de quien calibró.
     const captura: Captura = {
       id: randomUUID(),

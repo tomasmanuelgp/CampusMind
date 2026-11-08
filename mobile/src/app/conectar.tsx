@@ -1,25 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { router } from 'expo-router';
 import { Linking, Text } from 'react-native';
 import { Pantalla, Tarjeta, Texto, Boton, Cargando, s } from '../ui/componentes';
 import { buscarEquipos, type Equipo } from '../infraestructura/bluetooth/servicio';
-import { leerAjuste } from '../infraestructura/db/repositorio';
+import { leerEquipoRecordado } from '../aplicacion/almacen';
 import { useSesion } from '../aplicacion/sesion';
 export default function Conectar() {
   const [equipos, setEquipos] = useState<Equipo[]>([]),
     [buscando, setBuscando] = useState(false),
     [error, setError] = useState('');
-  const [recordado, setRecordado] = useState<{ id: string; nombre: string } | null>(null);
+  const [recordado] = useState(leerEquipoRecordado);
   const estado = useSesion(v => v.estado),
     errorConexion = useSesion(v => v.error);
-  useEffect(() => {
-    try {
-      const valor = leerAjuste('equipo');
-      if (valor) setRecordado(JSON.parse(valor));
-    } catch {
-      setError('No pudimos recuperar el equipo recordado. Puedes buscarlo otra vez.');
-    }
-  }, []);
   const conectar = async (id: string, nombre: string) => {
     await useSesion.getState().conectar(id, nombre);
     if (useSesion.getState().estado !== 'desconectado') router.push('/medir');

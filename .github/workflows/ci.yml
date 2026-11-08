@@ -27,6 +27,8 @@ jobs:
         run: npm ci
       - name: Revisar tipos
         run: npm run typecheck
+      - name: Revisar estilo (ESLint y Prettier)
+        run: npm run lint && npm run format:check
       - name: Pruebas y cobertura del dominio
         run: npm run test:coverage
       - name: Vulnerabilidades críticas en dependencias de la app

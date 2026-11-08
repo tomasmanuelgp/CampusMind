@@ -45,7 +45,7 @@ export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lectu
   const datosVerificados =
     ica !== null && l.errores.length === 0 && l.versionProtocolo <= 1 && calibracionVigente(c, l.recibidaEn);
   const confiable = datosVerificados && lecturaEstable;
-  const reglas: Array<{ id: string; nivel: 0 | 1 | 2; motivo: string }> = [];
+  const reglas: { id: string; nivel: 0 | 1 | 2; motivo: string }[] = [];
   const agregar = (condicion: boolean, id: string, nivel: 0 | 1 | 2, motivo: string) => {
     if (condicion) reglas.push({ id, nivel, motivo });
   };

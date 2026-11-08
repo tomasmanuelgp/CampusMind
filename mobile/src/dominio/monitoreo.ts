@@ -1,4 +1,4 @@
-import type { Lectura } from '../../dominio/tipos';
+import type { Lectura } from './tipos';
 
 /** Mostrar sensores no requiere estabilidad, calibración ni validez de otros campos. */
 export function lecturaEnVivo(lecturas: Lectura[], estado: string, ahora: number): Lectura | null {
@@ -33,8 +33,9 @@ export function segmentosSensor(lecturas: Lectura[], sensor: Sensor): number[][]
       anterior = null;
       continue;
     }
+    // Un hueco de tiempo corta la curva; `anterior` solo existe si el tramo actual tiene puntos.
     if (anterior !== null && (p.t - anterior >= 5000 || p.t <= anterior)) {
-      if (actual.length) segmentos.push(actual);
+      segmentos.push(actual);
       actual = [];
     }
     actual.push([

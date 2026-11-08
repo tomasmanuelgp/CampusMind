@@ -9,7 +9,7 @@ import {
   borrarTodo,
   exportarCsv,
   type Registro,
-} from '../infraestructura/db/repositorio';
+} from '../aplicacion/almacen';
 import { useSesion } from '../aplicacion/sesion';
 import { DESCARGO, type Resultado } from '../dominio/motor';
 
