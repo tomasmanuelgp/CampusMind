@@ -1,0 +1,135 @@
+# Compila la APK de Android en GitHub (no hace falta instalar el SDK en tu computador).
+#
+# - En cada PR que toque la app: compila y deja la APK como
+#   artefacto descargable de la ejecución (comprobación de que la app compila).
+# - Al subir una etiqueta vX.Y.Z: además crea la publicación en «Releases» con la
+#   APK, su SHA-256 y los manuales en Word y PDF.
+#
+# Firma: si el repositorio tiene los secretos REFLUYE_KEYSTORE_BASE64,
+# REFLUYE_KEYSTORE_PASSWORD, REFLUYE_KEY_ALIAS y REFLUYE_KEY_PASSWORD, la APK se
+# firma con el certificado oficial. Si no, se firma con la clave de desarrollo y
+# la publicación se marca como versión de pruebas (ver SECURITY.md).
+name: APK
+
+on:
+  pull_request:
+    paths: ['mobile/**', '.github/workflows/apk.yml']
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      KEYSTORE_B64: ${{ secrets.REFLUYE_KEYSTORE_BASE64 }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Instalar dependencias y comprobar
+        working-directory: mobile
+        run: |
+          npm ci
+          npm run typecheck
+          npm test
+      - name: Preparar firma oficial (si hay secretos)
+        if: env.KEYSTORE_B64 != ''
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/refluye.keystore"
+          {
+            echo "REFLUYE_KEYSTORE_FILE=$RUNNER_TEMP/refluye.keystore"
+            echo "REFLUYE_KEYSTORE_PASSWORD=${{ secrets.REFLUYE_KEYSTORE_PASSWORD }}"
+            echo "REFLUYE_KEY_ALIAS=${{ secrets.REFLUYE_KEY_ALIAS }}"
+            echo "REFLUYE_KEY_PASSWORD=${{ secrets.REFLUYE_KEY_PASSWORD }}"
+          } >> "$GITHUB_ENV"
+      - name: Generar proyecto Android
+        working-directory: mobile
+        run: npx expo prebuild --platform android --no-install
+      - name: Compilar APK (armeabi-v7a y arm64-v8a)
+        working-directory: mobile/android
+        env:
+          NODE_ENV: production
+        run: |
+          ./gradlew :app:assembleRelease --no-daemon --console=plain \
+            -PreactNativeArchitectures=armeabi-v7a,arm64-v8a \
+            '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g'
+      - name: Nombrar la APK y calcular SHA-256
+        id: apk
+        run: |
+          VERSION=$(node -p "require('./mobile/package.json').version")
+          if [ -n "$KEYSTORE_B64" ]; then FIRMA=oficial; else FIRMA=pruebas-firma-desarrollo; fi
+          NOMBRE="refluye-$VERSION-$FIRMA.apk"
+          mkdir -p salida
+          cp mobile/android/app/build/outputs/apk/release/app-release.apk "salida/$NOMBRE"
+          (cd salida && sha256sum "$NOMBRE" > "$NOMBRE.sha256")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "firma=$FIRMA" >> "$GITHUB_OUTPUT"
+          echo "nombre=$NOMBRE" >> "$GITHUB_OUTPUT"
+          ls -la salida
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.apk.outputs.nombre }}
+          path: salida/
+          retention-days: 30
+      - name: Generar manuales (solo al publicar)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-dejavu-core
+          python3 -m venv .venv
+          .venv/bin/pip install -q python-docx reportlab
+          .venv/bin/python docs/manuales/generar-word.py
+          .venv/bin/python docs/manuales/generar-guia-visual.py
+          cp output/word/*.docx output/pdf/*.pdf salida/
+      - name: Crear la publicación
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIQUETA: ${{ github.ref_name }}
+          VERSION: ${{ steps.apk.outputs.version }}
+          FIRMA: ${{ steps.apk.outputs.firma }}
+          NOMBRE: ${{ steps.apk.outputs.nombre }}
+        run: |
+          if [ "$FIRMA" = "oficial" ]; then
+            AVISO="APK firmada con el certificado oficial de RE-FLUYE."
+            PRUEBAS=""
+          else
+            AVISO="**Versión de pruebas:** firmada con la clave de desarrollo. Instálala solo desde esta página, nunca desde una copia reenviada."
+            PRUEBAS="--prerelease"
+          fi
+          cat > notas.md <<NOTAS
+          ## RE-FLUYE $VERSION
+
+          App Android para orientar el uso del agua en zonas rurales, sin internet.
+
+          ### Descargar e instalar
+          1. Descarga **$NOMBRE** (abajo, en *Assets*). Requiere Android 7.0 o superior con Bluetooth Classic.
+          2. Ábrela desde **Archivos** o **Descargas** y permite instalar apps de esa fuente si Android lo pide.
+          3. Toca **Instalar**. Si tienes una versión anterior, instala encima para conservar tus mediciones.
+          4. Para practicar sin equipo: **Practicar sin equipo · DEMO**.
+
+          Comprueba la descarga con el archivo \`$NOMBRE.sha256\`.
+
+          $AVISO
+
+          > RE-FLUYE orienta, no certifica. No detecta bacterias, virus ni parásitos: para beber o cocinar, desinfecta siempre.
+
+          También se adjuntan la guía de la app, la guía visual del equipo y el manual técnico (Word y PDF).
+          Novedades: ver el [registro de cambios](https://github.com/${{ github.repository }}/blob/$ETIQUETA/CHANGELOG.md).
+          NOTAS
+          gh release create "$ETIQUETA" salida/* --title "RE-FLUYE $VERSION" --notes-file notas.md $PRUEBAS
