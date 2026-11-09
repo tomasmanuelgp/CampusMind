@@ -57,6 +57,9 @@ primera que se cumpla, en este orden. Los vetos van antes que las advertencias.
 | R12 | Sólidos disueltos de 600 ppm o más |
 | R13 | El agua está **quieta** (estancada): favorece microbios |
 | R14 | Alguna observación es «No sé» |
+| R18 | El agua viene de un **pozo o aljibe**: puede contaminarse por letrinas, animales o lluvias |
+| R19 | Es **agua lluvia**: arrastra lo que hay en el techo y las canaletas |
+| R20 | Viene de un **acueducto o tubería**: en la vereda no siempre llega tratada |
 | R16 | El agua se ve **turbia** |
 
 ### Sin alertas: nivel 0

@@ -322,7 +322,8 @@ export function guiasRecomendadas(r: Resultado, o: Partial<Observacion>): GuiaId
     ids.push('guardar');
   }
   if (r.plan === 'repetir') ids.push('equipo');
-  if (r.plan === 'alternativa' || o.origen === 'estancada') ids.push('fuente');
+  if (r.plan === 'alternativa' || o.origen === 'estancada' || o.origen === 'pozo' || o.origen === 'lluvia')
+    ids.push('fuente');
   ids.push('salud');
   return ids.slice(0, 3);
 }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-export type Origen = 'corriente' | 'estancada' | 'no_se';
+export type Origen = 'corriente' | 'estancada' | 'pozo' | 'lluvia' | 'acueducto' | 'no_se';
 export type Olor = 'normal' | 'raro' | 'no_se';
 export type OlorTipo = 'azufre' | 'combustible' | 'podrido' | 'quimico' | 'cloro' | 'otro';
 export type Visual = 'limpia' | 'verdosa' | 'aceitosa' | 'turbia' | 'no_se';

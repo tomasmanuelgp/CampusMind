@@ -5,6 +5,7 @@
 import type { Calibracion } from '../dominio/tipos';
 import { CALIBRACION_DEMO } from '../dominio/catalogos';
 import { CUIDADOS, type CuidadoId } from '../dominio/cuidados';
+import type { MetodoId } from '../dominio/protocolos';
 import { guardarAjuste, leerAjuste } from '../infraestructura/db/repositorio';
 
 export {
@@ -24,6 +25,8 @@ export interface EquipoRecordado {
 export interface Progreso {
   paso: number;
   fin: number | null;
+  /** Forma de desinfectar elegida en el plan de tratamiento. */
+  metodo?: MetodoId;
 }
 
 function leerJson<T>(clave: string): T | null {

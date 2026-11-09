@@ -71,7 +71,7 @@ en **UTC** (`*_utc` en texto ISO-8601, `*_ms` en milisegundos desde 1970).
 | `fuente_nombre` | TEXT | hasta 80 caracteres | Nombre del lugar de la fuente |
 | `equipo_ref` | TEXT | `equipo-<uuid>` · `DEMO` | Referencia local del equipo |
 | `uso` | TEXT | `beber` · `cocinar` · `banarse` · `utensilios` · `ropa` · `ganado` · `cultivo` | Para qué se quiere el agua |
-| `origen` | TEXT | `corriente` · `estancada` · `no_se` | ¿El agua corre o está quieta? |
+| `origen` | TEXT | `corriente` · `estancada` · `pozo` · `lluvia` · `acueducto` · `no_se` | ¿De dónde viene el agua? (`pozo`, `lluvia` y `acueducto` desde el motor 0.5.0) |
 | `olor` | TEXT | `normal` · `raro` · `no_se` | ¿Huele raro? |
 | `olor_tipo` | TEXT | `azufre` · `combustible` · `podrido` · `quimico` · `cloro` · `otro` | Solo si `olor = raro` |
 | `aspecto` | TEXT | `limpia` · `turbia` · `verdosa` · `aceitosa` · `no_se` | ¿Cómo se ve? |
@@ -101,7 +101,7 @@ Pares `clave` → `valor` (texto o JSON):
 | `equipo` | Último equipo conectado: `{id: MAC, nombre}` |
 | `equipo-ref:<MAC>` | Referencia aleatoria del equipo usada en las mediciones |
 | `calibracion:<MAC>` | Calibración declarada: fechas, responsable y referencia |
-| `progreso:<id>` | Paso del protocolo de tratamiento y fin del temporizador |
+| `progreso:<id>` | Paso del protocolo de tratamiento, fin del temporizador y método de desinfección elegido (`hervir`, `cloro` o `sol`) |
 | `guia:<id>` | Pasos marcados como hechos en una guía de cuidado (lista de índices) |
 | `cuidado:<id>` | Fecha (ms UTC) en que se hizo por última vez un cuidado que se repite: `tanque`, `canaletas` o `agua-guardada` |
 

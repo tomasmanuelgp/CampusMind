@@ -14,6 +14,13 @@ Todas las versiones de la app RE-FLUYE. Formato basado en
   (cada 6 meses), la limpieza de canaletas (cada 3 meses) y el agua tratada
   guardada; **Inicio** muestra **Tus cuidados** y avisa si la calibración vence
   en 7 días o menos.
+- **Más orígenes del agua** (motor 0.5.0): pozo o aljibe (R18), agua lluvia
+  (R19) y acueducto o tubería (R20). La pregunta pasa a ser «¿De dónde viene el
+  agua?». Son avisos que piden desinfectar; no cambian el plan.
+- **Desinfectar con cloro o al sol** cuando no se puede hervir, con las
+  cantidades de CDC y temporizadores de 30 minutos y 6 horas. Solo se ofrecen
+  cuando el motor eligió tratar; nunca con agua verde ni con olor extraño.
+  **Pendiente de revisión por el área de salud antes de publicarse.**
 
 ## [1.0.1] — 2026-11-09
 

@@ -15,7 +15,15 @@ export interface Opcion<T extends string> {
 
 export const ORIGENES: readonly Opcion<Origen>[] = [
   { id: 'corriente', texto: 'Agua que corre', detalle: 'Río, quebrada o nacimiento', icono: '🌊' },
-  { id: 'estancada', texto: 'Agua quieta', detalle: 'Tanque, charco, pozo o agua estancada', icono: '🐸' },
+  {
+    id: 'estancada',
+    texto: 'Agua quieta',
+    detalle: 'Tanque abierto, charco, laguna o agua estancada',
+    icono: '🐸',
+  },
+  { id: 'pozo', texto: 'Pozo o aljibe', detalle: 'Agua sacada del subsuelo', icono: '🕳️' },
+  { id: 'lluvia', texto: 'Agua lluvia', detalle: 'Recogida del techo o de canaletas', icono: '🌧️' },
+  { id: 'acueducto', texto: 'Acueducto o tubería', detalle: 'Llega por manguera o tubería', icono: '🚰' },
   { id: 'no_se', texto: 'No sé', detalle: 'Puedes pedir ayuda', icono: '❓' },
 ];
 

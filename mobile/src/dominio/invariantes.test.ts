@@ -9,7 +9,7 @@ import { join } from 'node:path';
 import { evaluar, DESCARGO } from './motor';
 import { orientarUso, nombresUso } from './orientacion';
 import { resumirEnVivo } from './resumenEnVivo';
-import { protocolos } from './protocolos';
+import { metodosPara, protocolos } from './protocolos';
 import { guiasRecomendadas } from './guias';
 import type { Lectura, Observacion, Calibracion, Uso } from './tipos';
 
@@ -37,7 +37,7 @@ function* combinaciones() {
   for (const ph of [null, 4, 6, 7.4, 9, 10])
     for (const turbidez of [null, 0, 30, 150])
       for (const tds of [null, 100, 800, 1600])
-        for (const origen of ['corriente', 'estancada', 'no_se'] as const)
+        for (const origen of ['corriente', 'estancada', 'pozo', 'lluvia', 'acueducto', 'no_se'] as const)
           for (const olor of ['normal', 'raro', 'no_se'] as const)
             for (const visual of ['limpia', 'verdosa', 'aceitosa', 'turbia', 'no_se'] as const)
               for (const cal of [calibracion, null])
@@ -106,6 +106,14 @@ describe('S4 y S5 · vetos que nada anula', () => {
   });
   it('el agua verdosa nunca se resuelve solo hirviendo', () => {
     for (const { o, r } of combinaciones()) if (o.visual === 'verdosa') expect(r.plan).toBe('alternativa');
+  });
+  it('cloro y sol solo se ofrecen cuando el motor eligió tratar, nunca con agua verde', () => {
+    for (const { o, r } of combinaciones()) {
+      const metodos = metodosPara(r.plan).map(m => m.id);
+      if (r.plan === 'hervido') expect(metodos).toEqual(['hervir', 'cloro', 'sol']);
+      else expect(metodos).toEqual([]);
+      if (o.visual === 'verdosa' || o.olor === 'raro') expect(metodos).toEqual([]);
+    }
   });
   it('las guías sugeridas nunca abren un tratamiento que el motor no permite', () => {
     for (const { o, r } of combinaciones()) {

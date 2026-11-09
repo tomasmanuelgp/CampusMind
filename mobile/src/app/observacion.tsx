@@ -18,7 +18,7 @@ const preguntas: {
 }[] = [
   {
     clave: 'origen',
-    titulo: '¿El agua corre o está quieta?',
+    titulo: '¿De dónde viene el agua?',
     ayuda: 'Piensa en la fuente, no en el recipiente.',
     opciones: ORIGENES,
   },

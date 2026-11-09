@@ -1,4 +1,4 @@
-# 09 · Motor de recomendaciones — versión implementada 0.4.0
+# 09 · Motor de recomendaciones — versión implementada 0.5.0
 
 Código: `../../mobile/src/dominio/motor.ts`. Instrucciones: `protocolos.ts`.
 Casos esperados: `__tests__/casos-golden.json` en ese mismo directorio.
@@ -58,12 +58,15 @@ numéricas solo se aplican a valores dentro de los rangos válidos del sensor.
 | 11 | R11 | Turbidez ≥ 25 | 1 |
 | 12 | R12 | TDS ≥ 600 | 1 |
 | 13 | R13 | Estancada | 1 |
-| 14 | R14 | Alguna observación «no sé» | 1 |
-| 15 | R16 | Aspecto turbio | 1 |
-| 16 | R15 | Ninguna regla anterior | 0 |
+| 14 | R18 | Pozo o aljibe | 1 |
+| 15 | R19 | Agua lluvia | 1 |
+| 16 | R20 | Acueducto o tubería | 1 |
+| 17 | R14 | Alguna observación «no sé» | 1 |
+| 18 | R16 | Aspecto turbio | 1 |
+| 19 | R15 | Ninguna regla anterior | 0 |
 
 R10 usa 6.5–8.5, referencia del doc 04, más conservadora que el borrador 6–9.
-R16 impide clasificar como favorable el aspecto turbio. Los umbrales heredados
+R16 impide clasificar como favorable el aspecto turbio. R18, R19 y R20 (motor 0.5.0) explican el riesgo propio de cada origen y piden desinfectar; no cambian el plan, así que un pozo, el agua lluvia o un acueducto con lectura favorable siguen en `hervido`, nunca en una autorización. Los umbrales heredados
 son decisiones del proyecto; no certifican cumplimiento sanitario.
 
 ## Planes y destinos
@@ -101,9 +104,24 @@ de más combustible en zonas bajas. [CDC](https://www.cdc.gov/water-emergency/ab
 El agua verdosa no recibe hervido: las toxinas de algas no se eliminan hirviendo.
 [CDC](https://www.cdc.gov/harmful-algal-blooms/prevention/index.html).
 
-No hay cloración, corrección doméstica de pH, filtro de arena/carbón ni SODIS.
-El borrador tenía equivalencias erróneas de gotas, mL y cucharaditas; reintroducir
-esos tratamientos exige revisión técnica y nuevos casos golden.
+### Otras formas de desinfectar (desde motor 0.5.0)
+
+Con el plan `hervido`, la pantalla del protocolo deja elegir cómo desinfectar
+(`METODOS` y `metodosPara` en `protocolos.ts`). Con `alternativa` o `repetir` no
+se ofrece ningún método: la prueba de invariantes lo comprueba en todas las
+combinaciones, incluidas agua verde y olor extraño (S4, S5).
+
+| Método | Cantidades y tiempos | Fuente |
+|---|---|---|
+| Hervir (por defecto) | 3 minutos desde el burbujeo fuerte | [CDC](https://www.cdc.gov/water-emergency/about/index.html) |
+| Cloro | Blanqueador doméstico sin perfume ni detergente. Del 5 % al 9 %: 2 gotas por litro (40 por 20 L); del 1 %: 10 gotas por litro; el doble si está turbia, con color o muy fría; esperar 30 minutos. Otra concentración o sin etiqueta: no usar | [CDC](https://www.cdc.gov/water-emergency/about/index.html) |
+| Sol (SODIS) | Botellas transparentes de 2 L o menos, agua clara (prueba del periódico), 6 horas de sol o 2 días si está nublado; no sirve con lluvia continua | [CDC](https://www.cdc.gov/water-emergency/about/index.html) · [Akvopedia](https://akvopedia.org/wiki/Sodis) |
+
+Las cantidades se copian tal cual de CDC: la app no calcula ni redondea dosis, y
+`protocolos.test.ts` fija cada cifra. El borrador antiguo tenía equivalencias
+erróneas; esta versión las sustituye. **Antes de publicar estos métodos, una
+persona del área de salud debe revisarlos** (ver el PR que los introduce).
+Sigue sin haber corrección doméstica de pH ni filtros de arena o carbón.
 
 ## Guías de cuidado
 
@@ -125,7 +143,8 @@ veredicto (S3) y cada pantalla repite el aviso `AVISO_GUIAS`.
 
 Las guías `aclarar` y `guardar` solo aparecen con el plan `hervido`; la prueba de
 invariantes lo comprueba en todas las combinaciones (S3, S5). Ninguna guía da
-dosis de cloro, gotas ni cucharadas: esas cantidades exigen la misma revisión
+dosis de cloro, gotas ni cucharadas: esas cantidades viven solo en el protocolo
+de desinfección y exigen la misma revisión
 técnica que se pide para reintroducir cloración o SODIS. Para el tanque, la guía
 remite a la dosis que indique el acueducto o la secretaría de salud.
 
