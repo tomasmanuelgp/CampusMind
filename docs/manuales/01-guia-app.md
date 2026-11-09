@@ -61,7 +61,7 @@ El botón **Escuchar** lee el resultado si el teléfono tiene voz en español. *
 
 ### Guías para cuidar el agua
 
-Debajo de **Qué hacer ahora**, el resultado sugiere hasta tres guías según lo que encontró: por ejemplo, **Aclara el agua turbia** y **Guarda el agua tratada** cuando hay una ruta de tratamiento, o **Agua verde o con natas** y **Cuida la fuente y el tanque** cuando hay que buscar otra fuente. Todas están también en **Aprender → Cuidar el agua, paso a paso**, funcionan sin internet y se pueden escuchar. Las guías no cambian el resultado: si dice **Busca otra fuente**, no uses esa agua aunque sigas los pasos.
+Debajo de **Qué hacer ahora**, el resultado sugiere hasta tres guías según lo que encontró: por ejemplo, **Aclara el agua turbia** y **Guarda el agua tratada** cuando hay una ruta de tratamiento, o **Agua verde o con natas** y **Cuida la fuente y el tanque** cuando hay que buscar otra fuente. Todas están también en **Aprender → Cuidar el agua, paso a paso**, donde puedes buscarlas por palabras; funcionan sin internet y se pueden escuchar. Dentro de cada guía, toca cada paso cuando lo termines: el avance queda guardado. En las guías de la fuente y del agua guardada puedes registrar «Lavé el tanque hoy», «Limpié las canaletas hoy» o «Guardé agua tratada hoy»; **Inicio** te recordará en **Tus cuidados** cuándo toca de nuevo. Las guías no cambian el resultado: si dice **Busca otra fuente**, no uses esa agua aunque sigas los pasos.
 
 ## 7. Calibración y cuidado después de medir
 

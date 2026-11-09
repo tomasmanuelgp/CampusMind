@@ -67,7 +67,7 @@ flowchart TB
 
 | Carpeta | Contiene | Regla |
 |---|---|---|
-| `dominio/` | `motor.ts` (reglas), `orientacion.ts` (qué hacer según el uso), `resumenEnVivo.ts`, `catalogos.ts`, `estabilidad.ts`, `monitoreo.ts`, `calibracion.ts`, `privacidad.ts` | **Sin React, sin red, sin archivos.** Funciones deterministas. 100 % de cobertura obligatoria |
+| `dominio/` | `motor.ts` (reglas), `orientacion.ts` (qué hacer según el uso), `resumenEnVivo.ts`, `catalogos.ts`, `estabilidad.ts`, `monitoreo.ts`, `calibracion.ts`, `privacidad.ts`, `guias.ts` (guías de cuidado), `cuidados.ts` (búsqueda, pasos hechos y recordatorios) | **Sin React, sin red, sin archivos.** Funciones deterministas. 100 % de cobertura obligatoria |
 | `aplicacion/` | `sesion.ts` (estado de la medición, reconexión, DEMO), `almacen.ts` (datos para las pantallas) | Une dominio e infraestructura |
 | `infraestructura/bluetooth/` | `servicio.ts` (Android), `parser.ts` (protocolo) | Habla con el equipo |
 | `infraestructura/db/` | `esquema.ts`, `repositorio.ts` (SQLite), `repositorio.web.ts` (DEMO en navegador) | Guarda en el teléfono |

@@ -417,7 +417,7 @@ El código está en `mobile/src/`, separado en capas. Cada capa solo usa las que
 
 | Carpeta | Contiene | Regla |
 |---|---|---|
-| `dominio/` | `motor.ts` (reglas), `orientacion.ts` (qué hacer según el uso), `protocolos.ts`, `guias.ts`, `resumenEnVivo.ts`, `catalogos.ts`, `estabilidad.ts`, `monitoreo.ts`, `calibracion.ts`, `privacidad.ts`, `presentacion.ts` | TypeScript puro: sin React, sin red, sin archivos. Funciones deterministas. 100 % de cobertura obligatoria |
+| `dominio/` | `motor.ts` (reglas), `orientacion.ts` (qué hacer según el uso), `protocolos.ts`, `guias.ts`, `cuidados.ts`, `resumenEnVivo.ts`, `catalogos.ts`, `estabilidad.ts`, `monitoreo.ts`, `calibracion.ts`, `privacidad.ts`, `presentacion.ts` | TypeScript puro: sin React, sin red, sin archivos. Funciones deterministas. 100 % de cobertura obligatoria |
 | `aplicacion/` | `sesion.ts` (estado de la medición, reconexión, DEMO), `almacen.ts` (datos para las pantallas) | Une dominio e infraestructura |
 | `infraestructura/bluetooth/` | `servicio.ts` (Android), `parser.ts` (protocolo), `servicio.web.ts` (DEMO) | Habla con el equipo |
 | `infraestructura/db/` | `esquema.ts`, `repositorio.ts` (SQLite), `repositorio.web.ts` (DEMO en navegador) | Guarda en el teléfono |
@@ -436,7 +436,7 @@ La carpeta `android/` la genera Expo y no se versiona. Los cambios permanentes d
 | `/observacion` | Observación | Responder, pregunta por pregunta, las observaciones que falten en una medición guardada |
 | `/resultado` | Resultado | Semáforo, decisión para el uso elegido, qué hacer ahora, guías sugeridas, ICA, otros usos, compartir y detalles técnicos |
 | `/protocolo` | Protocolo | Pasos del plan con temporizador del hervor; guarda el avance |
-| `/guia` | Guía de cuidado | Una guía paso a paso con lectura en voz alta y fuentes |
+| `/guia` | Guía de cuidado | Una guía paso a paso: marcar pasos hechos, registrar cuidados que se repiten, lectura en voz alta y fuentes |
 | `/historial` | Mis mediciones | Lista, exportar CSV y borrar |
 | `/datos` | Tus datos | Aviso de privacidad (Ley 1581 de 2012) |
 | `/equipo` | Mi equipo | Equipo recordado y registro de la calibración |
@@ -518,6 +518,8 @@ El hervor dura **3 minutos** desde el burbujeo fuerte en cualquier altitud. CDC 
 ### 17.2 Guías de cuidado
 
 `mobile/src/dominio/guias.ts` define seis guías que funcionan sin internet, en **Aprender** y como sugerencia en el resultado: guardar el agua tratada, aclarar el agua turbia, cuidar la fuente y el tanque, agua verde o con natas, cuidar el equipo, y diarrea (cuidados y cuándo buscar ayuda). Cada una tiene pasos, errores que evitar, lectura en voz alta y fuentes citadas.
+
+En **Aprender** hay un buscador que encuentra guías por cualquier palabra, sin importar tildes ni mayúsculas. Dentro de cada guía, la persona marca los pasos que va terminando y el avance queda guardado en el teléfono. Las guías de la fuente y del agua guardada permiten registrar «Lavé el tanque hoy» (cada 180 días), «Limpié las canaletas hoy» (cada 90 días) y «Guardé agua tratada hoy» (se revisa al día siguiente). Con esas fechas, **Inicio** muestra la tarjeta **Tus cuidados**, con lo que está pendiente primero, y avisa si la calibración vence en 7 días o menos. Todo se calcula en `dominio/cuidados.ts`, sin red y sin leer el reloj dentro del dominio.
 
 Las guías **no cambian el resultado**. La función `guiasRecomendadas` solo sugiere aclarar o guardar agua tratada cuando el motor eligió el plan `hervido`, y una prueba lo comprueba en todas las combinaciones. Ninguna guía da dosis de cloro: esas cantidades necesitan revisión técnica antes de entrar a la app.
 

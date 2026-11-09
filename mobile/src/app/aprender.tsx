@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-only
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { Audio, Boton, Pantalla, Tarjeta, Texto, s } from '../ui/componentes';
+import { Audio, Boton, Campo, Pantalla, Tarjeta, Texto, s } from '../ui/componentes';
 import { Icono, type NombreIcono } from '../ui/iconos';
 import { colores, radio, semaforoColores, tipo } from '../ui/tema';
 import { DESCARGO } from '../dominio/motor';
-import { AVISO_GUIAS, GUIAS as GUIAS_CUIDADO } from '../dominio/guias';
+import { AVISO_GUIAS } from '../dominio/guias';
+import { buscarGuias } from '../dominio/cuidados';
 
 const GUIAS: { icono: NombreIcono; titulo: string; texto: string }[] = [
   {
@@ -57,6 +59,8 @@ const COLORES: { tono: 'verde' | 'ambar' | 'rojo'; icono: NombreIcono; titulo: s
 ];
 
 export default function Aprender() {
+  const [consulta, setConsulta] = useState('');
+  const encontradas = buscarGuias(consulta);
   return (
     <Pantalla titulo="Medir, observar, cuidar" volver={false} nav="aprender">
       <Texto>Estas guías están siempre disponibles, sin internet.</Texto>
@@ -80,7 +84,20 @@ export default function Aprender() {
 
       <Text style={est.seccion}>Cuidar el agua, paso a paso</Text>
       <Texto suave>{AVISO_GUIAS}</Texto>
-      {GUIAS_CUIDADO.map(g => (
+      <Campo
+        etiqueta="Buscar una guía"
+        placeholder="Ej. tanque, diarrea, algas"
+        value={consulta}
+        onChangeText={setConsulta}
+        autoCorrect={false}
+        returnKeyType="search"
+      />
+      {encontradas.length === 0 ? (
+        <Texto>
+          No encontramos guías con esas palabras. Prueba con otra, por ejemplo «agua», «equipo» o «tanque».
+        </Texto>
+      ) : null}
+      {encontradas.map(g => (
         <Pressable
           key={g.id}
           accessibilityRole="button"

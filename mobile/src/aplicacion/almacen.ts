@@ -4,6 +4,7 @@
 // dañado, se devuelve null en lugar de romper la pantalla.
 import type { Calibracion } from '../dominio/tipos';
 import { CALIBRACION_DEMO } from '../dominio/catalogos';
+import { CUIDADOS, type CuidadoId } from '../dominio/cuidados';
 import { guardarAjuste, leerAjuste } from '../infraestructura/db/repositorio';
 
 export {
@@ -49,3 +50,23 @@ export const calibracionDeSesion = (equipo: string, demo: boolean): Calibracion 
 export const leerProgreso = (id: string) => leerJson<Progreso>('progreso:' + id);
 export const guardarProgreso = (id: string, p: Progreso) =>
   guardarAjuste('progreso:' + id, JSON.stringify(p));
+
+/** Pasos marcados como hechos en una guía de cuidado. */
+export const leerPasosGuia = (guia: string): number[] => {
+  const valor = leerJson<unknown>('guia:' + guia);
+  return Array.isArray(valor) ? valor.filter((n): n is number => typeof n === 'number') : [];
+};
+export const guardarPasosGuia = (guia: string, hechos: number[]) =>
+  guardarAjuste('guia:' + guia, JSON.stringify(hechos));
+
+/** Fecha (ms) en que se hizo por última vez cada cuidado que se repite. */
+export const leerRegistrosCuidado = (): Partial<Record<CuidadoId, number>> => {
+  const registros: Partial<Record<CuidadoId, number>> = {};
+  for (const c of CUIDADOS) {
+    const valor = leerJson<unknown>('cuidado:' + c.id);
+    if (typeof valor === 'number' && Number.isFinite(valor)) registros[c.id] = valor;
+  }
+  return registros;
+};
+export const registrarCuidado = (id: CuidadoId, fecha: number) =>
+  guardarAjuste('cuidado:' + id, JSON.stringify(fecha));
