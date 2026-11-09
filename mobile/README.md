@@ -1,8 +1,8 @@
 # Re-Fluye · App Android de campo
 
-Versión del código: **1.0.1** (nuevo frontend, esquema de datos v2). APK oficial
+Versión del código: **1.1.0** (nuevo frontend, esquema de datos v2). APK oficial
 publicada en [Publicaciones](https://github.com/tomasmanuelgp/Refluye/releases).
-Aceptación en Android físico pendiente: [guion de pruebas](../docs/app/13-pruebas-apk.md).
+Primera prueba en Android físico con el equipo informada el 2026-11-09; falta registrar el [guion de pruebas](../docs/app/13-pruebas-apk.md) completo.
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
 la observación humana y la identidad del proyecto Re-Fluye de CCD/UNAB.

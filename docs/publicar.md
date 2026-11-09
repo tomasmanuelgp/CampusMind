@@ -232,4 +232,4 @@ public**.
 2. Sube la versión en `mobile/package.json` y en `mobile/app.config.ts`
    (`version` y `versionCode`, que siempre debe aumentar).
 3. Anota los cambios en [CHANGELOG.md](../CHANGELOG.md).
-4. Fusiona y repite el paso 7 con la etiqueta nueva, por ejemplo `v1.0.1`.
+4. Fusiona y repite el paso 7 con la etiqueta nueva, por ejemplo `v1.1.1`.
