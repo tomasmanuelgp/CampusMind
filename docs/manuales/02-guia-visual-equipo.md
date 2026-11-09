@@ -1,14 +1,14 @@
-# Re-Fluye · Guía visual para acompañar el producto
+# RE-FLUYE · Guía visual para acompañar el producto
 
-**Formato de entrega:** hoja A4, dos caras, en PDF listo para imprimir, adjunto a cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) (se genera con `generar-guia-visual.py`). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
+**Formato de entrega:** hoja A4, dos caras, en PDF listo para imprimir, adjunto a cada [publicación](https://github.com/tomasmanuelgp/Refluye/releases) (se genera con `generar-guia-visual.py`). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
 
-**Edición de prototipo · 2 de octubre de 2026.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
+**Edición de prototipo · 9 de noviembre de 2026 · app 1.0.0 y firmware V2.3.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
 
 ## Cara 1 · Abre, conecta, mide
 
 ### Lo primero que debes saber
 
-**Re-Fluye mide pH, turbidez, sólidos disueltos (TDS) y temperatura.** Tus observaciones sobre origen, olor y aspecto completan la evaluación. **No detecta bacterias, virus, parásitos, metales ni todos los químicos. No certifica potabilidad.** No pruebes el agua.
+**RE-FLUYE mide pH, turbidez, sólidos disueltos (TDS) y temperatura.** Tus observaciones sobre origen, olor y aspecto completan la evaluación. **No detecta bacterias, virus, parásitos, metales ni todos los químicos. No certifica potabilidad.** No pruebes el agua.
 
 ### 1 · Revisa
 
@@ -19,8 +19,8 @@
 ### 2 · Enciende y conecta
 
 - Enciende el equipo con la alimentación **etiquetada en tu unidad**.
-- Si aún no tienes la app, descarga la APK 0.3.1 desde el enlace/QR de esta hoja.
-- Abre Re-Fluye en Android: **Medir agua → Buscar equipos cercanos**.
+- Si aún no tienes la app, descarga la APK oficial desde el enlace o el QR de esta hoja.
+- Abre RE-FLUYE en Android: **Medir agua → Buscar equipos cercanos**.
 - Acepta el permiso Bluetooth de Android. Elige **ReFluye-V2** y verifica su identificador; el firmware de referencia documenta PIN `1234`, si Android lo pide.
 - Sin equipo, toca **Practicar sin equipo · DEMO**; los resultados simulados no describen tu fuente.
 
@@ -36,7 +36,7 @@ En la misma pantalla escribe el **nombre de la fuente**, escoge **para qué nece
 
 ### 5 · Decide con el resultado completo
 
-Toca **Ver qué puedo hacer con esta agua**. Lee primero la decisión, **TU USO** y **QUÉ HACER AHORA**. El ICA de 0 a 100 es orientativo, no un porcentaje de potabilidad. Para beber o cocinar, una lectura favorable todavía exige desinfección. La app puede indicar buscar otra fuente o repetir. Nunca uses el color o el número del LCD/LED como autorización: son una preclasificación solo por sensores.
+Toca **Ver qué puedo hacer con esta agua**. Lee primero la decisión, **TU USO** y **QUÉ HACER AHORA**. El ICA de 0 a 100 es orientativo, no un porcentaje de potabilidad. Para beber o cocinar, una lectura favorable todavía exige desinfección. La app puede indicar buscar otra fuente o repetir. Nunca uses el número del LCD ni los LED como autorización: el LCD muestra datos y los LED solo indican el estado del equipo (verde: app conectada; amarillo: midiendo; rojo: revisar un sensor).
 
 ## Cara 2 · Cuida el equipo y resuelve dudas
 
@@ -60,9 +60,9 @@ Las indicaciones específicas de pH y TDS corresponden a las referencias DFRobot
 - **Temperatura ausente:** el código `-127` indica que el DS18B20 no respondió. No es la temperatura del agua.
 - **LCD apagado o LEDs contradictorios:** usa solo la app para registrar el resultado y reporta la unidad; algunas versiones de la PCB original tienen fallas de conexión documentadas.
 
-**Después de medir:** enjuaga las partes sumergibles, apaga el equipo, guarda el pH según su fabricante y tapa las muestras tratadas. Conserva el resultado en **Mis mediciones**. El equipo no reemplaza un análisis de laboratorio ni una recomendación sanitaria local.
+**Después de medir:** enjuaga las partes sumergibles, apaga el equipo, guarda el pH según su fabricante y tapa las muestras tratadas. Conserva el resultado en **Mis mediciones**. En la app, **Aprender** tiene guías sin internet para guardar el agua tratada, cuidar la fuente y cuidar el equipo. El equipo no reemplaza un análisis de laboratorio ni una recomendación sanitaria local.
 
-**Descarga de la app:** [CampusMind · Re-Fluye 0.3.0](https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.0). El QR de la cara 1 lleva a esta misma publicación; comprueba el dominio `github.com` antes de descargar.
+**Descarga de la app:** [RE-FLUYE · última versión](https://github.com/tomasmanuelgp/Refluye/releases/latest). El QR de la cara 1 lleva a esta misma página; comprueba que sea `github.com/tomasmanuelgp/Refluye` antes de descargar y elige el archivo que termina en `-oficial.apk`.
 
 ### Datos de esta unidad · completar antes de entregarla
 
@@ -74,4 +74,4 @@ Las indicaciones específicas de pH y TDS corresponden a las referencias DFRobot
 | Vigente hasta | ______________________________ |
 | Contacto de soporte | ______________________________ |
 
-**Versión de app:** 0.3.0 · **Documento:** guía de prototipo 0.2 · **Origen:** CCD / UNAB, proyecto Re-Fluye. Para el procedimiento completo de la app: `docs/manuales/01-guia-app.md`. Para mantenimiento y montaje: `docs/manuales/03-manual-tecnico.md`.
+**Versión de app:** 1.0.0 · **Documento:** guía de prototipo 0.3 · **Origen:** obra derivada del proyecto Re-Fluye de Alfredo Antonio Díaz Claros, CCD / UNAB. Para el procedimiento completo de la app: `docs/manuales/01-guia-app.md`. Para mantenimiento y montaje: `docs/manuales/03-manual-tecnico.md`.

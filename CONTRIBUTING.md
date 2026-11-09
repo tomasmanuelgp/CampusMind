@@ -44,8 +44,8 @@ la cambies para que pase**: revisa tu cambio.
 Necesitas Git y Node.js 22.
 
 ```sh
-git clone https://github.com/tomasmanuelgp/CampusMind.git
-cd CampusMind/mobile
+git clone https://github.com/tomasmanuelgp/Refluye.git
+cd Refluye/mobile
 npm ci
 npm run web          # interfaz en el navegador con datos DEMO
 ```

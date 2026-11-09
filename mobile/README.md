@@ -1,7 +1,7 @@
 # Re-Fluye · App Android de campo
 
-Versión del código: **1.0.0** (nuevo frontend, esquema de datos v2). Última APK de pruebas
-publicada: [Publicaciones](https://github.com/tomasmanuelgp/CampusMind/releases).
+Versión del código: **1.0.0** (nuevo frontend, esquema de datos v2). APK oficial
+publicada en [Publicaciones](https://github.com/tomasmanuelgp/Refluye/releases).
 Aceptación en Android físico pendiente: [guion de pruebas](../docs/app/13-pruebas-apk.md).
 
 Aplicación nueva que conserva el transporte SPP, los parámetros de sensores,
@@ -145,7 +145,7 @@ Android es generado por Expo; cambios permanentes van en app.config.ts y plugins
 
 Proyecto original: Alfredo Antonio Díaz Claros, CCD, Universidad Autónoma de
 Bucaramanga, [adiacla/refluye](https://github.com/adiacla/refluye).
-Contexto y continuidad: [CampusMind](https://github.com/tomasmanuelgp/CampusMind).
+Repositorio: [tomasmanuelgp/Refluye](https://github.com/tomasmanuelgp/Refluye).
 La app está bajo [AGPL-3.0](../LICENSE); ver [LICENCIAS.md](../LICENCIAS.md).
 
 ## Actualización 0.3.2 · Conclusión dinámica

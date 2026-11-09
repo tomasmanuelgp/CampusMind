@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Reportar una vulnerabilidad de seguridad
-    url: https://github.com/tomasmanuelgp/CampusMind/security/advisories/new
+    url: https://github.com/tomasmanuelgp/Refluye/security/advisories/new
     about: Fallos que puedan hacer que la app muestre un resultado más favorable del que corresponde, o que expongan datos.

@@ -13,7 +13,7 @@ qué hacer con ella. Funciona **sin internet**.
 > análisis de laboratorio.
 
 <p align="center">
-  <a href="https://github.com/tomasmanuelgp/CampusMind/releases/latest"><b>⬇️ Descargar la app para Android</b></a>
+  <a href="https://github.com/tomasmanuelgp/Refluye/releases/latest"><b>⬇️ Descargar la app para Android</b></a>
   ·
   <a href="https://re-fluye.vercel.app/">Sitio del proyecto</a>
   ·
@@ -130,7 +130,7 @@ La guía completa, con diagramas y problemas comunes, está en
 ### En un teléfono Android
 
 1. Descarga la APK de la
-   [**última publicación**](https://github.com/tomasmanuelgp/CampusMind/releases/latest)
+   [**última publicación**](https://github.com/tomasmanuelgp/Refluye/releases/latest)
    (sección *Assets*, archivo `refluye-1.0.0-….apk`). Requiere Android 7.0 o
    superior con Bluetooth Classic. La app no funciona en iPhone por ahora.
 2. Ábrela desde **Archivos** o **Descargas**. Si Android lo pide, permite
@@ -152,8 +152,8 @@ La guía completa, con diagramas y problemas comunes, está en
 Necesitas [Git](https://git-scm.com/) y [Node.js 22](https://nodejs.org/).
 
 ```sh
-git clone https://github.com/tomasmanuelgp/CampusMind.git
-cd CampusMind/mobile
+git clone https://github.com/tomasmanuelgp/Refluye.git
+cd Refluye/mobile
 npm ci
 npm run web
 ```

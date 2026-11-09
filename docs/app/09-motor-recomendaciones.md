@@ -1,4 +1,4 @@
-# 09 · Motor de recomendaciones — versión implementada 0.3.0
+# 09 · Motor de recomendaciones — versión implementada 0.4.0
 
 Código: `../../mobile/src/dominio/motor.ts`. Instrucciones: `protocolos.ts`.
 Casos esperados: `__tests__/casos-golden.json` en ese mismo directorio.

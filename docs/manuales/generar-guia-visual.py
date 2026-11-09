@@ -1,4 +1,4 @@
-"""Genera la hoja A4 a doble cara de Re-Fluye.
+"""Genera la hoja A4 a doble cara de RE-FLUYE.
 
 Texto editorial: 02-guia-visual-equipo.md. Mantener ambos sincronizados.
 Ejecutar con el Python del runtime de Codex o cualquier Python con reportlab.
@@ -100,15 +100,15 @@ def step(c, n, title, content, top, height, tint):
 def footer(c, page):
     c.setStrokeColor(LINE)
     c.line(M, 39, PAGE_W - M, 39)
-    label(c, "RE-FLUYE  /  GUIA DE PROTOTIPO 0.1", M, 25, 8, NAVY)
+    label(c, "RE-FLUYE  /  GUIA DE PROTOTIPO 0.3  ·  APP 1.0.0", M, 25, 8, NAVY)
     c.setFont("Arial", 8)
     c.setFillColor(MUTED)
-    c.drawRightString(PAGE_W - M, 25, f"{page} / 2  ·  02 OCT 2026")
+    c.drawRightString(PAGE_W - M, 25, f"{page} / 2  ·  09 NOV 2026")
 
 
 c = canvas.Canvas(str(DEST), pagesize=A4, pageCompression=1)
-c.setTitle("Re-Fluye - guia visual de uso y cuidado del equipo")
-c.setAuthor("CampusMind / Re-Fluye, con atribucion a CCD-UNAB")
+c.setTitle("RE-FLUYE - guia visual de uso y cuidado del equipo")
+c.setAuthor("RE-FLUYE, obra derivada del proyecto Re-Fluye de Alfredo Antonio Diaz Claros, CCD-UNAB")
 c.setSubject("Guia A4 a doble cara para prototipo de medicion de agua")
 
 # Cara 1
@@ -147,7 +147,7 @@ for i, (title, content, height, tint) in enumerate(steps, 1):
 if top < 95:
     raise ValueError(f"La cara 1 invade el pie: {top}")
 paragraph(c, "<b>Si hay olor raro, aceite o agua verde:</b> no intentes volverla utilizable solo hirviéndola. Busca otra fuente y pide orientación local.", M, top - 3, W, small, top - 50)
-qr_url = "https://github.com/tomasmanuelgp/CampusMind/releases/tag/refluye-v0.3.1"
+qr_url = "https://github.com/tomasmanuelgp/Refluye/releases/latest"
 qr = QrCodeWidget(qr_url)
 qr_bounds = qr.getBounds()
 qr_scale = 63 / (qr_bounds[2] - qr_bounds[0])
@@ -158,8 +158,8 @@ qr_drawing = Drawing(qr_bounds[2] - qr_bounds[0], qr_bounds[3] - qr_bounds[1])
 qr_drawing.add(qr)
 renderPDF.draw(qr_drawing, c, 0, 0)
 c.restoreState()
-label(c, "DESCARGA LA APP 0.3.1", M + 77, 108, 9.8, NAVY)
-paragraph(c, "Escanea el QR y descarga la APK en <b>Assets</b>. Confirma que el sitio sea <b>github.com/tomasmanuelgp/CampusMind</b>. Android 7.0+; Bluetooth Classic SPP para medir.", M + 77, 100, W - 77, micro, 45)
+label(c, "DESCARGA LA APP OFICIAL", M + 77, 108, 9.8, NAVY)
+paragraph(c, "Escanea el QR y descarga la APK en <b>Assets</b>. Confirma que el sitio sea <b>github.com/tomasmanuelgp/Refluye</b> y elige el archivo <b>-oficial.apk</b>. Android 7.0+; Bluetooth Classic SPP para medir.", M + 77, 100, W - 77, micro, 45)
 footer(c, 1)
 c.showPage()
 

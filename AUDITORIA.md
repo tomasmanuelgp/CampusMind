@@ -1,7 +1,7 @@
 # Auditoría para publicación open source · RE-FLUYE
 
 **Fecha:** 2026-11-08 · **Rama auditada:** `claude/wizardly-goodall-ofuz8p` (commit `3dad58c`, app 0.3.2)
-**Alcance:** todo el repositorio `CampusMind` y su historial completo (9 commits).
+**Alcance:** todo el repositorio (hoy `Refluye`) y su historial completo (9 commits).
 **Fase:** 1 — solo lectura. No se modificó código.
 
 ---
@@ -396,7 +396,7 @@ Las pruebas y el 100 % de cobertura solo se comprueban a mano o en `compilar-apk
 
 ### 4.3 Nombre del repositorio
 
-El repositorio se llama `CampusMind` y los enlaces de descarga apuntan a `github.com/tomasmanuelgp/CampusMind/releases/...` (`README.md:7,104`). Renombrarlo a `re-fluye` cambia todas las URL. GitHub redirige las antiguas, pero no si luego se crea otro repositorio con el nombre `CampusMind`. Es un cambio de un clic, pero conviene decidirlo antes de escribir la documentación final.
+El repositorio tenía un nombre provisional, ajeno al proyecto, y los enlaces de descarga apuntaban a ese nombre (`README.md:7,104`). Renombrarlo a `re-fluye` cambia todas las URL. GitHub redirige las antiguas, pero no si luego se crea otro repositorio con el nombre anterior. **Resuelto el 2026-11-08: se renombró a `Refluye`.**
 
 ---
 
@@ -489,7 +489,7 @@ El sitio dice «La marca RE-FLUYE está protegida». AGPL-3.0 no concede derecho
 - **P2 · `refluye/prompts/`.** ¿Publicar, mover a `docs/historial/` o excluir?
 - **P3 · Correo en el historial de git.** ¿Aceptas que quede público? La alternativa es reescribir el historial, que tú indicaste no hacer.
 - **P4 · Página web.** Para revisarla, añade `re-fluye.vercel.app` a los hosts permitidos del entorno, o compárteme su contenido o repositorio.
-- **P5 · Nombre del repositorio.** ¿Renombrar `CampusMind` a `re-fluye` antes de la documentación final?
+- **P5 · Nombre del repositorio.** ¿Renombrar el repositorio a `re-fluye` antes de la documentación final? **Resuelto el 2026-11-08: se renombró a `Refluye`.**
 - **P6 · `VER:0`.** ¿Un equipo sin línea `VER` debe considerarse siempre «no confiable»? Cambia el motor y añade un caso golden.
 
 ---

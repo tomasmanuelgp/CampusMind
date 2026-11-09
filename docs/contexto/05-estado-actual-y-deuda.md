@@ -1,5 +1,17 @@
 # 05 · Estado actual y deuda técnica
 
+## Versión 1.0.0 · 2026-11-08
+
+Primera versión publicada como proyecto abierto, en el repositorio
+[tomasmanuelgp/Refluye](https://github.com/tomasmanuelgp/Refluye). App 1.0.0
+(versionCode 7) con nuevo frontend, motor 0.4.0 con la regla R17 (sólidos por
+encima de 1000 ppm no son confiables), esquema de datos v2, exportación CSV y
+borrado de mediciones, y APK firmada con el certificado oficial. Desde el
+2026-11-09 la app incluye seis guías de cuidado sin internet. La aceptación en
+Android físico sigue pendiente. El estado completo, por pieza, está en el
+[manual técnico](../manuales/03-manual-tecnico.md); las secciones siguientes
+son el historial de versiones anteriores.
+
 ## Conclusión dinámica · 2026-10-02
 
 La app 0.3.2 añade una conclusión visible al inicio de Medir y junto a las
@@ -24,7 +36,7 @@ prueba real por Bluetooth queda para el equipo usuario con la APK nueva.
 ## Actualización de la aplicación · 2026-09-30
 
 La auditoría histórica inferior describe el repositorio original. El desarrollo
-activo está ahora en `../../mobile`, dentro de CampusMind. Existe una primera
+activo está ahora en `../../mobile`, dentro de este repositorio. Existe una primera
 aplicación de campo con Bluetooth Classic, modo DEMO, motor local, observaciones,
 SQLite, guía y registro de calibración. La versión 0.3.0 pasa 54 pruebas y
 TypeScript; el recorrido web DEMO se revisó. La medición, nombre, uso y

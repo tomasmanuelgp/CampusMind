@@ -72,13 +72,13 @@ a construir**.
 | [`historial/`](historial/) | Bitácora, decisiones e iteraciones del trabajo con agentes de IA, y el diseño inicial no vigente |
 | [`../CLAUDE.md`](../CLAUDE.md) | Contexto permanente para agentes que trabajen en el repo |
 
-### Manuales de la versión 0.3.1
+### Manuales de la versión 1.0.0
 
 | Pieza | Destinatario | Formato |
 |---|---|---|
-| [Guía de la app](manuales/01-guia-app.md) | Persona que mide y facilitador | Lectura digital; Word en cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) |
-| [Guía visual del equipo](manuales/02-guia-visual-equipo.md) | Persona que recibe el prototipo | A4 a doble cara; PDF y Word en cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) y [texto fuente](manuales/02-guia-visual-equipo.md) |
-| [Manual técnico](manuales/03-manual-tecnico.md) | Soporte, desarrollo y calibración | Documento versionable; Word en cada [publicación](https://github.com/tomasmanuelgp/CampusMind/releases) |
+| [Guía de la app](manuales/01-guia-app.md) | Persona que mide y facilitador | Lectura digital; Word en cada [publicación](https://github.com/tomasmanuelgp/Refluye/releases) |
+| [Guía visual del equipo](manuales/02-guia-visual-equipo.md) | Persona que recibe el prototipo | A4 a doble cara; PDF y Word en cada [publicación](https://github.com/tomasmanuelgp/Refluye/releases) y [texto fuente](manuales/02-guia-visual-equipo.md) |
+| [Manual técnico](manuales/03-manual-tecnico.md) | Soporte, desarrollo y calibración | Hardware, firmware, protocolo, app, datos, pruebas y publicación; Word en cada [publicación](https://github.com/tomasmanuelgp/Refluye/releases) |
 
 La guía impresa requiere completar los datos reales de alimentación, sondas,
 calibración y soporte de cada unidad antes de entregarla. Ningún manual sustituye
@@ -89,7 +89,7 @@ la prueba física ni la validación sanitaria pendiente.
 ## Decisiones ya tomadas
 
 Estas decisiones están cerradas. Cambiarlas obliga a revisar varios documentos.
-La tabla recoge decisiones de arquitectura del plan; la app 0.3.1 implementa
+La tabla recoge decisiones de arquitectura del plan; la app 1.0.0 implementa
 solo el flujo local descrito en el [manual técnico](manuales/03-manual-tecnico.md).
 
 | Decisión | Elección | Por qué |

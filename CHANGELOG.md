@@ -18,6 +18,20 @@ Todas las versiones de la app RE-FLUYE. Formato basado en
 - Las guías no incluyen dosis de cloro ni otras cantidades sin revisión técnica;
   una prueba lo comprueba.
 
+### Documentación
+- **Manual técnico reescrito para 1.0.0:** hardware (materiales, conexiones,
+  ensamblaje, sensores, calibración, mantenimiento y diagnóstico), firmware,
+  protocolo, app, motor, guías, datos, pruebas, firma y publicación, aceptación
+  en campo, hoja de vida del equipo y glosario.
+- Guía de la app y guía visual actualizadas a 1.0.0: APK oficial, exportación
+  CSV, nuevas etiquetas de pantalla, LED del firmware V2.3 y QR a la última
+  publicación.
+- Se quitaron las menciones al nombre anterior del repositorio; todos los
+  enlaces apuntan a `tomasmanuelgp/Refluye`.
+
+### Corregido
+- El monitor serie del firmware decía «V2.2»; ahora dice «V2.3».
+
 ## [1.0.0] — 2026-11-08
 
 Primera versión publicada como proyecto abierto.
