@@ -45,6 +45,7 @@ export function orientarUso(r: Resultado, uso: Uso) {
         'Si ves partículas, deja que se asienten y pasa la parte clara por una tela limpia. Si sigue turbia, busca otra fuente.',
         'Pon el agua clara al fuego. Cuando hierva con burbujas grandes y continuas, mantenla hirviendo 3 minutos.',
         'Deja enfriar el agua protegida de suciedad. Guárdala en un recipiente limpio, desinfectado y tapado.',
+        'Si no puedes hervir, en «Abrir temporizador y guía» hay formas de desinfectar con cloro o al sol.',
       ],
     };
   if (uso === 'banarse')

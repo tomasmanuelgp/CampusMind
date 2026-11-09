@@ -1,6 +1,6 @@
 # RE-FLUYE · Manual técnico del sistema
 
-**Versión de referencia:** aplicación 1.0.1 (versionCode 8), motor de reglas 0.4.0, firmware V2.3, protocolo Bluetooth `VER:1`, esquema de datos v2.
+**Versión de referencia:** aplicación 1.0.1 (versionCode 8), motor de reglas 0.5.0 (en revisión), firmware V2.3, protocolo Bluetooth `VER:1`, esquema de datos v2.
 
 **Fecha:** 9 de noviembre de 2026.
 
@@ -56,7 +56,7 @@ Las restricciones de seguridad S1 a S8 son innegociables. Un cambio que viole cu
 | Regla | Qué exige | Cómo se comprueba |
 |---|---|---|
 | S1 | Ninguna pantalla dice «potable», «apta» o «segura» a secas | Prueba que recorre todos los textos de la app |
-| S2 | Toda recomendación de consumo humano incluye desinfección, aun con ICA 100 | Prueba sobre 2880 combinaciones de datos |
+| S2 | Toda recomendación de consumo humano incluye desinfección, aun con ICA 100 | Prueba sobre 5760 combinaciones de datos |
 | S3 | El veredicto lo calcula el motor determinista, nunca la IA | Arquitectura: la decisión vive solo en `src/dominio/motor.ts` |
 | S4 | El veto por olor extraño no puede anularse por ninguna vía | Prueba de invariantes |
 | S5 | El agua verdosa nunca se resuelve solo con «hervir» (toxinas que resisten el calor) | Prueba de invariantes |
@@ -81,7 +81,7 @@ App Android RE-FLUYE 1.0.1
    │  + fuente, uso, origen, olor y aspecto que aporta la persona
    │  + calibración declarada del equipo
    ▼
-Motor de reglas 0.4.0 (determinista, sin red)
+Motor de reglas 0.5.0 (determinista, sin red)
    ▼
 Resultado por uso · pasos · protocolo con temporizador · guías de cuidado
    ▼
@@ -455,7 +455,7 @@ El modo DEMO usa datos simulados, marca cada pantalla con **DEMO · DATOS SIMULA
 
 ## 16. Motor de reglas
 
-El motor está en `mobile/src/dominio/motor.ts` (versión 0.4.0). Recibe la lectura, la observación, la calibración y si la lectura es estable. Evalúa **todas** las reglas y elige como motivo principal la primera que se cumple, con los vetos antes que las advertencias. La explicación completa, con su razonamiento, está en [motor-de-reglas.md](../motor-de-reglas.md) y [app/09-motor-recomendaciones.md](../app/09-motor-recomendaciones.md).
+El motor está en `mobile/src/dominio/motor.ts` (versión 0.5.0). Recibe la lectura, la observación, la calibración y si la lectura es estable. Evalúa **todas** las reglas y elige como motivo principal la primera que se cumple, con los vetos antes que las advertencias. La explicación completa, con su razonamiento, está en [motor-de-reglas.md](../motor-de-reglas.md) y [app/09-motor-recomendaciones.md](../app/09-motor-recomendaciones.md).
 
 ### 16.1 Reglas
 
@@ -475,6 +475,9 @@ El motor está en `mobile/src/dominio/motor.ts` (versión 0.4.0). Recibe la lect
 | R11 | 1 | Turbidez de 25 NTU o más |
 | R12 | 1 | Sólidos disueltos de 600 ppm o más |
 | R13 | 1 | Agua estancada |
+| R18 | 1 | Pozo o aljibe: desinfectar y revisar que esté tapado |
+| R19 | 1 | Agua lluvia: desinfectar antes de beber o cocinar |
+| R20 | 1 | Acueducto o tubería: no siempre llega tratada; desinfectar |
 | R14 | 1 | Alguna observación es «No sé» |
 | R16 | 1 | Agua turbia a la vista |
 | R15 | 0 | Ninguna de las anteriores: «Aclara y desinfecta antes de beber o cocinar» |
@@ -512,6 +515,8 @@ La app calcula su propio índice con la misma fórmula del firmware (sección 12
 | `hervido` | Aclarar primero; llevar a ebullición; mantener el hervor 3 minutos con temporizador; enfriar y guardar | No elimina químicos, combustibles, metales, sales ni toxinas de algas |
 | `repetir` | Revisar el equipo; preparar otra medición; completar la observación | Repetir no elimina contaminantes |
 | `alternativa` | Separar el agua; conseguir otra fuente; solicitar revisión | Hervir, clorar o filtrar con tela no resuelve todos los contaminantes |
+
+Con el plan `hervido`, la persona elige cómo desinfectar: **hervir** (por defecto), **con cloro** o **al sol**. Cloro: blanqueador doméstico sin perfume ni detergente; del 5 % al 9 %, 2 gotas por litro; del 1 %, 10 gotas por litro; el doble si el agua sigue turbia, tiene color o está muy fría; esperar 30 minutos con temporizador. Si el cloro tiene otra concentración o no la indica, no se usa para beber. Sol: botellas transparentes de 2 litros o menos con agua clara, 6 horas a pleno sol (temporizador) o 2 días si está nublado; no sirve con lluvia continua. Las cifras son las de CDC y una prueba las fija. Con `alternativa` o `repetir` no se ofrece ningún método.
 
 El hervor dura **3 minutos** desde el burbujeo fuerte en cualquier altitud. CDC recomienda 1 minuto, y 3 por encima de unos 2000 m; la app usa 3 siempre para no depender de conocer la altitud. El temporizador no deja avanzar antes de tiempo y se puede reiniciar si el hervor se interrumpe. [CDC](https://www.cdc.gov/water-emergency/about/index.html).
 
@@ -590,7 +595,7 @@ Reglas de trabajo: los textos de interfaz, comentarios y documentación van en e
 | Prueba | Qué cubre |
 |---|---|
 | Casos golden (`dominio/__tests__/casos-golden.json`) | Escenarios fijos del motor con su resultado esperado |
-| Invariantes (`dominio/invariantes.test.ts`) | Recorre 2880 combinaciones de lecturas, observaciones, calibración y estabilidad para comprobar S1, S2, S4, S5, S6 y S7, y que las guías no abran un tratamiento que el motor no permite |
+| Invariantes (`dominio/invariantes.test.ts`) | Recorre 5760 combinaciones de lecturas, observaciones, calibración y estabilidad para comprobar S1, S2, S4, S5, S6 y S7, y que las guías no abran un tratamiento que el motor no permite |
 | Dominio | Motor, orientación, guías, conclusión en vivo, estabilidad, monitoreo, calibración, privacidad y presentación |
 | Parser | Tramas completas, incompletas, fuera de rango, de equipos antiguos y demasiado largas |
 | SQLite | Repositorio y migración v1 → v2 con un SQLite real de Node |
@@ -706,7 +711,7 @@ El guion detallado de pruebas de la app está en [app/13-pruebas-apk.md](../app/
 | PCB original | Defectos P1 y P2 | Corregir en una nueva revisión de la placa |
 | Copia de seguridad | El historial se pierde al desinstalar si no se exportó | Agregar copia de seguridad completa |
 | Validación sanitaria | No hay estudio de campo ni de laboratorio de las reglas y guías | Revisión con autoridades de salud y laboratorio |
-| Cloración y SODIS | Excluidas a propósito porque el borrador tenía dosis erróneas | Reintroducir solo con fuentes oficiales, revisión de salud y casos golden |
+| Cloración y SODIS | Incluidas desde el motor 0.5.0 con las cifras de CDC y pruebas que las fijan | Revisión por una persona del área de salud antes de publicarlas |
 | Backend e IA | Diseñados (docs 10 y 11), no implementados | Siempre opcionales; la ruta crítica seguirá sin internet |
 
 ## 26. Hoja de vida del equipo

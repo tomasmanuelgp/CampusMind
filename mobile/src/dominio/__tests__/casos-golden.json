@@ -222,5 +222,62 @@
     "regla": "R12",
     "nivel": 1,
     "plan": "alternativa"
+  },
+  {
+    "nombre": "pozo con lectura favorable: desinfectar",
+    "observacion": {
+      "origen": "pozo"
+    },
+    "regla": "R18",
+    "nivel": 1,
+    "plan": "hervido"
+  },
+  {
+    "nombre": "agua lluvia con lectura favorable: desinfectar",
+    "observacion": {
+      "origen": "lluvia"
+    },
+    "regla": "R19",
+    "nivel": 1,
+    "plan": "hervido"
+  },
+  {
+    "nombre": "acueducto con lectura favorable: desinfectar",
+    "observacion": {
+      "origen": "acueducto"
+    },
+    "regla": "R20",
+    "nivel": 1,
+    "plan": "hervido"
+  },
+  {
+    "nombre": "pozo con olor extraño: el veto prevalece",
+    "observacion": {
+      "origen": "pozo",
+      "olor": "raro"
+    },
+    "regla": "R02",
+    "nivel": 2,
+    "plan": "alternativa"
+  },
+  {
+    "nombre": "agua lluvia verdosa: otra fuente",
+    "observacion": {
+      "origen": "lluvia",
+      "visual": "verdosa"
+    },
+    "regla": "R07",
+    "nivel": 1,
+    "plan": "alternativa"
+  },
+  {
+    "nombre": "acueducto sin calibración: repetir",
+    "observacion": {
+      "origen": "acueducto"
+    },
+    "sinCalibracion": true,
+    "regla": "R05",
+    "nivel": 1,
+    "plan": "repetir"
   }
 ]

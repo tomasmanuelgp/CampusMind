@@ -204,7 +204,7 @@ export default function Medir() {
       />
       <Tarjeta>
         <GrupoOpciones
-          titulo="¿El agua corre o está quieta?"
+          titulo="¿De dónde viene el agua?"
           ayuda="Piensa en la fuente, no en el recipiente."
           opciones={ORIGENES}
           valor={observacion.origen}

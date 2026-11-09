@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 import type { Calibracion, Lectura, Observacion } from './tipos';
-export const VERSION_MOTOR = '0.4.0';
+export const VERSION_MOTOR = '0.5.0';
 /**
  * Umbrales de las reglas. La app los usa también para colorear cada parámetro,
  * así la pantalla y el veredicto nunca se contradicen.
@@ -148,6 +148,24 @@ export function evaluar(l: Lectura, o: Observacion, c: Calibracion | null, lectu
     'R13',
     1,
     'El agua estancada puede contener microorganismos que este equipo no detecta.',
+  );
+  agregar(
+    o.origen === 'pozo',
+    'R18',
+    1,
+    'El agua de pozo o aljibe puede contaminarse por letrinas, animales o lluvias. Desinfecta antes de beber y revisa que el pozo esté tapado.',
+  );
+  agregar(
+    o.origen === 'lluvia',
+    'R19',
+    1,
+    'El agua lluvia arrastra lo que hay en el techo y las canaletas. Desinfecta antes de beber o cocinar.',
+  );
+  agregar(
+    o.origen === 'acueducto',
+    'R20',
+    1,
+    'El agua de acueducto veredal no siempre llega tratada. Si no tienes certeza, desinfecta antes de beber.',
   );
   agregar(
     o.origen === 'no_se' || o.olor === 'no_se' || o.visual === 'no_se',
