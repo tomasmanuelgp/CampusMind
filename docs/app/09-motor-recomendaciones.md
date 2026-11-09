@@ -105,6 +105,37 @@ No hay cloración, corrección doméstica de pH, filtro de arena/carbón ni SODI
 El borrador tenía equivalencias erróneas de gotas, mL y cucharaditas; reintroducir
 esos tratamientos exige revisión técnica y nuevos casos golden.
 
+## Guías de cuidado
+
+`src/dominio/guias.ts` reúne seis guías que la app muestra sin internet en
+**Aprender** y, como sugerencia, en el resultado: `guardar`, `aclarar`, `fuente`,
+`agua-verde`, `equipo` y `salud`. Son contenido, no decisión: no cambian el
+veredicto (S3) y cada pantalla repite el aviso `AVISO_GUIAS`.
+
+`guiasRecomendadas(resultado, observación)` elige hasta tres guías:
+
+| Condición | Guía |
+|---|---|
+| Aspecto verdoso | `agua-verde` (siempre primera) |
+| Plan `hervido` y agua turbia | `aclarar` |
+| Plan `hervido` | `guardar` |
+| Plan `repetir` | `equipo` |
+| Plan `alternativa` u origen estancado | `fuente` |
+| Siempre, si cabe | `salud` |
+
+Las guías `aclarar` y `guardar` solo aparecen con el plan `hervido`; la prueba de
+invariantes lo comprueba en todas las combinaciones (S3, S5). Ninguna guía da
+dosis de cloro, gotas ni cucharadas: esas cantidades exigen la misma revisión
+técnica que se pide para reintroducir cloración o SODIS. Para el tanque, la guía
+remite a la dosis que indique el acueducto o la secretaría de salud.
+
+Fuentes: [OMS · Enfermedades diarreicas](https://www.who.int/es/news-room/fact-sheets/detail/diarrhoeal-disease) ·
+[CDC · Almacenamiento del agua](https://www.cdc.gov/global-water-sanitation-hygiene/about/about-safe-water-storage.html) ·
+[CDC · Floraciones de algas](https://www.cdc.gov/harmful-algal-blooms/prevention/index.html) ·
+[ACNUR · Distancias de letrinas](https://www.unhcr.org/sites/default/files/legacy-pdf/49d080df2.pdf) ·
+[CRA · Limpieza de tanques](https://normas.cra.gov.co/gestor/docs/concepto_superservicios_0000344_2022.htm) ·
+[NSW Health · Agua lluvia](https://www.health.nsw.gov.au/environment/water/Pages/rainwater.aspx).
+
 ## Restricciones y pruebas
 
 S1–S3: textos condicionados, desinfección obligatoria y decisión local determinista.

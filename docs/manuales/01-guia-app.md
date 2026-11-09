@@ -59,6 +59,10 @@ Para **baño, ropa, ganado y cultivos**, la app presenta límites y recomienda o
 
 El botón **Escuchar** lee el resultado si el teléfono tiene voz en español. **Ver detalles técnicos** muestra los datos que respaldan la evaluación. **Compartir resultado** usa la hoja de compartir del teléfono: revisa destinatario y contenido antes de enviarlo. **Mis mediciones** conserva hasta 100 entradas visibles en la lista; el almacenamiento local puede contener anteriores, pero todavía no hay paginación ni sincronización. No borres los datos de la app ni la desinstales si necesitas conservar el historial: aún no existe una exportación integral o copia de seguridad de mediciones.
 
+### Guías para cuidar el agua
+
+Debajo de **Qué hacer ahora**, el resultado sugiere hasta tres guías según lo que encontró: por ejemplo, **Aclara el agua turbia** y **Guarda el agua tratada** cuando hay una ruta de tratamiento, o **Agua verde o con natas** y **Cuida la fuente y el tanque** cuando hay que buscar otra fuente. Todas están también en **Aprender → Cuidar el agua, paso a paso**, funcionan sin internet y se pueden escuchar. Las guías no cambian el resultado: si dice **Busca otra fuente**, no uses esa agua aunque sigas los pasos.
+
 ## 7. Calibración y cuidado después de medir
 
 En **Mi equipo y calibración**, un técnico puede **registrar** responsable, referencia y vigencia de una calibración ya realizada. La app no calibra la sonda ni envía comandos al equipo. Sin registro vigente, marca la lectura **no confiable**. Una lectura repetida solo describe variación reciente, no exactitud.
