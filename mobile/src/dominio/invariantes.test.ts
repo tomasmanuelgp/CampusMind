@@ -10,6 +10,7 @@ import { evaluar, DESCARGO } from './motor';
 import { orientarUso, nombresUso } from './orientacion';
 import { resumirEnVivo } from './resumenEnVivo';
 import { protocolos } from './protocolos';
+import { guiasRecomendadas } from './guias';
 import type { Lectura, Observacion, Calibracion, Uso } from './tipos';
 
 const lectura: Lectura = {
@@ -105,6 +106,17 @@ describe('S4 y S5 · vetos que nada anula', () => {
   });
   it('el agua verdosa nunca se resuelve solo hirviendo', () => {
     for (const { o, r } of combinaciones()) if (o.visual === 'verdosa') expect(r.plan).toBe('alternativa');
+  });
+  it('las guías sugeridas nunca abren un tratamiento que el motor no permite', () => {
+    for (const { o, r } of combinaciones()) {
+      const guias = guiasRecomendadas(r, o);
+      if (r.plan !== 'hervido') {
+        expect(guias).not.toContain('aclarar');
+        expect(guias).not.toContain('guardar');
+      }
+      if (o.visual === 'verdosa') expect(guias[0]).toBe('agua-verde');
+      expect(guias.length).toBeLessThanOrEqual(3);
+    }
   });
   it('el protocolo de hervido advierte lo que no elimina', () => {
     expect(protocolos.hervido.limites).toMatch(/químicos/);

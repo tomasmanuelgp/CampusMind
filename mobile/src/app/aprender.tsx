@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-only
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Audio, Boton, Pantalla, Tarjeta, Texto, s } from '../ui/componentes';
 import { Icono, type NombreIcono } from '../ui/iconos';
 import { colores, radio, semaforoColores, tipo } from '../ui/tema';
 import { DESCARGO } from '../dominio/motor';
+import { AVISO_GUIAS, GUIAS as GUIAS_CUIDADO } from '../dominio/guias';
 
 const GUIAS: { icono: NombreIcono; titulo: string; texto: string }[] = [
   {
@@ -77,6 +78,27 @@ export default function Aprender() {
         </Tarjeta>
       ))}
 
+      <Text style={est.seccion}>Cuidar el agua, paso a paso</Text>
+      <Texto suave>{AVISO_GUIAS}</Texto>
+      {GUIAS_CUIDADO.map(g => (
+        <Pressable
+          key={g.id}
+          accessibilityRole="button"
+          accessibilityLabel={`${g.titulo}. ${g.resumen}`}
+          onPress={() => router.push({ pathname: '/guia', params: { id: g.id } })}
+          style={({ pressed }) => [est.guia, pressed && { opacity: 0.85 }]}
+        >
+          <Text style={est.pictograma} accessible={false}>
+            {g.icono}
+          </Text>
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text style={est.titulo}>{g.titulo}</Text>
+            <Texto suave>{g.resumen}</Texto>
+          </View>
+          <Icono nombre="flecha" color={colores.azul} tamano={22} />
+        </Pressable>
+      ))}
+
       <Text style={est.seccion}>Qué significa cada color</Text>
       {COLORES.map(c => (
         <View
@@ -138,5 +160,16 @@ const est = StyleSheet.create({
     padding: 16,
     alignItems: 'flex-start',
   },
+  guia: {
+    flexDirection: 'row',
+    gap: 14,
+    alignItems: 'center',
+    backgroundColor: colores.tarjeta,
+    borderRadius: radio.l,
+    borderWidth: 1,
+    borderColor: colores.borde,
+    padding: 16,
+  },
+  pictograma: { fontSize: 34, width: 44, textAlign: 'center' },
   colorIcono: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
 });

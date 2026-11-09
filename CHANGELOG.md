@@ -4,6 +4,20 @@ Todas las versiones de la app RE-FLUYE. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); versiones con
 [SemVer](https://semver.org/lang/es/).
 
+## [Sin publicar]
+
+### Nuevo
+- **Guías de cuidado sin internet** en **Aprender**: guardar el agua tratada,
+  aclarar el agua turbia, cuidar la fuente y el tanque, agua verde o con natas,
+  cuidar el equipo, y diarrea (cuidados y cuándo buscar ayuda). Cada guía tiene
+  pasos, errores que evitar, lectura en voz alta y fuentes citadas (OMS, CDC,
+  ACNUR, CRA, DFRobot).
+- **El resultado sugiere hasta tres guías** según el plan del motor y lo
+  observado. Nunca sugiere aclarar ni guardar agua tratada cuando el veredicto
+  es «Busca otra fuente» o «Necesitamos otra medición» (prueba de invariantes).
+- Las guías no incluyen dosis de cloro ni otras cantidades sin revisión técnica;
+  una prueba lo comprueba.
+
 ## [1.0.0] — 2026-11-08
 
 Primera versión publicada como proyecto abierto.

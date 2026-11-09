@@ -10,6 +10,7 @@ import { obtenerCaptura } from '../aplicacion/almacen';
 import { DESCARGO, type Resultado } from '../dominio/motor';
 import { nombresUso, orientarUso } from '../dominio/orientacion';
 import { semaforo } from '../dominio/presentacion';
+import { guiasRecomendadas, obtenerGuia } from '../dominio/guias';
 import { USOS } from '../dominio/catalogos';
 import type { Uso } from '../dominio/tipos';
 
@@ -127,6 +128,23 @@ export default function ResultadoPantalla() {
             onPress={() => router.push({ pathname: '/protocolo', params: { id } })}
           />
         ) : null}
+      </Tarjeta>
+
+      <Tarjeta>
+        <Text style={est.seccion}>Guías para cuidar el agua</Text>
+        <Texto suave>Funcionan sin internet. No cambian este resultado.</Texto>
+        {guiasRecomendadas(r, c.observacion).map(gid => {
+          const g = obtenerGuia(gid)!;
+          return (
+            <Boton
+              key={gid}
+              secundario
+              icono="libro"
+              texto={g.titulo}
+              onPress={() => router.push({ pathname: '/guia', params: { id: gid } })}
+            />
+          );
+        })}
       </Tarjeta>
 
       <Tarjeta>
