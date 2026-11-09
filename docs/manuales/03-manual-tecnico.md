@@ -1,6 +1,6 @@
 # RE-FLUYE · Manual técnico del sistema
 
-**Versión de referencia:** aplicación 1.0.0 (versionCode 7), motor de reglas 0.4.0, firmware V2.3, protocolo Bluetooth `VER:1`, esquema de datos v2.
+**Versión de referencia:** aplicación 1.0.1 (versionCode 8), motor de reglas 0.4.0, firmware V2.3, protocolo Bluetooth `VER:1`, esquema de datos v2.
 
 **Fecha:** 9 de noviembre de 2026.
 
@@ -76,7 +76,7 @@ ESP32 (firmware V2.3)
    ▼
 Bluetooth Classic SPP · trama de texto CLAVE:valor cada 1,5 s
    ▼
-App Android RE-FLUYE 1.0.0
+App Android RE-FLUYE 1.0.1
    │  parser → monitoreo en vivo → captura de la lectura
    │  + fuente, uso, origen, olor y aspecto que aporta la persona
    │  + calibración declarada del equipo
@@ -104,8 +104,8 @@ El campo `ESTADO` y el `ICA` que envía el ESP32 son una **preclasificación por
 |---|---|---|
 | Firmware V2.3 | `firmware/refluye_v2/refluye_v2.ino` | Compila en la integración continua (núcleo ESP32 2.0.17). Falta validarlo con cada unidad física |
 | Protocolo Bluetooth | `docs/protocolo-bluetooth.md` | Contrato `VER:1` normativo; el parser de la app tiene pruebas |
-| App Android | `mobile/` | 1.0.0 publicada con firma oficial; pruebas automáticas en cada cambio; 100 % de cobertura en `src/dominio/` |
-| APK oficial | [Publicación v1.0.0](https://github.com/tomasmanuelgp/Refluye/releases/tag/v1.0.0) | Firmada con el certificado oficial, con suma SHA-256 publicada. **No se ha probado aún en un Android físico** |
+| App Android | `mobile/` | 1.0.1 publicada con firma oficial; pruebas automáticas en cada cambio; 100 % de cobertura en `src/dominio/` |
+| APK oficial | [Última publicación](https://github.com/tomasmanuelgp/Refluye/releases/latest) | Firmada con el certificado oficial, con suma SHA-256 publicada. **No se ha probado aún en un Android físico** |
 | PCB y carcasa originales | Repositorio `adiacla/refluye` | Diseño histórico auditado, con dos defectos conocidos (sección 7) |
 | Validación de campo | — | No existe un estudio de laboratorio ni de campo que certifique el sistema |
 
@@ -651,8 +651,8 @@ La guía completa, paso a paso, está en [publicar.md](../publicar.md).
 Para comprobar que una APK es la oficial, en un computador:
 
 ```sh
-sha256sum refluye-1.0.0-oficial.apk
-apksigner verify --print-certs refluye-1.0.0-oficial.apk
+sha256sum refluye-1.0.1-oficial.apk
+apksigner verify --print-certs refluye-1.0.1-oficial.apk
 ```
 
 La primera línea debe coincidir con el archivo `.sha256` de la publicación. En la segunda, el valor `SHA-256 digest` debe coincidir con la huella de la sección 21.2, en minúsculas y sin los dos puntos. Si no coincide, no la instales y repórtalo por el canal privado de [SECURITY.md](../../SECURITY.md).
@@ -696,7 +696,7 @@ El guion detallado de pruebas de la app está en [app/13-pruebas-apk.md](../app/
 | Tema | Situación | Siguiente paso |
 |---|---|---|
 | Microbiología | El equipo no detecta bacterias, virus ni parásitos | Ninguno: es un límite del diseño. La app siempre pide desinfectar |
-| Android físico | La APK 1.0.0 no se ha probado en un teléfono real con un equipo real | Ejecutar el guion de la sección 24 |
+| Android físico | La APK 1.0.x no se ha probado en un teléfono real con un equipo real | Ejecutar el guion de la sección 24 |
 | Sólidos disueltos | El protocolo acepta hasta 2000 ppm, pero el sensor está validado hasta 1000 ppm y no compensa temperatura | Caracterizar con patrones; la app ya marca > 1000 ppm como no confiable (R17) |
 | Turbidez | Conversión lineal aproximada, sin calibración con patrones | Caracterizar con patrones de formazina |
 | Calibración | La app guarda la calibración declarada pero no puede comprobarla | Definir un procedimiento metrológico trazable; guiar la calibración desde la app |

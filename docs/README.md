@@ -72,7 +72,7 @@ a construir**.
 | [`historial/`](historial/) | Bitácora, decisiones e iteraciones del trabajo con agentes de IA, y el diseño inicial no vigente |
 | [`../CLAUDE.md`](../CLAUDE.md) | Contexto permanente para agentes que trabajen en el repo |
 
-### Manuales de la versión 1.0.0
+### Manuales de la versión 1.0.1
 
 | Pieza | Destinatario | Formato |
 |---|---|---|
@@ -89,7 +89,7 @@ la prueba física ni la validación sanitaria pendiente.
 ## Decisiones ya tomadas
 
 Estas decisiones están cerradas. Cambiarlas obliga a revisar varios documentos.
-La tabla recoge decisiones de arquitectura del plan; la app 1.0.0 implementa
+La tabla recoge decisiones de arquitectura del plan; la app 1.0.1 implementa
 solo el flujo local descrito en el [manual técnico](manuales/03-manual-tecnico.md).
 
 | Decisión | Elección | Por qué |

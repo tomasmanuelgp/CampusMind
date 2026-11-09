@@ -100,7 +100,7 @@ def step(c, n, title, content, top, height, tint):
 def footer(c, page):
     c.setStrokeColor(LINE)
     c.line(M, 39, PAGE_W - M, 39)
-    label(c, "RE-FLUYE  /  GUIA DE PROTOTIPO 0.3  ·  APP 1.0.0", M, 25, 8, NAVY)
+    label(c, "RE-FLUYE  /  GUIA DE PROTOTIPO 0.3  ·  APP 1.0.1", M, 25, 8, NAVY)
     c.setFont("Arial", 8)
     c.setFillColor(MUTED)
     c.drawRightString(PAGE_W - M, 25, f"{page} / 2  ·  09 NOV 2026")

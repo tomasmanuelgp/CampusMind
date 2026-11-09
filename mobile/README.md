@@ -1,6 +1,6 @@
 # Re-Fluye · App Android de campo
 
-Versión del código: **1.0.0** (nuevo frontend, esquema de datos v2). APK oficial
+Versión del código: **1.0.1** (nuevo frontend, esquema de datos v2). APK oficial
 publicada en [Publicaciones](https://github.com/tomasmanuelgp/Refluye/releases).
 Aceptación en Android físico pendiente: [guion de pruebas](../docs/app/13-pruebas-apk.md).
 
