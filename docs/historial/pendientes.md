@@ -56,4 +56,4 @@ Hallazgos anotados durante iteraciones enfocadas en otra área.
 
 Evidencia y propuesta detallada: `../../../analisis/01-auditoria-y-plan-android.md`
 en el workspace de revisión. El firmware corregido V2.2 ya existe localmente y en
-CampusMind; el pendiente de compilación del original no implica volver a portarlo.
+este repositorio; el pendiente de compilación del original no implica volver a portarlo.

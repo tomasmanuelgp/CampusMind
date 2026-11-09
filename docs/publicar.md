@@ -127,7 +127,7 @@ bash scripts/configurar-repositorio.sh
 ### Opción B: a mano en la web
 
 1. **Settings → General → Repository name**: escribe `Refluye` y pulsa
-   **Rename**. GitHub redirige los enlaces antiguos de `CampusMind`.
+   **Rename**. GitHub redirige los enlaces del nombre anterior. **Hecho el 2026-11-08.**
 2. En la página principal del repositorio, toca el engranaje ⚙️ junto a
    **About** y completa:
    - **Description:**

@@ -184,7 +184,7 @@ void loop() {
   else { lcd.print((int)valorTemp); lcd.print("C  "); }
 
   // --- 5. Monitor serie ----------------------------------------------------
-  Serial.println("======= RE-FLUYE V2.2 =======");
+  Serial.println("======= RE-FLUYE V2.3 =======");
   Serial.print("pH: ");     Serial.println(valorPH, 2);
   Serial.print("TDS: ");    Serial.println(valorTDS, 0);
   Serial.print("Turb: ");   Serial.println(valorTurb, 0);

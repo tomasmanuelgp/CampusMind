@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Configura la ficha pública del repositorio en GitHub: nombre, descripción,
+# Configura la ficha pública del repositorio en GitHub: descripción,
 # sitio web y temas. Ejecútalo UNA vez, con permisos de administrador:
 #
 #   gh auth login            # si aún no has iniciado sesión
@@ -8,16 +8,11 @@
 # Requiere la CLI de GitHub (https://cli.github.com/).
 set -euo pipefail
 
-ACTUAL="tomasmanuelgp/CampusMind"
-NUEVO_NOMBRE="Refluye"
+# El repositorio ya se renombró a Refluye el 2026-11-08; GitHub redirige los
+# enlaces del nombre anterior. El script queda para volver a aplicar la ficha.
+REPO="tomasmanuelgp/Refluye"
 
-# 1. Renombrar (GitHub redirige automáticamente los enlaces antiguos).
-if gh repo view "$ACTUAL" >/dev/null 2>&1; then
-  gh repo rename "$NUEVO_NOMBRE" --repo "$ACTUAL" --yes
-fi
-REPO="tomasmanuelgp/$NUEVO_NOMBRE"
-
-# 2. Descripción, sitio web y temas («About»).
+# 1. Descripción, sitio web y temas («About»).
 gh repo edit "$REPO" \
   --description "💧 RE-FLUYE: equipo de bajo costo (ESP32) y app Android sin internet que orienta a familias rurales de Colombia sobre el agua que usan y qué hacer con ella. Código abierto." \
   --homepage "https://re-fluye.vercel.app/" \
@@ -38,7 +33,7 @@ gh repo edit "$REPO" \
   --add-topic citizen-science \
   --add-topic agpl
 
-# 3. Reporte privado de vulnerabilidades (lo usa SECURITY.md).
+# 2. Reporte privado de vulnerabilidades (lo usa SECURITY.md).
 gh api -X PUT "repos/$REPO/private-vulnerability-reporting" >/dev/null || \
   echo "Activa el reporte privado a mano: Settings → Code security → Private vulnerability reporting."
 

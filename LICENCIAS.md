@@ -43,7 +43,7 @@ método y no un texto protegido; aun así, damos crédito a su origen en
 
 Si usas el firmware o la documentación, incluye una nota como esta:
 
-> Basado en RE-FLUYE (https://github.com/tomasmanuelgp/CampusMind), obra
+> Basado en RE-FLUYE (https://github.com/tomasmanuelgp/Refluye), obra
 > derivada del proyecto Re-Fluye de Alfredo Antonio Díaz Claros, CCD –
 > Universidad Autónoma de Bucaramanga. Licencia CC BY-NC-SA 4.0.
 
