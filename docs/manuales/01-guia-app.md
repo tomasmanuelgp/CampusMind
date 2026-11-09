@@ -1,8 +1,8 @@
-# RE-FLUYE 1.0.1 · Guía de uso de la aplicación
+# RE-FLUYE 1.1.0 · Guía de uso de la aplicación
 
 **Para quién:** personas que miden una fuente de agua con RE-FLUYE y quienes las acompañan.
 
-**Edición:** 9 de noviembre de 2026 · APK oficial 1.0.1, Android 7.0 o posterior.
+**Edición:** 9 de noviembre de 2026 · APK oficial 1.1.0, Android 7.0 o posterior.
 **Lectura esencial:** la aplicación orienta decisiones, pero el equipo **no detecta bacterias, virus ni parásitos y no certifica potabilidad**. Una pantalla favorable no autoriza beber agua sin desinfección. La conexión con un equipo físico todavía requiere pruebas de aceptación en campo.
 
 ## 1. Antes de salir a medir
@@ -13,7 +13,7 @@ No introduzcas la mano en agua con olor químico, combustible, espuma inusual o 
 
 ## 2. Instalar la APK
 
-1. En el teléfono Android abre la [última publicación](https://github.com/tomasmanuelgp/Refluye/releases/latest). En **Assets**, descarga `refluye-1.0.1-oficial.apk` (o la versión más reciente que aparezca).
+1. En el teléfono Android abre la [última publicación](https://github.com/tomasmanuelgp/Refluye/releases/latest). En **Assets**, descarga `refluye-1.1.0-oficial.apk` (o la versión más reciente que aparezca).
 2. Abre **Archivos** o **Descargas** y toca la APK. Si Android lo pide, permite temporalmente **Instalar apps de esta fuente** para ese navegador o gestor de archivos. Los nombres de menú cambian según fabricante. Al terminar puedes revocar ese permiso en Ajustes.
 3. Toca **Instalar** y luego **Abrir**. Si Android rechaza instalar encima de una versión de pruebas anterior (0.x), es porque aquellas usaban otra firma: exporta antes tus mediciones desde **Mis mediciones → Exportar mediciones (CSV)**, desinstala la versión vieja e instala la oficial. Desde la 1.0.0, las actualizaciones se instalan encima y conservan el historial.
 4. Opcionalmente comprueba la descarga con el archivo `.sha256` incluido en Assets, y la firma con la huella del certificado publicada en [SECURITY.md](../../SECURITY.md). El [manual técnico](03-manual-tecnico.md) explica cómo hacerlo.

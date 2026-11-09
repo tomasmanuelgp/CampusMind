@@ -3,14 +3,14 @@ import type { ExpoConfig } from 'expo/config';
 const config: ExpoConfig = {
   name: 'Re-Fluye',
   slug: 'refluye',
-  version: '1.0.1',
+  version: '1.1.0',
   scheme: 'refluye',
   orientation: 'default',
   userInterfaceStyle: 'light',
   platforms: ['android', 'web'],
   android: {
     package: 'co.refluye.campo',
-    versionCode: 8,
+    versionCode: 9,
     allowBackup: false,
     permissions: [
       'android.permission.BLUETOOTH',

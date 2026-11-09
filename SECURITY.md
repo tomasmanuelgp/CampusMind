@@ -56,7 +56,7 @@ Para comprobar una APK descargada (necesita las herramientas de compilación de
 Android, ver [mobile/README.md](mobile/README.md#firma-de-publicación)):
 
 ```sh
-apksigner verify --print-certs refluye-1.0.1-oficial.apk
+apksigner verify --print-certs refluye-1.1.0-oficial.apk
 ```
 
 La línea `SHA-256 digest` debe coincidir con la huella de arriba (en minúsculas y sin los dos

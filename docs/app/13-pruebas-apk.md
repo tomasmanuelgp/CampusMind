@@ -1,7 +1,10 @@
 # 13 · Guion de aceptación de la APK
 
 Fecha de preparación: 2026-09-15; actualizada para 0.3.1 el 2026-10-02.
-Estado: pendiente en teléfono físico.
+Estado: primera prueba física informada. El 2026-11-09 el usuario instaló la
+APK oficial 1.0.1 en un teléfono Android y midió con el equipo físico por
+Bluetooth. Falta registrar modelo, versión de Android y firmware, y recorrer
+cada caso de la tabla; hasta entonces los casos siguen como «Pendiente».
 Registrar modelo, Android, versión APK, firmware, responsable y resultado de cada
 caso. No marcar aprobado por haber compilado o por haberlo probado en navegador.
 

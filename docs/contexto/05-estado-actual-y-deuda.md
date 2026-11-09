@@ -8,7 +8,7 @@ Primera versión publicada como proyecto abierto, en el repositorio
 encima de 1000 ppm no son confiables), esquema de datos v2, exportación CSV y
 borrado de mediciones, y APK firmada con el certificado oficial. Desde el
 2026-11-09 la app incluye seis guías de cuidado sin internet. La aceptación en
-Android físico sigue pendiente. El estado completo, por pieza, está en el
+Android físico tiene una primera prueba informada (2026-11-09, v1.0.1, medición real por Bluetooth); falta registrar el guion completo. La 1.1.0 añade pasos marcables, buscador y recordatorios de cuidado. El estado completo, por pieza, está en el
 [manual técnico](../manuales/03-manual-tecnico.md); las secciones siguientes
 son el historial de versiones anteriores.
 

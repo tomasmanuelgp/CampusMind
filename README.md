@@ -131,7 +131,7 @@ La guía completa, con diagramas y problemas comunes, está en
 
 1. Descarga la APK de la
    [**última publicación**](https://github.com/tomasmanuelgp/Refluye/releases/latest)
-   (sección *Assets*, archivo `refluye-1.0.1-oficial.apk`). Requiere Android 7.0 o
+   (sección *Assets*, archivo `refluye-1.1.0-oficial.apk`). Requiere Android 7.0 o
    superior con Bluetooth Classic. La app no funciona en iPhone por ahora.
 2. Ábrela desde **Archivos** o **Descargas**. Si Android lo pide, permite
    instalar apps de esa fuente.
