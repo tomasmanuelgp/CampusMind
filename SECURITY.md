@@ -42,13 +42,27 @@ hacer que la app muestre un resultado más favorable que el que corresponde.
 ## APK oficial
 
 Instala RE-FLUYE solo desde la página de
-[publicaciones](https://github.com/tomasmanuelgp/CampusMind/releases), nunca
+[publicaciones](https://github.com/tomasmanuelgp/Refluye/releases), nunca
 desde una copia reenviada. Cada publicación incluye la suma SHA-256 del archivo.
 
-Huella SHA-256 del certificado de publicación: **pendiente** (se publicará
-con la primera APK firmada con el keystore oficial; ver
-[mobile/README.md](mobile/README.md#firma-de-publicación)). Las APK de
-prueba anteriores usan la firma de desarrollo y no deben redistribuirse.
+Huella SHA-256 del certificado de publicación (RSA de 4096 bits, desde la
+versión 1.0.0):
+
+```
+55:A4:9B:FA:73:8B:3B:26:93:39:7C:4D:D2:E8:1B:1F:03:46:7F:B7:0A:38:F0:E5:86:E5:66:3E:8C:9E:A3:D6
+```
+
+Para comprobar una APK descargada (necesita las herramientas de compilación de
+Android, ver [mobile/README.md](mobile/README.md#firma-de-publicación)):
+
+```sh
+apksigner verify --print-certs refluye-1.0.0-oficial.apk
+```
+
+La línea `SHA-256 digest` debe coincidir con la huella de arriba (en minúsculas y sin los dos
+puntos). Si no coincide, no instales la APK y repórtalo por el canal privado.
+Las APK de prueba anteriores usan la firma de desarrollo y no deben
+redistribuirse.
 
 ## Secretos
 
