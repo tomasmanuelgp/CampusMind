@@ -9,6 +9,7 @@ import {
   contarCapturas,
   leerCalibracion,
   leerEquipoRecordado,
+  leerRegistrosCuidado,
   listarCapturas,
   type EquipoRecordado,
   type Registro,
@@ -16,12 +17,14 @@ import {
 import { useSesion } from '../aplicacion/sesion';
 import { calibracionVigente, DESCARGO, type Resultado } from '../dominio/motor';
 import { semaforo } from '../dominio/presentacion';
+import { recordatorios, type Recordatorio } from '../dominio/cuidados';
 
 interface Panel {
   ultimas: Registro[];
   total: number;
   equipo: EquipoRecordado | null;
   calibracionHasta: number | null;
+  cuidados: Recordatorio[];
   error: string;
 }
 
@@ -29,12 +32,20 @@ function leerPanel(): Panel {
   try {
     const equipo = leerEquipoRecordado();
     const calibracion = equipo ? leerCalibracion(equipo.id) : null;
+    const ahora = Date.now();
+    const vigenteHasta = calibracion && calibracionVigente(calibracion, ahora) ? calibracion.venceEn : null;
+    // La calibración ya se ve en la tarjeta del equipo: aquí solo se avisa si está por vencer.
+    const cuidados = recordatorios(
+      leerRegistrosCuidado(),
+      { equipo: vigenteHasta !== null, venceEn: vigenteHasta },
+      ahora,
+    ).filter(r => r.id !== 'calibracion' || r.pendiente);
     return {
       ultimas: listarCapturas(5),
       total: contarCapturas(),
       equipo,
-      calibracionHasta:
-        calibracion && calibracionVigente(calibracion, Date.now()) ? calibracion.venceEn : null,
+      calibracionHasta: vigenteHasta,
+      cuidados,
       error: '',
     };
   } catch {
@@ -43,6 +54,7 @@ function leerPanel(): Panel {
       total: 0,
       equipo: null,
       calibracionHasta: null,
+      cuidados: [],
       error: 'No pudimos abrir tus datos. Reinicia la aplicación antes de medir.',
     };
   }
@@ -180,6 +192,29 @@ export default function Inicio() {
         ) : null}
       </Tarjeta>
 
+      {panel.cuidados.length > 0 ? (
+        <Tarjeta tono={panel.cuidados.some(r => r.pendiente) ? 'ambar' : 'blanco'}>
+          <Text style={s.etiqueta}>TUS CUIDADOS</Text>
+          {panel.cuidados.map(r => (
+            <Pressable
+              key={r.id}
+              accessibilityRole="button"
+              accessibilityLabel={`${r.texto} Abrir la guía`}
+              onPress={() => router.push({ pathname: '/guia', params: { id: r.guia } })}
+              style={({ pressed }) => [est.cuidado, pressed && s.presionado]}
+            >
+              <Icono
+                nombre={r.pendiente ? 'alerta' : 'check'}
+                color={r.pendiente ? '#7A4A00' : '#1B7A3E'}
+                tamano={24}
+              />
+              <Text style={[s.texto, { flex: 1 }, r.pendiente && s.fuerte]}>{r.texto}</Text>
+              <Icono nombre="flecha" color={colores.azul} tamano={20} />
+            </Pressable>
+          ))}
+        </Tarjeta>
+      ) : null}
+
       {ultima && luzUltima && resultadoUltima ? (
         <Pressable
           accessibilityRole="button"
@@ -227,6 +262,7 @@ export default function Inicio() {
 }
 
 const est = StyleSheet.create({
+  cuidado: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 48, paddingVertical: 6 },
   heroFila: {
     flexDirection: 'row',
     alignItems: 'center',

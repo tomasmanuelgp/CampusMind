@@ -102,6 +102,8 @@ Pares `clave` → `valor` (texto o JSON):
 | `equipo-ref:<MAC>` | Referencia aleatoria del equipo usada en las mediciones |
 | `calibracion:<MAC>` | Calibración declarada: fechas, responsable y referencia |
 | `progreso:<id>` | Paso del protocolo de tratamiento y fin del temporizador |
+| `guia:<id>` | Pasos marcados como hechos en una guía de cuidado (lista de índices) |
+| `cuidado:<id>` | Fecha (ms UTC) en que se hizo por última vez un cuidado que se repite: `tanque`, `canaletas` o `agua-guardada` |
 
 ## Versiones del esquema y migración
 
