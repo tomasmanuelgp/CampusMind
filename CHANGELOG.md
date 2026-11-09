@@ -4,6 +4,17 @@ Todas las versiones de la app RE-FLUYE. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); versiones con
 [SemVer](https://semver.org/lang/es/).
 
+## [Sin publicar]
+
+### Nuevo
+- **Pasos marcables en las guías:** cada paso se toca al terminarlo y el avance
+  queda guardado en el teléfono.
+- **Buscador de guías** en **Aprender**, sin importar tildes ni mayúsculas.
+- **Recordatorios de cuidado:** desde las guías se registra el lavado del tanque
+  (cada 6 meses), la limpieza de canaletas (cada 3 meses) y el agua tratada
+  guardada; **Inicio** muestra **Tus cuidados** y avisa si la calibración vence
+  en 7 días o menos.
+
 ## [1.0.1] — 2026-11-09
 
 ### Nuevo
