@@ -1,6 +1,6 @@
 {
   "name": "refluye-mobile",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Re-Fluye: app Android de campo para orientar el uso del agua (offline, Bluetooth Classic).",
   "license": "AGPL-3.0-only",
   "repository": {

@@ -2,7 +2,7 @@
 
 **Formato de entrega:** hoja A4, dos caras, en PDF listo para imprimir, adjunto a cada [publicación](https://github.com/tomasmanuelgp/Refluye/releases) (se genera con `generar-guia-visual.py`). Imprime al 100 %, a doble cara y sin ajustar a página. Esta fuente de texto permite revisar el contenido sin abrir el PDF.
 
-**Edición de prototipo · 9 de noviembre de 2026 · app 1.0.0 y firmware V2.3.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
+**Edición de prototipo · 9 de noviembre de 2026 · app 1.0.1 y firmware V2.3.** Antes de incluirla en una caja comercial, el responsable debe completar la etiqueta física del equipo con alimentación, interruptor, referencia de sondas, identidad Bluetooth y contacto de soporte. Esos detalles aún no están confirmados para todos los prototipos. El firmware y la app tienen pruebas de software; la unidad física y la resistencia al agua deben verificarse por separado.
 
 ## Cara 1 · Abre, conecta, mide
 
@@ -74,4 +74,4 @@ Las indicaciones específicas de pH y TDS corresponden a las referencias DFRobot
 | Vigente hasta | ______________________________ |
 | Contacto de soporte | ______________________________ |
 
-**Versión de app:** 1.0.0 · **Documento:** guía de prototipo 0.3 · **Origen:** obra derivada del proyecto Re-Fluye de Alfredo Antonio Díaz Claros, CCD / UNAB. Para el procedimiento completo de la app: `docs/manuales/01-guia-app.md`. Para mantenimiento y montaje: `docs/manuales/03-manual-tecnico.md`.
+**Versión de app:** 1.0.1 · **Documento:** guía de prototipo 0.3 · **Origen:** obra derivada del proyecto Re-Fluye de Alfredo Antonio Díaz Claros, CCD / UNAB. Para el procedimiento completo de la app: `docs/manuales/01-guia-app.md`. Para mantenimiento y montaje: `docs/manuales/03-manual-tecnico.md`.

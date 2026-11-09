@@ -4,7 +4,7 @@ Todas las versiones de la app RE-FLUYE. Formato basado en
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); versiones con
 [SemVer](https://semver.org/lang/es/).
 
-## [Sin publicar]
+## [1.0.1] — 2026-11-09
 
 ### Nuevo
 - **Guías de cuidado sin internet** en **Aprender**: guardar el agua tratada,
